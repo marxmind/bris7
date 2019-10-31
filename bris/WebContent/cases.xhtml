@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Cases</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="sb-admin/font-awesome/css/all.min.css" />
+            <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
+            <h:outputStylesheet name="css/font-awesome.min.css" />
+            
+     </f:facet>
+     <f:facet name="last">       
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
+            <h:outputScript name="sb-admin/bootstrap/js/bootstrap.bundle.min.js"/>
+            <h:outputScript name="sb-admin/jquery-easing/jquery.easing.min.js"/>
+            <h:outputScript name="sb-admin/js/sb-admin.min.js"/>
+            
+            
+    </f:facet>
+        
+    <title>#{versionBean.copyright.appname} Cases</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+	z-index: 1500; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+  -->
+ </style>
+ 
+<title>#{versionBean.copyright.appname} Cases</title>
+
+</h:head>
+
+<h:body id="page-top">
+<h:form prependId="false" id="formId">
+
+<p:growl id="msg" life="8000" showDetail="true" />
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>	
+ 
+ 		<p:confirmDialog widgetVar="cfNote" header="Please Confirm" message="Are you sure you want to save? Please select your choice." severity="info" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       		
+	       		<p:commandButton value="Save Only" actionListener="#{caseBean2.saveData('save')}" update="FldId caseData msg"  oncomplete="PF('cfNote').hide()" />
+	       		<p:commandButton value="Save and Show Print" actionListener="#{caseBean2.saveData('print')}" update="FldId caseData formId msg"  onclick="PF('cfNote').hide()"/>
+	       
+	       	
+    	</p:confirmDialog>
+ 
+ <nav class="navbar navbar-expand navbar-intel bg-intel static-top">
+
+      <a class="navbar-brand mr-1" href="main.xhtml">#{versionBean.copyright.appname} #{menuBean.labels[5]}</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        	  
+        	  
+        	  <div class="input-group">
+        	  			<p:inputText value="#{caseBean2.searchParam}" placeholder="Search..." styleClass="js-tilt">
+		    					<f:ajax event="keyup" listener="#{caseBean2.init}" render="caseData FldId"/>
+		    			</p:inputText>
+				        <p:calendar value="#{caseBean2.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
+		    			<p:calendar value="#{caseBean2.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
+				        <p:commandButton update="caseData FldId" icon="fa fa-search" actionListener="#{caseBean2.init}" styleClass="avalon-button"/>
+          	  </div>
+     </div>
+
+      
+      <ui:include src="menutop.xhtml" />
+		
+	 	
+    </nav>
+    <p:tooltip for="scButtonId" position="left" >
+		<p:outputLabel value="Click this button to check scheduled for settlement" />
+	</p:tooltip>
+    <p:tooltip for="addButtonId" position="left" >
+		<p:outputLabel value="Click this button to create new case" />
+	</p:tooltip>
+	<p:tooltip for="clearButtonId" position="left" >
+		<p:outputLabel value="Click this button to clear the inputed information" />
+	</p:tooltip>
+	<p:tooltip for="saveButtonId" position="left" >
+		<p:outputLabel value="Click this button to save the inputed information" />
+	</p:tooltip>
+	<p:tooltip for="hideButtonId" position="left" >
+		<p:outputLabel value="Click this button to close the fill up form" />
+	</p:tooltip>
+    
+    <!-- Scroll Menu button-->
+    <p:commandLink id="scButtonId" styleClass="create-new rounded" onclick="PF('schedDlg').show();" actionListener="#{caseBean2.loadCaseScheduled}" update="schedData">
+      <i class="fa fa-calendar-alt"></i>
+    </p:commandLink>
+    <p:commandLink id="addButtonId" styleClass="create-clear rounded" style="display: inline" oncomplete="addNew();" actionListener="#{caseBean2.clearFlds}" update="FldId">
+      <i class="fa fa-file-o"></i>
+    </p:commandLink>
+    <p:commandLink id="clearButtonId" styleClass="create-save rounded" actionListener="#{caseBean2.clearFlds}" update="caseData FldId">
+      <i class="fa fa-eraser"></i>
+    </p:commandLink>
+    <p:commandLink id="saveButtonId" styleClass="create-hide rounded" update="msg" actionListener="#{caseBean2.checkValidInput}">
+	     <i class="fa fa-floppy-o"></i>
+	</p:commandLink>
+    <p:commandLink id="hideButtonId" styleClass="create-hide-another rounded" onclick="hideWizard();" update="FldId" actionListener="#{caseBean2.clearFlds}">
+    	<i class="fa fa-eye-slash"></i>
+    </p:commandLink>
+      
+    <div id="wrapper">
+		 
+      <ui:include src="sidebarmenu.xhtml" />
+
+      <div id="content-wrapper">        
+		  <div class="container-fluid">
+		      
+		   <div id="panelHide" style="display: none">
+		   
+		   <p:panelGrid id="FldId" columns="4" layout="grid">
+		   		
+		   		<p:outputLabel for="id1" value="Chairman" style="#{skin.label}"/>
+				<p:selectOneMenu id="id1" value="#{caseBean2.chairmanId}" style="width: 15em" filter="true" filterMatchMode="contains">
+                			<f:selectItems value="#{caseBean2.chairmans}"/>
+            	</p:selectOneMenu>
+            	
+		   		<p:outputLabel for="id2" value="Secretary" style="#{skin.label}"/>
+				<p:selectOneMenu id="id2"  value="#{caseBean2.secId}" style="width: 15em" filter="true" filterMatchMode="contains">
+                			<f:selectItems value="#{caseBean2.secretaries}"/>
+            	</p:selectOneMenu>
+				
+				
+				<p:outputLabel for="id3" value="Filling" style="#{skin.label}" />
+				<p:inputText id="id3" value="#{caseBean2.fillingDate}" readonly="true" style="width: 15em"/>
+				
+				<p:outputLabel for="id4" value="Status" style="#{skin.label}" />
+				<p:selectOneMenu id="id4" value="#{caseBean2.statusId}" style="width: 15em">
+                	<f:selectItems value="#{caseBean2.status}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel for="id5" value="Case No" style="#{skin.label}" />
+				<p:inputText id="id5" value="#{caseBean2.caseNumber}" style="width: 15em"/>
+				
+				<p:outputLabel for="id6" value="Forms:" style="#{skin.label}"/>
+				<p:selectOneMenu id="id6" value="#{caseBean2.kpId}" style="width: 15em" filter="true" filterMatchMode="contains">
+                			<f:selectItems value="#{caseBean2.kps}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel for="id7" value="Kind of Case" style="#{skin.label}" />
+				<p:selectOneMenu id="id7" value="#{caseBean2.kindId}" style="width: 15em" filter="true" filterMatchMode="contains">
+                	<f:selectItems value="#{caseBean2.kinds}"/>
+                	<p:ajax update="otherCaseId" listener="#{caseBean2.triggerCase}" event="change" />
+            	</p:selectOneMenu>
+            	
+            	<p:outputLabel for="otherCaseId" value="Other Case" style="#{skin.label}" />
+            	<p:inputTextarea id="otherCaseId" value="#{caseBean2.otherCaseName}" disabled="#{!caseBean2.otherCase}" style="width: 15em"/>
+            	
+            	
+				<p:outputLabel for="id8" value="Settlement Date" style="#{skin.label}" />
+				<p:calendar id="id8" value="#{caseBean2.settlementDate}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" inputStyle="width: 15em"/>
+					
+				
+				<p:outputLabel for="id9" value="Settlement Time" style="#{skin.label}" />
+				<p:inputText id="id9" value="#{caseBean2.settlementTime}" style="width: 15em"/>
+				
+				<p:outputLabel for="id10" value="Complainant/s" style="#{skin.label}" />
+				<p:inputTextarea id="id10" placeholder="Type here the fullname of the complainant. First name Last name" value="#{caseBean2.complainants}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeNames}"/>
+				
+				<p:outputLabel for="id11" value="Address" style="#{skin.label}" />
+				<p:inputTextarea id="id11" placeholder="Type here the complete address of the complainant/s" value="#{caseBean2.compAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeAddress}"/>
+				
+				<p:outputLabel for="id12" value="Respondent/s" style="#{skin.label}" />
+				<p:inputTextarea id="id12" placeholder="Type here the fullname of the respondent. First name Last name" value="#{caseBean2.respondents}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeNames}"/>
+				
+				<p:outputLabel for="id13" value="Address" style="#{skin.label}" />
+				<p:inputTextarea id="id13" placeholder="Type here the complete address of the respondent/s" value="#{caseBean2.resAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeAddress}"/>
+				
+				<p:outputLabel for="id14" value="Complain" style="#{skin.label}" />
+				<p:inputTextarea id="id14" value="#{caseBean2.narratives}" placeholder="Type here the reason of the case" style="width: 15em" autoResize="true|false"/>
+				
+				<p:outputLabel for="id15" value="Suggested Solution" style="#{skin.label}" />
+				<p:inputTextarea id="id15" value="#{caseBean2.solutions}" placeholder="Type here the agreed solution" style="width: 15em" autoResize="true|false"/>
+				
+				<p:outputLabel for="id16" value="Witness/es" style="#{skin.label}" />
+				<p:inputTextarea id="id16" placeholder="Type here the name of the witness or witnesses" value="#{caseBean2.witness}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeNames}"/>
+				
+				<p:outputLabel for="id17" value="Address" style="#{skin.label}" />
+				<p:inputTextarea id="id17" placeholder="Type here the complete address of the witness" value="#{caseBean2.witnessAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				completeMethod="#{caseBean2.completeAddress}"/>
+				
+				<p:outputLabel for="id18" value="OR No" style="#{skin.label}" />
+				<p:inputText id="id18" value="#{caseBean2.orNumber}" placeholder="0000000" style="width: 15em"/>
+				
+				<p:outputLabel for="id19" value="Fee" style="#{skin.label}" />
+				<p:inputText id="id19" value="#{caseBean2.fees}" style="width: 15em"/>
+				
+				<p:outputLabel for="id20" value="Messenger Fee" style="#{skin.label}" />
+				<p:inputText id="id20" value="#{caseBean2.messengerFees}" placeholder="00.00" style="width: 15em"/>
+		   
+		   </p:panelGrid>
+		   
+		   </div>
+		   
+		   <div id="panelTable" style="display: block">
+		   <p:dataTable id="caseData" value="#{caseBean2.cases}" var="cz" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}" draggableColumns="true" draggableRows="true" paginatorPosition="top"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Cases in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="caseData" fileName="Cases" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Cases in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="caseData" fileName="Cases" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+            				
+            				<p:column width="10" exportable="false">
+            					<p:rowToggler />
+            				</p:column>
+            				
+            				<p:column headerText="[*]" width="10" exportable="false">
+            					<p:commandButton update="caseData FldId msg" icon="fa fa-trash-o" title="Click this button to delete this data" actionListener="#{caseBean2.deleteCase(cz)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column headerText="Case No" width="30" sortable="false" sortBy="#{cz.caseNo}">
+            						<p:outputLabel  value="#{cz.caseNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="For" width="100" sortable="false" sortBy="#{cz.kindName}">
+            						<p:outputLabel  value="#{cz.kindName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Involved Persons" width="200" sortable="false" sortBy="#{cz.complainants}">
+            						<p:outputLabel  value="#{cz.complainants} vs #{cz.respondents}"/>
+            				</p:column>
+            				
+            				<p:rowExpansion>
+            					<p:toolbar id="tbDtls">
+						    		<f:facet name="left">
+						    			<p:commandButton update="FldId" value="Create New Form"  icon="fa fa-file-o" title="Click this button to start new form" oncomplete="addNew()" actionListener="#{caseBean2.createNewForm(cz.caseFilling)}"/>
+						    		</f:facet>
+						    		<f:facet name="right">
+						    		</f:facet>
+								</p:toolbar> 
+            					<p:dataTable id="filData" value="#{cz.caseFilling}" var="ciz">
+            							
+            							<p:column headerText="[*]" width="20" exportable="false">
+            								<p:commandButton update="caseData filData msg" icon="fa fa-trash-o" title="Click this button to delete this data" actionListener="#{caseBean2.deleteRow(ciz)}">
+            									<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            								</p:commandButton>
+            							</p:column>
+            							
+			            				<p:column headerText="Print" width="20" exportable="false">
+			            						<p:commandLink title="Show in PDF" action="#{caseBean2.printDocument(ciz)}" update="pdfid formId" >
+			            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+												</p:commandLink>
+			            				</p:column>
+			            				
+			            				<p:column headerText="View" width="20" exportable="false">
+			            					<p:commandButton icon="fa fa-search" title="Click this button to see the additional information" oncomplete="addNew()" update="FldId" actionListener="#{caseBean2.clickItem(ciz)}" />
+			            				</p:column>
+			            				
+            							<p:column headerText="Filed" width="50" sortable="false" sortBy="#{ciz.fillingDate}">
+            								<p:outputLabel  value="#{ciz.fillingDate}"/>
+            							</p:column>
+            							
+            							<p:column headerText="Settlement" width="70">
+            								<p:outputLabel  value="#{ciz.settlementDate} #{ciz.settlementTime}"/>
+            							</p:column>
+            							
+            							<p:column headerText="Form" width="100">
+            								<p:outputLabel  value="#{ciz.formName}"/>
+            							</p:column>
+            							
+            					</p:dataTable>
+            				</p:rowExpansion>
+            				
+            				
+            				
+        			</p:dataTable> 
+		   		</div>
+		   		
+		   		<div id="panelHidePdf" style="display: none">
+		   			<p:toolbar id="tbPdf" style="#{skin.toolbar}">
+		    		<f:facet name="left">	
+						    <p:commandButton value="Close" onclick="hidePdf()"/> 
+		    		</f:facet>
+		    		<f:facet name="right"/>
+					</p:toolbar> 
+				 	<p:media id="pdfid" value="#{caseBean2.tempPdfFile}" cache="false" player="pdf" width="1000" height="700">
+				 		<f:param name="id" value="#{caseBean2.generateRandomIdForNotCaching()}" />
+				 	</p:media>
+		   		</div>
+		   
+		   </div><!-- end content fluid -->
+		   
+	  </div><!-- End content wrapper -->
+	  
+	  <!-- Sticky Footer -->
+        <footer class="sticky-footer citizenBox">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>#{versionBean.copyright.copyrightname}</span>
+            </div>
+          </div>
+        </footer>
+	  
+    </div><!-- end wrapper -->	   
+    
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+    
+    <script>
+	 
+    function hideOnlyPdf(){
+		$("#panelHidePdf").hide(1000);
+		$("#panelTable").show(1000);
+	}	
+    
+    function hidePdf(){
+		 $("#panelHidePdf").hide(1000);
+		 $("#panelHide").hide(1000);
+		 $("#panelTable").show(1000);
+	 }
+    function showPdf(){
+		 $("#panelHidePdf").show(1000);
+		 $("#panelHide").hide(1000);
+		 $("#panelTable").hide(1000);
+	 }
+    
+	 function addNew(){
+		 callTop();
+		 showDetails();
+		 showButton();
+		 hideOnlyPdf();
+	 }
+	 
+	 function showDetails(){
+	 		$("#panelHide").show(1000);
+	 }
+	 
+	 $(".input-group").click(function(){
+		 hideWizard();
+		 callTop();
+	 });
+	 
+	 function hideWizard(){
+	 		$("#panelHide").hide(1000);
+	 		hideButton();
+	 }		
+	 
+	
+	 function hideButton(){
+		 $('#clearButtonId').fadeOut();
+	     $('#saveButtonId').fadeOut();
+	     $('#hideButtonId').fadeOut();
+	 }
+	 
+	 function showButton(){
+		 $('#clearButtonId').fadeIn();
+	     $('#saveButtonId').fadeIn();
+	     $('#hideButtonId').fadeIn();
+	 }
+	 
+	 function callTop(){ 
+		        $('html').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('body').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('document').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('window').animate({ scrollTop: 0 }, 'slow'); return true;
+	 }
+	 
+	//hiding wizard when scrolling down
+	  $(document).on('scroll',function() {
+		
+		$('#addButtonId').fadeIn();//always show 
+	    var scrollDistance = $(this).scrollTop();
+	    if (scrollDistance > 200) {
+	    	hideButton();
+	    } else {
+	    	
+	    	if($('#panelHide').css('display') == 'none'){
+	    		hideButton();
+	    	}else{
+	    		showButton();
+	    	}
+	    	
+	    }
+	  });
+	 
+	</script>
+    
+    <p:dialog header="Calendar of Settlements" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" widgetVar="schedDlg" Height="300" width="800" closable="true">
+ 	
+ 	<p:dataTable id="schedData" value="#{caseBean2.caseLookup}" var="lok">
+ 		<p:column headerText="Case" width="120">
+       			<p:outputLabel  value="#{lok.kindName}" style="#{lok.filling.style}"/>
+       </p:column>
+ 		<p:column headerText="Names" width="150">
+       			<p:outputLabel  value="#{lok.complainants} vs #{lok.respondents}" style="#{lok.filling.style}"/>
+       </p:column>
+		<p:column headerText="Settlement" width="100">
+       			<p:outputLabel  value="#{lok.filling.settlementDate} @#{lok.filling.settlementTime}" style="#{lok.filling.style}"/>
+       </p:column>		            				
+            							
+ 	</p:dataTable>
+ 	</p:dialog>			
+    
+    <ui:include src="loader.xhtml" />
+</h:form>
+</h:body>
+</f:view>
+</html>
+		   

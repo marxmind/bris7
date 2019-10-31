@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Cases</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="css/menu.css"/>
+			<h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <!-- <h:outputStylesheet name="css/dataTables.bootstrap.mini.css"/>-->
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/> 
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Cases</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Cases</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+		<p:growl id="msg" showDetail="true"/>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+		
+		<div class="page-header">
+		 	<a><p:outputLabel value="#{menuBean.labels[5]}" style="#{skin.pageTitle};"/></a>
+		 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	    </div>
+		
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="600" >
+				
+				<p:toolbar id="tbIncident" style="#{skin.toolbar}float:bottom; position: fixed;z-index: 1500;">
+		    		<f:facet name="left">
+				        <p:commandButton update="schedData" value="Scheduled Case Lookup"  onclick="PF('schedDlg').show();" icon="fa fa-calendar" title="Click this button to check the scheduled cases" actionListener="#{caseBean.loadCaseScheduled}"/>
+		    		</f:facet>
+		    		<f:facet name="right">
+		    				<p:commandButton update="FldId" value="New Case"  icon="fa fa-file-o" title="Click this button to start new case information" actionListener="#{caseBean.clearFlds}"/>
+		    				<p:commandButton update="FldId" value="Clear" icon="fa fa-trash" title="Click this button to clear information" actionListener="#{caseBean.clearFlds}"/>
+		    				<p:commandButton update="FldId caseData msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{caseBean.saveData}">
+		        				<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+		        			</p:commandButton>
+		    		</f:facet>
+				</p:toolbar>
+				<br/><br/>
+				<p:panelGrid id="FldId" columns="4" layout="grid">
+				
+				<p:outputLabel value="Filling" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.fillingDate}" readonly="true" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Status" style="#{skin.label}" />
+				<p:selectOneMenu  value="#{caseBean.statusId}" style="width: 11em;#{skin.select}">
+                	<f:selectItems value="#{caseBean.status}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel value="Case No" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.caseNumber}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Type" style="#{skin.label}" />
+				<p:selectOneMenu  value="#{caseBean.typeId}" style="width: 11em;#{skin.select}">
+                	<f:selectItems value="#{caseBean.types}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel value="Attempt" style="#{skin.label}" />
+				<p:inputNumber value="#{caseBean.attemps}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Kind of Case" style="#{skin.label}" />
+				<p:outputLabel>
+				<p:selectOneMenu  value="#{caseBean.kindId}" style="width: 11em;#{skin.select}" filter="true" filterMatchMode="contains">
+                	<f:selectItems value="#{caseBean.kinds}"/>
+                	<p:ajax update="otherCaseId" listener="#{caseBean.triggerCase}" event="change" />
+            	</p:selectOneMenu>
+            	&nbsp;<p:inputTextarea id="otherCaseId" value="#{caseBean.otherCaseName}" disabled="#{!caseBean.otherCase}" style="width: 11em;#{skin.textInput}"/>
+            	</p:outputLabel>
+            	
+				<p:outputLabel value="Settlement Date" style="#{skin.label}" />
+				<p:calendar value="#{caseBean.settlementDate}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" style="#{skin.calendar}"/>
+					
+				
+				<p:outputLabel value="Settlement Time" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.settlementTime}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Complainant/s" style="#{skin.label}" />
+				<p:inputTextarea a:placeholder="Fullname, et al" value="#{caseBean.complainants}" style="width: 11em;#{skin.textInput}" autoResize="true|false" rows="3" cols="50" minQueryLength="4"
+				completeMethod="#{caseBean.completeNames}"/>
+				
+				<p:outputLabel value="Address" style="#{skin.label}" />
+				<p:inputTextarea a:placeholder="Address" value="#{caseBean.compAddress}" style="width: 11em;#{skin.textInput}" autoResize="true|false" rows="3" cols="50" minQueryLength="4"
+				completeMethod="#{caseBean.completeAddress}"/>
+				
+				<p:outputLabel value="Respondent/s" style="#{skin.label}" />
+				<p:inputTextarea a:placeholder="Fullname, et al" value="#{caseBean.respondents}" style="width: 11em;#{skin.textInput}" autoResize="true|false" rows="3" cols="50" minQueryLength="4"
+				completeMethod="#{caseBean.completeNames}"/>
+				
+				<p:outputLabel value="Address" style="#{skin.label}" />
+				<p:inputTextarea a:placeholder="Address" value="#{caseBean.resAddress}" style="width: 11em;#{skin.textInput}" autoResize="true|false" rows="3" cols="50" minQueryLength="4"
+				completeMethod="#{caseBean.completeAddress}"/>
+				
+				<p:outputLabel value="OR No" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.orNumber}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Fee" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.fees}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Messenger Fee" style="#{skin.label}" />
+				<p:inputText value="#{caseBean.messengerFees}" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Narratives" style="#{skin.label}" />
+				<p:inputTextarea value="#{caseBean.narratives}" style="width: 11em;#{skin.textInput}" autoResize="true|false"/>
+				
+				</p:panelGrid>
+				
+			</p:layoutUnit>
+		
+			<p:layoutUnit position="east" size="0" visible="false" >
+		
+			</p:layoutUnit>
+		
+			<p:layoutUnit position="center">
+				
+				<p:dataTable id="caseData" value="#{caseBean.cases}" var="cz" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}" draggableColumns="true" draggableRows="true" paginatorPosition="top"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Cases in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="caseData" fileName="Cases" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Cases in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="caseData" fileName="Cases" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+            				
+            				<p:column width="10" exportable="false">
+            					<p:rowToggler />
+            				</p:column>
+            				
+            				<p:column headerText="[*]" width="10" exportable="false">
+            					<p:commandButton update="caseData FldId msg" icon="fa fa-trash-o" title="Click this button to delete this data"   actionListener="#{caseBean.deleteCase(cz)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column headerText="Case No" width="70" sortable="false" sortBy="#{cz.caseNo}">
+            						<p:outputLabel  value="#{cz.caseNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Case No" width="100" sortable="false" sortBy="#{cz.kindName}">
+            						<p:outputLabel  value="#{cz.kindName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Involved Persons" width="200" sortable="false" sortBy="#{cz.complainants}">
+            						<p:outputLabel  value="#{cz.complainants} vs #{cz.respondents}"/>
+            				</p:column>
+            				
+            				<p:rowExpansion>
+            					<p:toolbar id="tbDtls">
+						    		<f:facet name="left">
+						    			<p:commandButton update="FldId" value="New Invitation/Summon"  icon="fa fa-file-o" title="Click this button to start new summon" actionListener="#{caseBean.newInvitation(cz.caseFilling)}"/>
+						    			&nbsp;<p:outputLabel value="No Confrontation?" />
+						    			<p:selectBooleanCheckbox value="#{caseBean.severalConfrontation}" style="#{skin.checkbox}" disabled="#{cz.endorsed}" title="Tick this checkbox if has several confrontation"/>
+						    			&nbsp;<p:outputLabel value="Print Endorsement" />
+						    			<p:commandLink title="Print in PDF" target="_blank" action="#{caseBean.generateEndorsement(cz)}" ajax="false" immediate="false" disabled="#{cz.endorsed}">
+			            					<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+										</p:commandLink>
+						    		</f:facet>
+						    		<f:facet name="right">
+						    		</f:facet>
+								</p:toolbar> 
+            					<p:dataTable id="filData" value="#{cz.caseFilling}" var="ciz">
+            							
+            							<p:column headerText="[*]" width="20" exportable="false">
+            								<p:commandButton update="caseData filData msg" icon="fa fa-trash-o" title="Click this button to delete this data" actionListener="#{caseBean.deleteRow(ciz)}">
+            									<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            								</p:commandButton>
+            							</p:column>
+            				
+			            				<p:column headerText="Receipt" width="20" exportable="false">
+			            						<p:commandLink title="Print in PDF" target="_blank" action="#{caseBean.printCase(ciz)}" ajax="false" immediate="false" >
+			            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+												</p:commandLink>
+			            				</p:column>
+			            				
+			            				<p:column headerText="Notice" width="20" exportable="false">
+			            						<p:commandLink title="Print in PDF" target="_blank" action="#{caseBean.printNotice(ciz)}" ajax="false" immediate="false" >
+			            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+												</p:commandLink>
+			            				</p:column>
+			            				
+			            				<p:column headerText="View" width="20" exportable="false">
+			            					<p:commandButton icon="fa fa-search" title="Click this button to see the additional information" update="FldId" actionListener="#{caseBean.clickItem(ciz)}" />
+			            				</p:column>
+			            				
+			            				<p:column headerText="Attempt" width="20" sortable="false" sortBy="#{ciz.count}">
+            								<p:outputLabel  value="#{ciz.count}"/>
+            							</p:column>
+			            				
+            							<p:column headerText="Filling" width="50" sortable="false" sortBy="#{ciz.fillingDate}">
+            								<p:outputLabel  value="#{ciz.fillingDate}"/>
+            							</p:column>
+            							
+            							<p:column headerText="Settlement" width="50">
+            								<p:outputLabel  value="#{ciz.settlementDate} #{ciz.settlementTime}"/>
+            							</p:column>
+            							
+            					</p:dataTable>
+            				</p:rowExpansion>
+            				
+            				
+            				
+        			</p:dataTable>  
+				
+		
+			</p:layoutUnit>
+		
+		</p:layout>
+		
+ 	    				
+ <p:dialog header="Case Scheduled Details" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" widgetVar="schedDlg" Height="300" width="800" closable="true">
+ 	
+ 	<p:dataTable id="schedData" value="#{caseBean.caseLookup}" var="lok">
+ 		<p:column headerText="Case" width="120">
+       			<p:outputLabel  value="#{lok.kindName}" style="#{lok.filling.style}"/>
+       </p:column>
+ 		<p:column headerText="Names" width="150">
+       			<p:outputLabel  value="#{lok.complainants} vs #{lok.respondents}" style="#{lok.filling.style}"/>
+       </p:column>
+		<p:column headerText="Settlement" width="100">
+       			<p:outputLabel  value="#{lok.filling.settlementDate} @#{lok.filling.settlementTime}" style="#{lok.filling.style}"/>
+       </p:column>		            				
+            							
+ 	</p:dataTable>
+ 	
+ </p:dialog>	
+ 	
+				<p:commandButton id="idMenuFilter" onclick="PF('sideBarSearch').show()" icon="fa fa-search" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
+				<p:sidebar widgetVar="sideBarSearch" style="#{skin.sideBar}; height: 3em;" fullScreen="false" position="top">
+				
+				<p:toolbar id="tb" style="#{skin.toolbar}">
+			    		<f:facet name="left">
+			        		
+			        	</f:facet>
+			    		<f:facet name="right">
+			    		
+		    			
+		    			<p:inputText value="#{caseBean.searchParam}" a:placeholder="Search...">
+		    					<f:ajax event="keyup" listener="#{caseBean.init}" render="caseData FldId"/>
+		    			</p:inputText>
+		    			&nbsp;&nbsp;
+				        <p:calendar value="#{caseBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+				        &nbsp;&nbsp;
+		    			<p:calendar value="#{caseBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+		    			&nbsp;&nbsp;
+				        <p:commandButton update="caseData FldId" icon="fa fa-search" actionListener="#{caseBean.init}"/>
+		    		
+		    		</f:facet>
+				</p:toolbar> 
+				</p:sidebar>
+	
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+<p:dialog style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+</p:dialog>
+
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

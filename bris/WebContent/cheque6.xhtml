@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+	
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+             <!--  <h:outputStylesheet name="css/dataTables.bootstrap.mini.css"/>-->
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/> 
+            <h:outputStylesheet name="css/growl.css"/>
+            
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+
+<style>
+<!-- 
+
+
+ -->
+ </style>
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+
+	<div class="page-header">
+	 	<a><p:outputLabel value="#{menuBean.labels[4]}" style="#{skin.pageTitle};"/></a>
+	 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	 </div>
+
+		<p:growl id="msg" life="2000" />
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+        	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	 </p:confirmDialog>
+
+		<p:focus context="tb"/>
+		
+		<p:layout fullPage="true">
+			
+			<p:layoutUnit position="east" size="0" visible="false" >
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+				
+	
+				<p:dataTable id="dataChkId" value="#{checkBean.checks}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}"
+                         draggableColumns="true" draggableRows="true" paginatorPosition="top"
+                         >
+                         
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export BankCheuqe Report in excel format" a:data-step="10" a:data-intro="This function use to export this table to excel file.">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="dataChkId" fileName="DispenseCheques" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export BankCheuqe Report in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="dataChkId" fileName="DispenseCheques" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+            				
+            				<p:column width="10" exportable="false">
+            					<p:rowToggler />
+            				</p:column>
+            				
+            				<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update="dataChkId,msg" icon="fa fa-trash-o" title="Click this button to delete this data" actionListener="#{checkBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column headerText="PDF" width="20" exportable="false">
+            				 	<p:commandLink title="Print BankCheuqe in PDF" target="_blank" action="#{checkBean.printReportIndividual(rpt)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+								</p:commandLink>
+							</p:column>
+            				
+            				<p:column headerText="View" width="20" exportable="false">
+            					<p:commandButton icon="fa fa-search" title="Click this button to see the additional information" update="chequeDataId" actionListener="#{checkBean.clickItem(rpt)}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Issued" width="60">
+            						<p:outputLabel value="#{rpt.dateTrans}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Budget" width="90">
+            						<p:outputLabel value="#{rpt.mooe.name}"/>
+            				</p:column>
+            				
+            				
+            				
+            				<p:column headerText="Status" width="60" exportable="false">
+	            				<f:view>		
+	            						<my:if condition="#{rpt.status==1}">
+	                         			 	<f:facet name="then">
+	            								<p:outputLabel  value="PROCESSED"/>
+	            							</f:facet>
+	            							<f:facet name="else">
+	            								<p:outputLabel  value="CANCELLED" style="color: red; font-size: 150% ! important; font-weight: bold ! important;"/>
+	            							</f:facet>
+	            						  </my:if>
+	            				</f:view>		
+            				</p:column>
+            				
+            				<p:column headerText="Check No" width="60">
+            						<p:outputLabel  value="#{rpt.checkNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Amount" width="60">
+            						<p:outputLabel  value="#{rpt.checkAmount}"/>
+            				</p:column>
+            				
+            				<p:rowExpansion>
+            					<p:panelGrid columns="2" layout="grid">
+            						<p:outputLabel value="Account No"/><p:outputLabel value="#{rpt.accounts.bankAccntNo}"/>
+            						<p:outputLabel value="Issue To"/><p:outputLabel value="#{rpt.issueTo}"/>
+            						<p:outputLabel value="Processed By"/><p:outputLabel value="#{rpt.userDtls.firstname}"/>
+            					</p:panelGrid>
+            				</p:rowExpansion>
+            				
+            				<p:columnGroup type="footer">
+                        		<p:row>
+            						<p:column colspan="1" style="text-align:right" footerText="" width="20"/>
+            					</p:row>
+                        		<p:row>
+                					<p:column style="font-size:3em; font-weight:bold" footerText="Total Issued Amount: Php#{checkBean.totalAmount}"/>
+            					</p:row>
+                        </p:columnGroup>
+                        	
+      			 </p:dataTable>  
+				
+			</p:layoutUnit>
+			
+			
+			<p:layoutUnit position="west" size="500" >
+				
+				<p:toolbar id="tbDetails" style="#{skin.toolbar};float:bottom; position: fixed;z-index: 1500;">
+		    		<f:facet name="left">
+		    				<p:commandButton disabled="#{featuresBean.pbcCreation}" update="formId" value="PBC" icon="fa fa-file-o" title="Click this button to create bank report" action="bankreport.xhtml" />
+		    				<p:commandButton disabled="#{featuresBean.pbcCreation}" update="formId" value="Transmittal" icon="fa fa-file-o" title="Click this button to create bank report" action="transmittal.xhtml" />
+		    				<p:commandButton update="budgetData" value="Budget" icon="fa fa-file-o" title="Click this button to check budget information" onclick="PF('budgetDlg').show();" actionListener="#{checkBean.loadBudgetDtls}"/>
+		    		</f:facet>
+		    		<f:facet name="right">
+		    			<p:commandButton update="chequeDataId" value="New" icon="fa fa-file-o" title="Click this button to start new information" actionListener="#{checkBean.createNew}"/>
+		    			<p:commandButton update="chequeDataId" value="Clear" icon="fa fa-trash" title="Click this button to clear information" action="#{checkBean.clearFields}"/>
+		    			<p:commandButton update="dataChkId msg" value="Save" icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{checkBean.saveData}" >
+		    				<p:confirm header="Confirmation" message="Are you sure you want to save this data?" icon="ui-icon-alert" />
+		    			</p:commandButton>
+		    		</f:facet>
+				</p:toolbar> 
+		<br/><br/><br/>
+        	
+        <p:panelGrid id="chequeDataId" columns="2" styleClass="ui-noborder">
+        
+        		<p:outputLabel value="Account No" style="#{skin.label}"/>
+        		<p:selectOneMenu value="#{checkBean.accountId}"  style="width:15em;#{skin.select}">
+					<f:selectItems value="#{checkBean.bankAccounts}"/>
+					<f:ajax listener="#{checkBean.processAccnt}" render="chequeDataId"/>
+				</p:selectOneMenu>
+				
+								
+				<p:outputLabel value="Check No" style="#{skin.label}"/>
+				<p:inputText value="#{checkBean.checkNumber}" a:placeholder="0000000000" style="width:15em;#{skin.textInput}"/>
+				
+				
+				<p:outputLabel value="Date" style="#{skin.label}"/>
+            	<p:calendar value="#{checkBean.calendarTrans}" style="width:15em;#{skin.calendar}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+            	
+            	<p:outputLabel value="DV No" style="#{skin.label}"/>
+				<p:inputText value="#{checkBean.dvNumber}" a:placeholder="00-00-000" style="width:15em;#{skin.textInput}"/>
+				
+				<p:outputLabel value="Purpose" style="#{skin.label}"/>
+				<p:inputText value="#{checkBean.purpose}" a:placeholder="Type here" style="width:15em;#{skin.textInput}"/>
+            	
+            	<p:outputLabel value="MOOE Budget" style="#{skin.label}"/>	
+	            <p:selectOneMenu value="#{checkBean.moi}"  style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
+					<f:selectItems value="#{checkBean.moes}"/>
+				</p:selectOneMenu>
+            					 
+            	<p:outputLabel value="Pay To The Order Of" style="#{skin.label}"/>
+	            <p:inputTextarea id="idpayto" completeMethod="#{checkBean.autoPayToName}" value="#{checkBean.issueTo}" a:placeholder="Pay To The Order Of" queryDelay="750" minQueryLength="4"
+	            	 style="width: 15em; height: 20px; align-text: left;#{skin.textInput}">
+				</p:inputTextarea>
+				
+				
+				<p:outputLabel value="Amount" style="#{skin.label}"/>
+				<p:inputNumber id="amntId" maxlength="10" value="#{checkBean.amount}" style="width: 15em;#{skin.textInput}">
+					<f:ajax  event="keyup" render="inwordsId" listener="#{checkBean.generateWords}"/>
+				</p:inputNumber>
+				
+				
+				<p:outputLabel value="Amount in words" style="#{skin.label}"/>	
+            	<p:inputTextarea id="inwordsId" value="#{checkBean.numberInToWords}"  style="width: 15em;#{skin.textInput}" a:placeholder="PESOS ONLY"/>
+            	
+            	<p:outputLabel value="Status" style="#{skin.label}"/>	
+	            <p:selectOneMenu value="#{checkBean.statusId}"  style="width:15em;#{skin.select}">
+					<f:selectItems value="#{checkBean.status}"/>
+				</p:selectOneMenu>
+				
+            				
+            	<p:outputLabel value="Sign by Public Official" style="#{skin.label}"/>
+				<p:selectOneMenu value="#{checkBean.sigId1}" style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
+						<f:selectItems value="#{checkBean.signatory1}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Sign by Treasurer" style="#{skin.label}"/>
+	            <p:selectOneMenu value="#{checkBean.sigId2}" style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
+					<f:selectItems value="#{checkBean.signatory2}"/>
+				</p:selectOneMenu>
+								       	    	    
+        	</p:panelGrid>
+				
+			</p:layoutUnit>
+			
+		</p:layout>	
+		
+		
+				<p:commandButton id="idMenuFilter" onclick="PF('sideBarSearch').show()" icon="fa fa-search" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
+				<p:sidebar widgetVar="sideBarSearch" style="#{skin.sideBar}; height: 3em;" fullScreen="false" position="top">
+				
+			    <div class="ui-inputgroup">		
+				<p:selectOneMenu value="#{checkBean.searchAccountId}"  style="width: 15em" >
+					<f:selectItems value="#{checkBean.searchBankAccounts}"/>
+					<f:ajax event="change" listener="#{checkBean.init}" render="dataChkId"/>
+				</p:selectOneMenu>
+				<p:selectOneMenu value="#{checkBean.moid}"  style="width:15em;" filterMatchMode="contains" filter="true">
+					<f:selectItems value="#{checkBean.moeSearch}"/>
+				</p:selectOneMenu>
+				<p:autoComplete id="tb" placeholder="Search..." value="#{checkBean.searchData}" completeMethod="#{checkBean.autoPayToName}" effect="fade">
+		    		<f:ajax event="change" listener="#{checkBean.init}" render="dataChkId"/>
+		    	</p:autoComplete>
+				<p:calendar value="#{checkBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+		    	<p:calendar value="#{checkBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+				<p:commandButton id="findId" update="dataChkId"  icon="fa fa-search" actionListener="#{checkBean.init}" a:data-step="5" a:data-intro="Search button - this button use to retrieve data."/>
+				</div>
+				</p:sidebar>
+
+<p:dialog position="center top" responsive="true" widgetVar="budgetDlg" modal="false" draggable="false" closable="true" resizable="true" showHeader="true">
+    	<p:scrollPanel style="width:80em;height:50em" mode="native">
+    	<p:dataTable id="budgetData" value="#{checkBean.budgetsInfo}" var="bud" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}"
+                         paginatorPosition="top"
+                         >
+                         
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Budget Report in excel format" a:data-step="10" a:data-intro="This function use to export this table to excel file.">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="budgetData" fileName="Budget" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Budget Report in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="budgetData" fileName="Budget" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+            				
+            				<p:column width="10" exportable="false">
+            					<p:rowToggler />
+            				</p:column>
+            				
+            				<p:column headerText="Name" width="100" exportable="true">
+            					<p:outputLabel  value="#{bud.name}"/>
+            				</p:column>
+            				
+            				<p:column headerText="% Budget Allotment" width="30" exportable="true">
+            					<p:outputLabel value="#{bud.percentPerMooe}"/>
+            				</p:column>
+            				
+            				<p:column headerText="% Budget Used" width="30" exportable="true">
+            					<p:outputLabel  value="#{bud.percentBudgetUsed}"/>
+            				</p:column>
+            				
+            				<p:column headerText="% Per MOOE Used" width="30" exportable="true">
+            					<p:outputLabel  value="#{bud.percentage}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Budget" width="70" exportable="true">
+            					<p:outputLabel  value="#{bud.amountMo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Used" width="70" exportable="true">
+            					<p:outputLabel value="#{bud.usedBudget}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Remaining" width="70" exportable="true">
+            					<p:outputLabel value="#{bud.remaining}"/>
+            				</p:column>
+            				
+            				<p:rowExpansion>
+            					<p:dataTable id="checkData" value="#{bud.cheques}" var="ck" >
+            							<p:column headerText="Issued" width="50">
+            								<p:outputLabel  value="#{ck.dateTrans}"/>
+            							</p:column>
+            							<p:column headerText="Check No" width="50">
+            								<p:outputLabel  value="#{ck.checkNo}"/>
+            							</p:column>
+            							<p:column headerText="Pay To" width="200">
+            							
+            								<f:view>		
+			            						<my:if condition="#{ck.issueTo.equalsIgnoreCase('CANCELLED')}">
+			                         			 	<f:facet name="then">
+			            								<p:outputLabel  value="CANCELLED" style="color: red; font-size: 150% ! important; font-weight: bold ! important;"/>
+			            							</f:facet>
+			            							<f:facet name="else">
+			            								<p:outputLabel value="#{ck.issueTo}"/>
+			            							</f:facet>
+			            						  </my:if>
+	            							</f:view>
+	            							
+            							</p:column>
+            							<p:column headerText="Amount" width="50">
+            								<p:outputLabel  value="#{ck.checkAmount}"/>
+            							</p:column>
+            					</p:dataTable>
+            				</p:rowExpansion>
+            				<p:columnGroup type="footer">
+            					<p:row>
+            						<p:column rowspan="2" headerText="" width="10" exportable="true"/>
+            						<p:column rowspan="2" headerText="" width="100" exportable="true"/>
+            						<p:column rowspan="2" style="font-size:1em; font-weight:bold" footerText="#{checkBean.totalMooePercentage}" width="30" exportable="true"/>
+            						<p:column rowspan="2" style="font-size:1em; font-weight:bold" footerText="#{checkBean.totalBudgetUsedPercentage}" width="30" exportable="true"/>
+            						<p:column rowspan="2" headerText="" width="30" exportable="true"/>
+                					<p:column colspan="1" style="font-size:1em; font-weight:bold" footerText="Total Php#{checkBean.totalMooe}" exportable="true"/>
+                					<p:column colspan="1" style="font-size:1em; font-weight:bold" footerText="Total Php#{checkBean.totalUsedMooe}" exportable="true"/>
+                					<p:column colspan="1" style="font-size:1em; font-weight:bold" footerText="Total Php#{checkBean.totalRemMooe}" exportable="true"/>
+            					</p:row>
+            				</p:columnGroup>
+            			</p:dataTable>	
+    	</p:scrollPanel>
+</p:dialog>
+
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

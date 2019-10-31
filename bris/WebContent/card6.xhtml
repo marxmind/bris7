@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Member Cards</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="css/menu.css"/>
+			<h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <!-- <h:outputStylesheet name="css/dataTables.bootstrap.mini.css"/>-->
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/> 
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Member Cards</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Member Cards</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+
+	<div class="page-header">
+	 	<a><p:outputLabel value="#{menuBean.labels[3]}" style="#{skin.pageTitle};"/></a>
+	 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	 </div>
+
+		<p:growl id="msg" showDetail="true"/>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+		<p:focus context="tbCard"/>
+		
+		<p:layout fullPage="true">
+		
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+		
+			
+			<p:layoutUnit position="west" size="330" >
+				<p:toolbar id="tbMemberCard" style="#{skin.toolbar}">
+    				<f:facet name="left">
+		       			
+    				</f:facet>
+    				<f:facet name="right">
+    					<p:commandButton update="cusId clearFldId" value="Clear" icon="fa fa-trash" actionListener="#{cardBean.clearFlds}" title="Click this button to clear information"/>
+	    				<p:commandButton update="cusId clearFldId msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{cardBean.saveData}">
+	        				<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+	        			</p:commandButton>
+    				</f:facet>
+    			</p:toolbar>
+				<p:panelGrid id="clearFldId" columns="2" layout="grid">
+        	
+		        	<p:outputLabel value="Transaction Date:" style="#{skin.label}"/>
+					<p:inputText value="#{cardBean.dateTrans}" readonly="true" style="width: 11em;#{skin.textInput}"/>
+					
+					<p:outputLabel value="Valid From Date:" style="#{skin.label}"/>
+					<p:calendar value="#{cardBean.validFrom}" style="width: 11em;#{skin.calendar}" pattern="yyyy-MM-dd" effect="slideDown"/>
+					
+					<p:outputLabel value="Valid To Date:" style="#{skin.label}"/>
+					<p:calendar value="#{cardBean.validTo}" style="width: 11em;#{skin.calendar}" pattern="yyyy-MM-dd" effect="slideDown"/>
+		        	
+		        	<p:outputLabel value="Name:" style="#{skin.label}"/>
+		        	<p:outputLabel>
+		        	<p:outputLabel value="#{cardBean.taxpayerName}"/>
+		        	&nbsp;&nbsp;<p:commandButton update="ownerId" icon="fa fa-search" actionListener="#{cardBean.loadTaxpayer}" onclick="PF('multiDialogOwner').show()"/>
+	        		</p:outputLabel>
+        			
+        		</p:panelGrid>
+			</p:layoutUnit>
+		
+		<p:layoutUnit position="east" size="0" visible="false" >
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<p:commandButton id="idMenuFilter"  icon="fa fa-search" type="button" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
+				<p:overlayPanel for="idMenuFilter" showEffect="slide" hideEffect="slide" style="#{skin.overlay}">
+				<p:toolbar id="tbCard" >
+    		<f:facet name="left">
+        		<p:inputText id="idSearchName" value="#{cardBean.searchName}" a:placeholder="Search Name" style="width: 20em">
+    					<f:ajax event="keyup" listener="#{cardBean.init}" render="cusId searchDataId clearFldId"/>
+    			</p:inputText>
+    			<p:calendar value="#{cardBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+    			<p:calendar value="#{cardBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+    			&nbsp;&nbsp;<p:commandButton update="cusId searchDataId" icon="fa fa-search" actionListener="#{cardBean.init}"/>
+    		</f:facet>
+    		<f:facet name="right">
+    				
+    		</f:facet>
+		</p:toolbar>
+		
+					 <p:dataList id="searchDataId" value="#{cardBean.cardTrans}" var="sct" type="ordered"
+					  rows="5" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true"
+					  emptyMessage="No details to show...">
+					 			#{sct.taxpayer.fullname}
+					 			<p:commandButton icon="fa  fa-hand-pointer-o" title="Click this button to see the additional information" update="clearFldId" actionListener="#{cardBean.clickItem(sct)}"/>
+					 </p:dataList>
+		
+		</p:overlayPanel>
+ 	
+ 	<p:dataTable id="cusId" value="#{cardBean.cardTrans}" var="ct" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}"
+                         selection="#{cardBean.cardSelected}" rowKey="#{ct.id}" draggableColumns="true" draggableRows="true" paginatorPosition="top"
+                         >
+                         
+                         <f:facet name="{Exporters}">
+                         			<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="fa fa-th-list" title="Click this button to hide and unhide columns"/>
+									<p:columnToggler datasource="cusId" trigger="toggler" />
+            						<h:commandLink title="Export Card in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="cusId" fileName="Cards" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Card in pdf format" target="_blank" actionListener="#{cardBean.printCard}">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+            						</h:commandLink>
+            				</f:facet>
+                         
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:cusId msg" icon="fa fa-trash-o" title="Click this button to delete this data"  actionListener="#{cardBean.deleteRow(ct)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column selectionMode="multiple" headerText="Select" style="width:16px;text-align:center" exportable="false" />
+            				
+            				<p:column headerText="View" width="20" exportable="false">
+            					<p:commandButton icon="fa fa-search" title="Click this button to see the additional information" update="clearFldId" actionListener="#{cardBean.clickItem(ct)}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Name" width="120" sortable="false" sortBy="#{ct.taxpayer.fullname}">
+            						<h:outputText  value="#{ct.taxpayer.fullname}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Card No" width="120" sortable="false" sortBy="#{ct.taxpayer.cardno}">
+            						<h:outputText  value="#{ct.taxpayer.cardno}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid From" width="70" sortable="false" sortBy="#{ct.validDateFrom}">
+            						<h:outputText  value="#{ct.validDateFrom}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid Until" width="70" sortable="false" sortBy="#{ct.validDateTo}">
+            						<h:outputText  value="#{ct.validDateTo}"/>
+            				</p:column>
+            				
+     					</p:dataTable>   
+		
+		</p:layoutUnit>
+		
+		</p:layout>
+		
+ 	    				
+ 	
+ 	
+<p:dialog header="Name List" style="#{skin.dialog}" showEffect="clip" hideEffect="clip" position="center top" modal="false" widgetVar="multiDialogOwner" Height="500" width="500" closable="false">
+		<p:toolbar id="tbTax">
+    		<f:facet name="left">
+        		<p:inputText id="idSearchTax" value="#{cardBean.searchTaxpayerName}" style="width: 20em" a:placeholder="Search Name">
+    					<f:ajax event="keyup" listener="#{cardBean.loadTaxpayer}" render="ownerId"/>
+    			</p:inputText>
+    		</f:facet>
+    			
+    		<f:facet name="right">
+    			<p:commandButton  value="Close" icon="ui-icon-closethick" title="Click this button to close the dialog" onclick="PF('multiDialogOwner').hide();"/>
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="ownerId" value="#{cardBean.taxpayers}" var="own" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                         
+                         <p:column headerText="Action" width="20">
+                         	<p:commandButton icon="fa fa-hand-pointer-o" title="Click this button to select person name" update="clearFldId" actionListener="#{cardBean.clickItemOwner(own)}" oncomplete="PF('multiDialogOwner').hide()"/>
+                         </p:column>
+                         
+                         <p:column headerText="Name" width="120">
+            				<h:outputText  value="#{own.fullname}"/>
+            			</p:column>
+                         
+         </p:dataTable>                
+		
+</p:dialog>
+	
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

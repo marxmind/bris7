@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    	 
+			<p:ajaxStatus widgetVar="loadWidget" styleClass="ui-noborder" onstart="showLoading();" onsuccess="hideLoading();" />
+			<p:dialog widgetVar="readLoading" showHeader="false" position="center center">
+				<p:graphicImage name="/gif/loader.gif" style="width: 3em;height: 3em"/>
+				<br/>
+				<p:outputLabel value="Please wait while reading database information."/>
+				<br/>
+				<p:outputLabel value="This will take times, sorry for the inconvenience."/>
+				<br/>
+				<p:outputLabel style="color:red" value="You are seeing this long notification only once everyday."/>
+			</p:dialog>	
+		
+		<script>
+	
+		function showLoading() {
+			PF('readLoading').show();
+		}
+		function hideLoading() {
+			PF('readLoading').hide();
+		}
+		</script>
+			
+     </ui:composition>
+</html>

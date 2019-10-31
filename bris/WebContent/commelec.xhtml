@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    
+    <p:dialog header="Commelec Registered Voters Directory" position="center top"  widgetVar="dlgCom" style="height:800px; width:800px">
+    		
+    		<p:outputLabel id="idComEx" value="Data Extracted Date: #{comBean.extractUpdateNote}"/>
+    		<p:toolbar id="tbCom">
+		    		<f:facet name="left"/>
+		    		<f:facet name="right">
+		    			<p:fileUpload fileUploadListener="#{comBean.uploadData}" disabled="#{comBean.enabledUpload}"
+					                    			mode="advanced" auto="true" sizeLimit="50000000" label="Upload Data"
+					                    			update="comData idComEx" dragDropSupport="true" style="#{skin.button}"
+					                    			allowTypes="/(\.|\/)(xls|xlsx|XLS|XLSX|txt|TXT)$/" />
+		    		</f:facet>
+				</p:toolbar>
+				<p:inputText autocomplete="off" value="#{comBean.searchName}" placeholder="Lastname, Frstname Middlename" style="width 20em">
+				    	<p:ajax event="keyup" listener="#{comBean.loadNames}" update="comData" delay="800"/>
+				</p:inputText>
+				<p:dataGrid id="comData" value="#{comBean.names}" var="nn" stickyHeader="false" layout="grid"
+						 columns="1" emptyMessage="BRIS SOFTWARE YOUR PORTAL FOR BARANAGAY INFORMATION" 
+						 paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,50,100" paginatorPosition="top" paginatorAlwaysVisible="false">
+                         
+                         <p:column style="font-weight: bold">
+                         	<p:outputLabel value="#{nn.lastName}, #{nn.firstName} #{nn.middleName}" />
+                         </p:column>
+                         	
+                         <p:column>
+                         	<p:outputLabel value=" * #{nn.address}" />
+                         </p:column>
+                         
+    			</p:dataGrid>
+    
+    </p:dialog>
+    
+    </ui:composition>
+    
+</html>

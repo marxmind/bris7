@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Dashboard</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
+            <h:outputStylesheet name="css/font-awesome.min.css" />
+            
+     </f:facet>
+     <f:facet name="last">       
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="sb-admin/bootstrap/js/bootstrap.bundle.min.js"/>
+            <h:outputScript name="sb-admin/js/sb-admin.min.js"/>
+    </f:facet>
+    
+    <title>#{versionBean.copyright.appname} Dashboard</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+	z-index: 1500; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+
+.ui-panel, div.ui-state-hover {
+   margin: 10px;
+   width:200px;
+}
+             
+.ui-dashboard-column {
+  width:220px;
+}
+
+ -->
+ </style>
+
+<title>#{versionBean.copyright.appname} Dashboard</title>
+
+</h:head>
+
+<h:body>
+
+<h:form prependId="false" id="formId">
+
+<p:growl id="msgs" showDetail="true" />
+
+<div id="wrapper">
+	
+<div class="sidebar bg-intel">
+	<p:outputLabel value=""/>
+	
+	<p:panelMenu style="width:180px; position: fixed">
+		<p:submenu label="Welcome back #{menuBean.user.firstname}!"/>
+		<p:submenu label="Pages" expanded="true">
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[0]}" ajax="false" icon="/resources/gif/home.png" action="#{menuBean.home}" disabled="#{featuresBean.profile}"/>
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[1]}" ajax="false" icon="/resources/gif/customer.png" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}"/>
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[2]}" ajax="false" icon="/resources/gif/clearance.png" action="#{menuBean.clearance}" disabled="#{featuresBean.clearance}"/>
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[3]}" ajax="false" icon="/resources/gif/idcard.png" action="#{menuBean.cards}" disabled="#{featuresBean.idGeneration}"/>
+				
+				
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[4]}" ajax="false" icon="/resources/gif/cheque.png" action="#{menuBean.cheque}" disabled="#{featuresBean.cheque}"/>
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[5]}" ajax="false" icon="/resources/gif/blotter.png" action="#{menuBean.blotters}" disabled="#{featuresBean.blotters}"/>
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[6]}" ajax="false" icon="/resources/gif/documents-1.png" action="#{menuBean.adminBusiness}" disabled="#{featuresBean.business}"/>
+				
+					<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[7]}" ajax="false" icon="/resources/gif/bris.png" action="#{menuBean.assistant}" disabled="#{featuresBean.assistant}"/>
+				
+		    		<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[8]}" ajax="false" icon="/resources/gif/graph.png" action="#{menuBean.graph}" disabled="#{featuresBean.graph}"/>
+		    		<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[9]}" ajax="false" icon="/resources/gif/organization.png" action="#{menuBean.organization}" disabled="#{featuresBean.organization}"/>
+		    		<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[10]}" ajax="false" icon="/resources/gif/meter2.png" action="#{menuBean.moemeter}" disabled="#{featuresBean.moemeter}"/>
+	    		
+	    		
+		    		<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[11]}" ajax="false" icon="/resources/gif/employee.png" action="#{menuBean.adminEmployees}" disabled="#{featuresBean.employee}"/>
+		    		<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[12]}" ajax="false" icon="/resources/gif/user.png" action="#{menuBean.adminUser}" disabled="#{featuresBean.userRegistration}"/>
+		    		
+	    			<p:menuitem style="#{skin.menu}" value="#{menuBean.labels[14]}" ajax="false" icon="/resources/gif/user-1.png" action="#{loginBean.logout}"/>
+		</p:submenu>
+	</p:panelMenu>
+	
+	
+</div>	
+	
+ <div id="content-wrapper">
+
+
+
+			<div style="height:1000px">
+			<p:dashboard id="board" model="#{dashboardBean.model}">
+            <p:ajax event="reorder" listener="#{dashboardBean.handleReorder}" update="msgs" />
+ 
+            <p:panel id="citId" header="Citizen Information" >
+                <h:outputText value="Citizen Informatin" />
+                <p:barChart model="#{chartJsView.hbarModel}" style="width: 500px; height: 1000px;" widgetVar="citChart"/>
+                <p:commandLink  onclick="PF('dlgCitizen').show()" update="citizenId" title="Click to Zoom the graph">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+ 
+            <p:panel id="docId" header="Documentation" >
+                <h:outputText value="Below are the most common documents were requested in Barangay"/>
+                <p:donutChart model="#{chartJsView.donutModel}" style="width: 500px; height: 1000px;" widgetVar="docChart"/>
+                <p:commandLink  onclick="PF('dlgDoc').show()" update="docOtherId" title="Click to Zoom the graph">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+ 
+            <p:panel id="ageBracketId" header="Age Bracket" >
+                <h:outputText value="Click Here to learn more" />
+                <p:polarAreaChart model="#{chartJsView.polarAreaModel}" style="width: 500px; height: 1000px;" widgetVar="idChart"/>
+                <p:commandLink  onclick="PF('dlgAge').show()" update="ageId" title="Click to Zoom the graph">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+ 
+            <p:panel id="checkId" header="MOOE Budget" >
+                <h:outputText value="For creation of Check, recording of checks, creation of Check advise, and generation of Transmittal report" />
+                <p:pieChart model="#{chartJsView.pieModel}" style="width: 500px; height: 1000px;" widgetVar="checkChard"/>
+                <p:commandLink  onclick="PF('dlgMooe').show()" update="mooeId" title="Click to Zoom the graph">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+            
+            <p:panel id="caseId" header="Recorded Settlements" >
+                <h:outputText value="For creation of summon and other cases related can record here." />
+                <p:lineChart model="#{chartJsView.lineModel}" style="width: 500px; height: 1000px;" widgetVar="caseChart"/>
+                 <p:commandLink  onclick="PF('dlgSettlement').show()" update="settleId" title="Click to Zoom the graph">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+            
+            <p:panel id="budId" header="Check Disbursement Status" >
+                <h:outputText value="This data is based on the current year budget. To learn more click here" />
+                <p:barChart model="#{chartJsView.barModel2}" style="width: 500px; height: 1000px;" widgetVar="budgetChart"/>
+                <p:commandLink  onclick="PF('dlgDisburse').show()" update="disChkId" title="Click to zoom">
+			    	<i class="fa fa-eye-slash"></i>
+    			</p:commandLink>
+            </p:panel>
+        </p:dashboard>
+        
+        <p:dialog widgetVar="dlg" style="#{skin.dialog}" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Chart View" resizable="false">
+    		<p:outputPanel id="outputId" layout="block"/>
+		</p:dialog>
+        
+        <p:dialog widgetVar="dlgDoc" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Common Document Graph" resizable="false">
+    		 <p:donutChart id="docOtherId" model="#{chartJsView.donutModel}" style="width: 800px; height: 500px;"/>
+		</p:dialog>
+        
+		<p:dialog widgetVar="dlgMooe" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="MOOE Graph" resizable="false">
+    		 <p:pieChart id="mooeId" model="#{chartJsView.pieModel}" style="width: 800px; height: 500px;"/>
+		</p:dialog>
+        
+        <p:dialog widgetVar="dlgCitizen" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Citizen Graph" resizable="false">
+        	<p:barChart id="citizenId" model="#{chartJsView.hbarModel}" style="width: 800px; height: 500px;"/>
+        </p:dialog>
+        
+        <p:dialog widgetVar="dlgDisburse" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Check Disbursement Graph" resizable="false">
+        	<p:barChart id="disChkId" model="#{chartJsView.barModel2}" style="width: 800px; height: 500px;"/>
+        </p:dialog>
+        
+        <p:dialog widgetVar="dlgSettlement" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Settlement Graph" resizable="false">
+        	<p:lineChart id="settleId" model="#{chartJsView.lineModel}" style="width: 800px; height: 500px;"/>
+        </p:dialog>
+        
+        <p:dialog widgetVar="dlgAge" position="center center" responsive="true" showEffect="clip" hideEffect="clip" modal="false" header="Age Graph" resizable="false">
+        	 <p:polarAreaChart id="ageId" model="#{chartJsView.polarAreaModel}" style="width: 800px; height: 500px;"/>
+        </p:dialog>
+        
+        
+        <div style="clear:both" />
+        </div>
+		
+		<!-- Sticky Footer -->
+        <footer class="sticky-footer citizenBox">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>#{versionBean.copyright.copyrightname}</span>
+            </div>
+          </div>
+        </footer>
+		
+	</div><!-- end content wrapper -->
+</div><!-- end wrapper -->
+		
+	<h:outputScript>
+
+	function exportChart(widgetName) {
+	    //export image
+	    $('#outputId').empty().append(PF(widgetName).exportAsImage());
+	 
+	    //show the dialog
+	    PF('dlg').show();
+	}
+
+</h:outputScript>		
+		
+
+
+<ui:include src="loader.xhtml" />
+</h:form>
+
+</h:body>
+</f:view>
+</html>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Cedula</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="css/menu.css"/>
+			<h:outputStylesheet name="css/pageHeaderFooter.css"/>
+           <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Cedula</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Cedula</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+		<p:growl id="msg" showDetail="true"/>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+    	
+    	<p:confirmDialog widgetVar="cfNote" header="Please Confirm" message="Are you sure you want to save?" severity="info" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       		<p:outputLabel value="Please check below where to send notification" />
+	       		<p:selectManyCheckbox id="custom" value="#{cedulaBean.checks}"
+					layout="custom">
+					<f:selectItem itemLabel="Secretary" itemValue="Secretary"/>
+					<f:selectItem itemLabel="Treasurer" itemValue="Treasurer" />
+					<f:selectItem itemLabel="Clerk" itemValue="Clerk" />
+				</p:selectManyCheckbox>
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6">
+							<p:outputLabel for="opt1" value="Secretary" style="display:block"/>
+							<p:checkbox id="opt1" for="custom" itemIndex="0"/>
+						</div>
+						<div class="ui-grid-col-6">
+							<p:outputLabel for="opt2" value="Treasurer" style="display:block"/>
+							<p:checkbox id="opt2" for="custom" itemIndex="1" />
+						</div>
+						<div class="ui-grid-col-6">
+							<p:outputLabel for="opt3" value="Clerk" style="display:block"/>
+							<p:checkbox id="opt3" for="custom" itemIndex="2" />
+						</div>
+					</div>
+				</div>
+	       	
+	       		<p:commandButton value="Yes" actionListener="#{cedulaBean.saveCedula}" update="cedFld cedDataId msg" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('cfNote').hide()" />
+	       		<p:commandButton value="No"  styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('cfNote').hide()"/>
+	       
+	       	
+    	</p:confirmDialog>
+    	
+		<p:focus context="tbCeds"/>
+		
+		<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[16]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+		
+		<p:layout fullPage="true">
+		
+		<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+		<p:layoutUnit position="west" size="600" >
+				
+			<p:toolbar id="tbCed" style="#{skin.toolbar};float:bottom; position: fixed;z-index: 1500;">
+    		<f:facet name="left">
+		        
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton update="cedFld"  value="Clear" icon="fa fa-trash" title="Click this button to clear information" actionListener="#{cedulaBean.clearFlds}"/>
+    			
+		        <p:commandButton type="button" value="Save" icon="fa fa-floppy-o" title="Click this button to save your changes" onclick="PF('cfNote').show()" />
+		        
+    		</f:facet>
+		</p:toolbar>
+		<br/><br/>
+		<p:panelGrid id="cedFld" columns="4" styleClass="ui-noborder">
+		
+				<p:outputLabel  value="Issued Date:" style="#{skin.label}"/>
+				<p:calendar value="#{cedulaBean.cedulaIssued}" pattern="yyyy-MM-dd" effect="slideDown" style="width: 11em;#{skin.calendar}"/>
+				
+				<p:outputLabel  value="Cedula Number: " style="#{skin.label}"/>
+				<p:inputText value="#{cedulaBean.cedulaNumber}" a:placeholder="000000000000" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Status: " style="#{skin.label}"/>
+            	<p:selectOneMenu value="#{cedulaBean.cedId}" style="width: 11em;#{skin.select}">
+                	<f:selectItems value="#{cedulaBean.ceds}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel  value="Type: " style="#{skin.label}"/>
+            	<p:selectOneMenu value="#{cedulaBean.cedulaTypeId}" style="width: 11em;#{skin.select}">
+                	<f:selectItems value="#{cedulaBean.cedulaTypes}"/>
+            	</p:selectOneMenu>
+				
+				<p:outputLabel  value="Issued Address: " style="#{skin.label}"/>
+				<p:inputTextarea value="#{cedulaBean.cedulaIssuedAddress}" a:placeholder="Issued Address" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Full Name: " style="#{skin.label}"/>
+				<p:outputLabel>
+					<p:outputLabel id="idName" value="#{cedulaBean.citizenName}"/> &nbsp;
+					<p:commandButton update="tbTax ownerId" icon="fa fa-search" actionListener="#{cedulaBean.loadTaxpayer}" onclick="PF('multiDialogOwner').show()"/>
+				</p:outputLabel>
+				
+				<p:outputLabel  value="TIN: " style="#{skin.label}"/>
+				<p:inputText value="#{cedulaBean.tinNo}" a:placeholder="000-000-000-000" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Height: " style="#{skin.label}"/>
+				<p:inputText value="#{cedulaBean.hieght}" a:placeholder="height" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Weight: " style="#{skin.label}"/>
+				<p:inputText value="#{cedulaBean.weight}" a:placeholder="weight" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Basic Tax: " style="#{skin.label}"/>
+				<p:inputNumber value="#{cedulaBean.basicTax}" a:placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Gross Tax: " style="#{skin.label}"/>
+				<p:inputNumber value="#{cedulaBean.grossTax}" a:placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				
+				<p:outputLabel  value="Total: " style="#{skin.label}"/>
+				<p:inputNumber value="#{cedulaBean.totalAmount}" a:placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				
+		</p:panelGrid> 
+				
+	    </p:layoutUnit>
+		
+		<p:layoutUnit position="east" size="0" visible="false" >
+		
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="center">
+			
+			
+		
+		<p:dataTable id="cedDataId" value="#{cedulaBean.cedulas}" var="ced" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50"
+                         scrollable="true" style="#{skin.table}" paginatorPosition="top"
+                         >
+                         		
+                         		<f:facet name="{Exporters}">
+                         			<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="fa fa-th-list" title="Click this button to hide and unhide columns"/>
+									<p:columnToggler datasource="cedDataId" trigger="toggler" />
+            						<h:commandLink title="Export Cedula in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="cedDataId" fileName="ORRelease" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Cedula in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="cedDataId" fileName="ORRelease" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+                         	
+                         	<p:column headerText="[*]" width="30" exportable="false">
+            					<p:commandButton update="cedFld cedDataId msg" icon="fa fa-trash-o" title="Click this button to delete this data"  actionListener="#{cedulaBean.deleteRow(ced)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+            				<p:column headerText="Action" width="30" exportable="false">
+                         		<p:commandButton update="cedFld" icon="fa fa-search" title="Click this button to see the additional information" actionListener="#{cedulaBean.clickItem(ced)}"/>
+                         	</p:column>
+            				
+            				<p:column headerText="Date" width="70" sortable="false" sortBy="#{ced.dateIssued}">
+            						<p:outputLabel value="#{ced.dateIssued}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Status" width="70" sortable="false" sortBy="#{ced.cedulaStatus}">
+            						<p:outputLabel value="#{ced.cedulaStatus}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Name" width="120" sortable="false" sortBy="#{ced.customer.fullname}">
+            						<p:outputLabel value="#{ced.customer.fullname}"/>
+            				</p:column>
+            				<p:column headerText="Cedula Number" width="70" sortable="false" sortBy="#{ced.cedulaNo}">
+            						<p:outputLabel value="#{ced.cedulaNo}"/>
+            				</p:column>
+            				<p:column headerText="Amount" width="70" sortable="false" sortBy="#{ced.totalAmount}">
+            						<p:outputLabel  value="#{ced.totalAmount}"/>
+            				</p:column>
+            				<p:column headerText="Address" width="100" sortable="false" sortBy="#{ced.issuedAddress}">
+            						<p:outputLabel value="#{ced.issuedAddress}"/>
+            				</p:column>
+            			            				
+     	</p:dataTable>
+			
+		</p:layoutUnit>
+		
+		</p:layout>
+		
+		
+		<p:dialog header="Name List" style="#{skin.dialog}" showEffect="clip" hideEffect="clip" position="center top" modal="false" widgetVar="multiDialogOwner" Height="500" width="500" closable="false">
+		<p:toolbar id="tbTax">
+    		<f:facet name="left">
+        		<p:inputText id="idSearchTax" value="#{cedulaBean.searchTaxpayerName}" style="width: 20em" a:placeholder="Search Name">
+    					<f:ajax event="keyup" listener="#{cedulaBean.loadTaxpayer}" render="ownerId"/>
+    			</p:inputText>
+    		</f:facet>
+    			
+    		<f:facet name="right">
+    			<p:commandButton  value="Close" icon="ui-icon-closethick" title="Click this button to close dialog" style="width: 10em;" onclick="PF('multiDialogOwner').hide();"/>
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="ownerId" value="#{cedulaBean.taxpayers}" var="own" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                         
+                         <p:column headerText="Action" width="20">
+                         	<p:commandButton icon="fa  fa-hand-pointer-o" title="Click this button to select person name" update="idName" actionListener="#{cedulaBean.clickItemOwner(own)}" oncomplete="PF('multiDialogOwner').hide()"/>
+                         </p:column>
+                         
+                         <p:column headerText="Name" width="120">
+            				<p:outputLabel value="#{own.fullname}"/>
+            			</p:column>
+                         
+         </p:dataTable>                
+		
+</p:dialog>
+	
+	<p:commandButton id="idMenuFilter" onclick="PF('sideBarSearch').show()" icon="fa fa-search" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
+	<p:sidebar widgetVar="sideBarSearch" style="#{skin.sideBar}; height: 3em;" fullScreen="false" position="top">
+				
+	<p:toolbar id="tbCeds" style="#{skin.toolbar}">
+    		<f:facet name="left">
+    			
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:inputText value="#{cedulaBean.searchParam}" a:placeholder="Search..." style="width: 20em">
+			    					<f:ajax event="keyup" listener="#{cedulaBean.init}" render="cedDataId"/>
+			    </p:inputText>
+			    &nbsp;&nbsp;
+				<p:calendar value="#{cedulaBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+				&nbsp;&nbsp;
+			    <p:calendar value="#{cedulaBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+				&nbsp;&nbsp;
+			    <p:commandButton update="cedDataId" icon="fa fa-search" actionListener="#{cedulaBean.init}"/>
+    		</f:facet>
+		</p:toolbar>
+	</p:sidebar>
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+<p:dialog style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+</p:dialog>
+
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>
