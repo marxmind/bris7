@@ -1,0 +1,65 @@
+.idpicture {
+  grid-area: sidebar;
+}
+
+.idcontent {
+  grid-area: content;
+  position: relative;
+}
+
+.idheader {
+  grid-area: header;
+}
+
+.idfooter {
+  grid-area: footer;
+}
+
+.idbody {
+        display: grid;
+    	grid-gap: 0px;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-areas: "header  header  header"
+        "sidebar content content"
+        "footer  footer  footer";
+        background-color: #fff;
+        color: #444;
+    }
+
+
+.idbox {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 50px;
+  font-size: 150%;
+}
+
+.idheader,
+.idfooter {
+  background-color: #999;
+}
+
+.idtopleft {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.idtopright {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.idbottomleft {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.idbottomright {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

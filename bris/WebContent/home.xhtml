@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Directory</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="bootstrap/css/bootstrap.css"/>
+            <h:outputStylesheet name="css/dashboard.css"/>
+            <h:outputStylesheet name="css/panel.css"/>
+            <h:outputStylesheet name="css/dataTables.bootstrap.mini.css"/>
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Directory</title>
+
+<style>
+<!-- 
+.dataDesignTable{
+	font-style: normal; 	
+	font-family: Times New Roman; 
+	font-size: 80%;
+	font-weight: bold;
+}
+
+.centerPage{
+	position: relative;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+	height: 100%;
+	border: 3px solid black;
+	padding: 1px;
+}
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Directory</title>
+
+</h:head>
+
+<h:body>
+	
+<h:outputScript>
+	
+	function handleDrop(event, ui) {
+        var droppedCar = ui.draggable;
+ 
+        droppedCar.fadeOut('fast');
+    }
+	
+	function allowDrop(ev) {
+    	ev.preventDefault();
+	}
+
+	function drag(ev) {
+	    ev.dataTransfer.setData("text", ev.target.id);
+	}
+
+	function drop(ev) {
+	    ev.preventDefault();
+	    var data = ev.dataTransfer.getData("text");
+	    ev.target.appendChild(document.getElementById(data));
+	}
+
+</h:outputScript>	
+
+<h:form prependId="false" id="formIdMain">
+		<p:growl id="msg" showDetail="true" sticky="true" autoUpdate="true"/>
+		<!-- <p:panel id="panel" header="#{versionBean.copyright.appname} Management Menu"/> -->
+		<!-- <p:focus context="panel"/>
+		
+		<h:panelGrid id="panel1" class="centerPage" columns="1" border="0" cellpadding="1" cellspacing="0" 
+				>
+				<p:outputPanel  style="text-align:center;">
+					<p:graphicImage name="gif/wallpaper.jpg" style="width: 100%; height: 100%"/>
+				</p:outputPanel>
+		</h:panelGrid> -->
+
+
+<p:dialog header="Profile" position="left top" visible="true" modal="false" showEffect="slide" widgetVar="multiDialogProfile" Height="500" width="380" closable="false">
+		
+		<h:panelGroup id="lessId"  layout="block" rendered="#{mainBean.lessDetails}">
+		
+		<p:panelGrid id="pictureId" columns="1" columnClasses="column" cellpadding="5">
+		
+				<h:outputLabel id="photo">
+        			<p:graphicImage id="picId" name="images/photocam/#{mainBean.photoId}.jpg" rendered="#{not empty mainBean.photoId}"  style="width: 300px; height: 300px"/>
+        		</h:outputLabel>
+        		
+		</p:panelGrid>
+		
+		
+		
+		<br/>
+		<p:panelGrid id="usercusId" columns="1" columnClasses="column" cellpadding="5">
+			<p:outputLabel value="Name: #{mainBean.fullName}"/>
+			<p:outputLabel value="Address: #{mainBean.fullAddress}"/>
+			<p:outputLabel value="Gender: #{mainBean.genderType}"/>
+			<p:outputLabel value="Civil Status: #{mainBean.civilType}"/>
+			<p:outputLabel value="Barangay ID: #{mainBean.bid}"/>
+			<p:outputLabel value="Contact No: #{mainBean.contactNo}"/>
+			<p:commandButton tabindex="2" update="formIdMain moreId usercusId2" value="Show more details..." actionListener="#{mainBean.details('MORE')}" />
+		</p:panelGrid>
+		</h:panelGroup>
+		<h:panelGroup id="moreId"  layout="block" rendered="#{mainBean.moreDetails}">
+		
+		<p:panelGrid id="usercusId2" columns="1" columnClasses="column" cellpadding="5">
+			<p:outputLabel value="Date Registered: #{mainBean.dateRegistered}"/>
+			<p:outputLabel value="Name: #{mainBean.fullName}"/>
+			<p:outputLabel value="Address: #{mainBean.fullAddress}"/>
+			<p:outputLabel value="Birthdate: #{mainBean.birthdate}"/>
+			<p:outputLabel value="Age: #{mainBean.age}"/>
+			<p:outputLabel value="Gender: #{mainBean.genderType}"/>
+			<p:outputLabel value="Civil Status: #{mainBean.civilType}"/>
+			<p:outputLabel value="Barangay ID: #{mainBean.bid}"/>
+			<p:outputLabel value="Contact No: #{mainBean.contactNo}"/>
+			<p:outputLabel value="Emergency Contact Person: #{mainBean.emergencyContactPersonName}"/>
+			<p:outputLabel value="Relationship: #{mainBean.relationship}"/>
+			<p:outputLabel value="Religion: #{mainBean.religionName}"/>
+			<p:outputLabel value="Education Level: #{mainBean.educationName}"/>
+			<p:outputLabel value="Race: #{mainBean.raceName}"/>
+			<p:commandButton tabindex="3" update="formIdMain lessId usercusId" value="Show less details..." actionListener="#{mainBean.details('LESS')}" />
+		</p:panelGrid>
+			
+		
+		</h:panelGroup>
+</p:dialog>
+
+<p:dialog header="Citizen Directory Profile" position="right top" visible="true" modal="false" widgetVar="multiDialogData" Height="500" width="980" closable="false">
+		
+		
+		<h:panelGroup id="dataId"  layout="block" rendered="#{mainBean.hideView1}">
+		
+		<p:toolbar id="tbData">
+    		<f:facet name="left">
+		        <p:inputText id="idSearch" value="#{mainBean.searchCustomer}" a:type="search" a:placeholder="#{mainBean.welcomeMsg}" style="width: 50em;">
+		        	<p:ajax  event="keyup" listener="#{mainBean.init}" update="cusId msg"/>
+		        </p:inputText>
+		        &nbsp;&nbsp;<p:commandButton tabindex="1" update="cusId" icon="ui-icon-search" actionListener="#{mainBean.init}"/>
+    		</f:facet>
+    		<f:facet name="right">
+    				
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		
+		
+         
+         <p:carousel id="cusId" var="rpt" value="#{mainBean.customers}">
+         		   
+         		   <p:panel id="pnl" header="#{rpt.fullname}" style="#{mainBean.stylePicture}">
+	            		<h:panelGrid columns="1" style="width:100%">
+	            			<p:commandLink update="formIdMain usercusId pictureId msg" actionListener="#{mainBean.clickItem(rpt)}" style="color: transparent;" oncomplete="PF('multiDialogProfile').show()">
+	            				<p:graphicImage name="images/photocam/#{rpt.photoid}.jpg" rendered="#{not empty rpt.photoid}" height="100px" width="100px"/>
+	            			</p:commandLink>
+	            			<p:commandLink update="formIdMain usercusId pictureId msg" actionListener="#{mainBean.clickItem(rpt)}" oncomplete="PF('multiDialogProfile').show()">
+	            				<p:outputLabel value="#{rpt.cardno}" />
+	            			</p:commandLink>
+	            			
+	            		</h:panelGrid>
+            		</p:panel>
+         </p:carousel>
+         
+			
+		
+		</h:panelGroup>
+		
+		<h:panelGroup id="data2Id"  layout="block" rendered="#{mainBean.hideView2}">
+		
+		<p:toolbar id="tbData2">
+    		<f:facet name="left">
+		        
+		        
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton tabindex="4" value="Back" update="formIdMain idSearch" actionListener="#{mainBean.backView}"/>	
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:tabView orientation="top" id="tabTrans">
+		
+		<p:ajax event="tabChange" listener="#{mainBean.onTabChangeView}" update="tabTrans" />
+		
+		<p:tab title="Documents" disabled="#{featuresBean.clearance}">
+			
+			<p:dataTable id="dataClear" value="#{mainBean.clearances}" var="ct" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<p:column headerText="Print" width="20">
+            						<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printClearance(ct)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+									</p:commandLink>
+            				</p:column>
+                         	
+            				<p:column headerText="Date Issued" width="50">
+            						<h:outputText  value="#{ct.issuedDate}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Document Type" width="150">
+            						<h:outputText  value="#{ct.typeName}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Purpose" width="200">
+            						<h:outputText  value="#{ct.purposeName}" style="color: black;"/>
+            				</p:column>
+            				
+            				
+			</p:dataTable>
+			
+		</p:tab>
+		
+		<p:tab title="Business" disabled="#{featuresBean.business}">
+			
+			<p:dataTable id="bizId" value="#{mainBean.businesses}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+            				
+            				<p:column headerText="Registered" width="50">
+            						<h:outputText  value="#{rpt.dateRegistered}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Status" width="50">
+            					<f:view>
+                         			 		<my:if condition="#{rpt.status==1}">
+                         			 			<f:facet name="then">
+            										<h:outputText  value="ACTIVE" style="color: black;"/>
+            									</f:facet>
+            								<f:facet name="else">
+            										<h:outputText  value="CLOSED" style="color: black;"/>
+            								</f:facet>
+            						  		</my:if>
+            						  </f:view>
+            				</p:column>
+            				
+            				<p:column headerText="Retired" width="50">
+            						<h:outputText  value="#{rpt.dateRetired}" style="color: black;"/>
+            				</p:column>
+                         	
+                         	<p:column headerText="Business" width="150">
+            						<h:outputText  value="#{rpt.businessName}" style="color: black;"/>
+            				</p:column>
+                         	
+            				<p:column headerText="Address" width="200">
+            						<h:outputText  value="#{rpt.purokName}, #{rpt.barangay.name}, #{rpt.municipality.name},  #{rpt.province.name}" style="color: black;"/>
+            				</p:column>
+            				
+		</p:dataTable>
+			
+		</p:tab>
+		
+		<p:tab title="Cards" disabled="#{featuresBean.idGeneration}">
+			
+			<p:dataTable id="cardId" value="#{mainBean.cardTrans}" var="ct" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                        	
+                        	<p:column headerText="Print" width="20">
+            						<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printCard(ct)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+									</p:commandLink>
+            				</p:column>
+                        	
+                        	<p:column headerText="Requested" width="70">
+            						<h:outputText  value="#{ct.dateTrans}" style="color: black;"/>
+            				</p:column>
+                        	
+            				<p:column headerText="Card No" width="70">
+            						<h:outputText  value="#{ct.taxpayer.cardno}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid From" width="70">
+            						<h:outputText  value="#{ct.validDateFrom}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid Until" width="70">
+            						<h:outputText  value="#{ct.validDateTo}" style="color: black;"/>
+            				</p:column>
+            				
+     </p:dataTable>     
+			
+		</p:tab>
+		
+		<p:tab title="Case Recorded" disabled="#{featuresBean.blotters}">
+		
+			<p:dataTable id="caseId" value="#{mainBean.personCases}" var="kis" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                        	
+                        	<p:column headerText="Print" width="20" exportable="false">
+            						<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printBlotter(kis.blotters)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+									</p:commandLink>
+            				</p:column>
+                        	
+                        	<p:column headerText="Date" width="70">
+            						<h:outputText  value="#{kis.dateTrans}" style="color: black;"/>
+            				</p:column>
+                        	
+            				<p:column headerText="Status" width="70">
+            						<h:outputText  value="#{kis.blotters.statusName}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Incident" width="100">
+            						<h:outputText  value="#{kis.blotters.incidentName}" style="color: black;"/>
+            				</p:column>
+            				
+            				<p:column headerText="Details" width="150">
+            						<h:outputText  value="#{kis.blotters.incidentDetails}" style="color: black;"/>
+            				</p:column>
+            				
+     </p:dataTable>    
+		</p:tab>
+			
+		</p:tabView>
+		
+		</h:panelGroup>
+		
+		
+</p:dialog>
+
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+<p:dialog style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+</p:dialog>
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>
