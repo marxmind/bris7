@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} RCD Forms Upload</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="sb-admin/font-awesome/css/all.min.css" />
+            <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
+            <h:outputStylesheet name="css/font-awesome.min.css" />
+            
+     </f:facet>
+     <f:facet name="last">       
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
+            <h:outputScript name="sb-admin/bootstrap/js/bootstrap.bundle.min.js"/>
+            <h:outputScript name="sb-admin/jquery-easing/jquery.easing.min.js"/>
+            <h:outputScript name="sb-admin/js/sb-admin.min.js"/>
+            
+            
+    </f:facet>
+        
+    <title>#{versionBean.copyright.appname} RCD Forms Upload</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+	z-index: 1500; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+    
+    -->
+ </style>
+ 
+<title>#{versionBean.copyright.appname} RCD Forms Upload</title>
+
+</h:head>
+
+<h:body id="page-top">
+<h:form prependId="false" id="formId">
+
+<p:growl id="msg" life="8000" showDetail="true" />
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>	
+ 
+ 
+ <nav class="navbar navbar-expand navbar-intel bg-intel static-top">
+
+      <a class="navbar-brand mr-1" href="main.xhtml">#{versionBean.copyright.appname}</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      
+      <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        		<!-- Search item -->
+     </div>
+
+      
+      <ui:include src="menutop.xhtml" />
+
+    </nav>
+	
+	
+	
+	<div id="wrapper">
+		
+     
+      <ui:include src="sidebarmenu.xhtml" />
+
+      <div id="content-wrapper">        
+		  <div class="container-fluid">	
+		  	
+			 
+			 <p:fileUpload fileUploadListener="#{rcdBean.uploadFile}"
+					                    			mode="advanced" auto="true" sizeLimit="50000000" label="Upload Your XML file here"
+					                    			update="msg pdfid formId" dragDropSupport="true" style="#{skin.button}"
+					                    			allowTypes="/(\.|\/)(xml)$/" >   
+		  	<div id="panelHide" style="display: none;">    
+		  	         <p:media id="pdfid" value="#{rcdBean.tempPdfFile}" cache="false" player="pdf" width="1000" height="700">
+		 				<f:param name="id" value="#{rcdBean.generateRandomIdForNotCaching()}" />
+		 			 </p:media>    
+			</div><!-- Panel hide -->
+		  	
+		  	</p:fileUpload>
+		  		
+		  </div>
+		  
+		  
+		   <!-- Sticky Footer -->
+        <footer class="sticky-footer citizenBox">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>#{versionBean.copyright.copyrightname}</span>
+            </div>
+          </div>
+        </footer>
+		  
+	  </div>	  
+	  
+	  
+	  
+	</div><!-- End wrapper -->
+	
+	<!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+	
+	<h:outputScript>
+		 
+		 function displayWizard(){
+		 	$("#panelHide").show(1000);
+		 } 
+		 
+		$('#page-top').each(function(){
+		    $(this).click(function(){ 
+		        $('html').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('body').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('document').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('window').animate({ scrollTop: 0 }, 'slow'); return true;  
+		    });
+		});	
+		
+		
+		 
+		  $(".input-group").click(function(){
+		  	$("#panelHide").hide(1000);
+			 callTop();
+		 });
+		 
+		 function callTop(){ 
+			        $('html').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('body').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('document').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('window').animate({ scrollTop: 0 }, 'slow'); return true;
+		 }
+		 
+		 </h:outputScript> 
+		 
+		 
+	 
+	<ui:include src="loader.xhtml" />
+	</h:form>
+	
+	</h:body>
+	</f:view>
+	</html>
