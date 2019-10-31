@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Reports</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="css/menu.css"/>
+			<h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Reports</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Reports</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+		<p:growl id="msg" showDetail="true"/>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+		
+		<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[18]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+		
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			<p:layoutUnit position="west"  visible="false">
+				
+			</p:layoutUnit>
+		
+		<p:layoutUnit position="east" size="0" visible="false" >
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+				
+				<p:commandButton id="idMenuFilter"  icon="fa fa-search" type="button" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
+				<p:overlayPanel for="idMenuFilter" showEffect="slide" hideEffect="slide" style="#{skin.overlay}">
+					
+					<p:toolbar id="tbEmp">
+		    		<f:facet name="left">
+		        		
+		    		</f:facet>
+		    		<f:facet name="right">
+		    			<p:commandButton update="clrFlds"  value="Reset" actionListener="#{rptBean.clearFlds}" icon="fa fa-refresh" title="Click this button to reset report"/>
+		    			<p:commandButton update="rptData"  value="Generate Report" actionListener="#{rptBean.loadReport}" icon="fa fa-book" title="Click this button to generate report"/>
+		    			
+		    		</f:facet>
+				</p:toolbar>
+				
+				<p:panelGrid id="clrFlds" layout="grid" columns="4" >
+				
+				<p:outputLabel value="Date Range" style="#{skin.label}"/>
+				<p:calendar value="#{rptBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" style="#{skin.calendar}"/>
+    			<p:calendar value="#{rptBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" style="#{skin.calendar}"/>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="Clearance/Certificate" style="#{skin.label}"/>
+				<p:outputLabel value="Include for Report" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.includeClearance}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel value="Detailed:" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.detailedClerance}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel/>
+				
+				<p:outputLabel value="IDs" style="#{skin.label}"/>
+				<p:outputLabel value="Include for Report" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.includeIds}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel value="Detailed:" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.detailedIds}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel value="Card Holder:" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.includeIdHolderName}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				
+				<p:outputLabel value="Cases" style="#{skin.label}"/>
+				<p:outputLabel value="Include for Report" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.includeCases}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel value="Detailed:" style="#{skin.label}">
+				<p:selectBooleanCheckbox value="#{rptBean.detailedCases}" style="#{skin.checkbox}"/>
+				</p:outputLabel>
+				<p:outputLabel/>
+				
+				</p:panelGrid>
+					
+				</p:overlayPanel>
+				
+				
+			
+			<p:dataTable id="rptData" value="#{rptBean.rpts}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" style="#{skin.table}"
+                         >
+                         
+                         <f:facet name="{Exporters}">
+            						<h:commandLink title="Export Clearance in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="rptData" fileName="Reports" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Clearnce in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="rptData" fileName="Reports" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+                         	
+                         	<p:column headerText="Module" width="120">
+            						<p:outputLabel value="#{rpt.f1}"/>
+            				</p:column>
+            				
+            				<p:column headerText="" width="120">
+            						<p:outputLabel value="#{rpt.f2}"/>
+            				</p:column>
+            				
+            				
+            				<p:column headerText="" width="120">
+            						<p:outputLabel value="#{rpt.f3}"/>
+            				</p:column>
+                         
+                         	
+            				<p:column headerText="" width="50">
+            						<p:outputLabel value="#{rpt.f4}"/>
+            				</p:column>
+                         	
+         </p:dataTable>  
+		
+		</p:layoutUnit>
+		
+		</p:layout>
+		
+ 	    				
+ 	
+ 	
+
+	
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+<p:dialog responsive="true" style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+</p:dialog>
+
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

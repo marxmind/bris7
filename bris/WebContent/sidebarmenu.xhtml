@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    	
+    	<h:outputStylesheet>
+    		.sidebarMenu {
+			  margin: 0;
+			  padding: 0;
+			  width: 120px;
+			  background-color: transparent;
+			  position: fixed;
+			  height: 100%;
+			  overflow: auto;
+			  z-index: 0;
+			}
+    		.sidebarMenu a {
+				display: block;
+				color: black;
+				padding: 4px;
+				text-decoration: none;
+			}
+				 
+			.sidebarMenu a.active {
+				background-color: transparent;
+				color: red;
+			}
+				
+			.sidebarMenu a:hover:not(.active) {
+			  background-color: #555;
+			  color: white;
+			}
+			
+			
+    	</h:outputStylesheet>
+    	
+    	<div class="sidebar bg-intel">
+    	
+          <!-- <input type="text" placeholder="Search..." id="mySearch"/> -->
+          <br/>	
+   		<div id="myMenu" class="sidebarMenu">
+   		  
+           <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.home}" disabled="#{featuresBean.profile}" ajax="false" immediate="false" onclick="showLoading()">
+            	<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[0]}</span>
+            </p:commandLink>
+          <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}" ajax="false" immediate="false" onclick="showLoading()">
+            	<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[1]}</span>
+            </p:commandLink>
+        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.clearance}" disabled="#{featuresBean.clearance}" ajax="false" immediate="false" onclick="showLoading()">
+        		<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[2]}</span>
+        	</p:commandLink>
+        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.cards}" disabled="#{featuresBean.idGeneration}" ajax="false" immediate="false" onclick="showLoading()">
+        		<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[3]}</span>
+        	</p:commandLink>
+        	
+        	 <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.blotters}" disabled="#{featuresBean.blotters}" ajax="false" immediate="false" onclick="showLoading()">
+        	 	<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[5]}</span>
+        	 </p:commandLink>
+        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.adminBusiness}" disabled="#{featuresBean.business}" ajax="false" immediate="false" onclick="showLoading()">
+        		<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[6]}</span>
+        	</p:commandLink>
+        	
+        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.moemeter}" disabled="#{featuresBean.moemeter}" ajax="false" immediate="false" onclick="showLoading()">
+        		<i class="fas fa-fw fa-folder"></i>
+            	<span>IRA Setup</span>
+        	</p:commandLink>
+        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.adminEmployees}" disabled="#{featuresBean.employee}" ajax="false" immediate="false" onclick="showLoading()">
+        		<i class="fas fa-fw fa-folder"></i>
+            	<span>#{menuBean.labels[11]}</span>
+        	</p:commandLink>
+        
+          <p:commandLink style="color: white" styleClass="nav-link" action="graph" ajax="false" immediate="false" onclick="showLoading()">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Charts</span>
+            </p:commandLink>
+       		
+       	  <p:commandLink style="color: white" styleClass="nav-link" action="organization" ajax="false" immediate="false" onclick="showLoading()">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Organization</span>
+          </p:commandLink>
+          
+          <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.cedula}" ajax="false" disabled="#{featuresBean.cedula}" immediate="false" onclick="showLoading()">
+            <i class="fas fa-fw fa-table"></i>
+            <span>#{menuBean.labels[16]}</span>
+          </p:commandLink>
+          
+          <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.orlisting}" ajax="false" disabled="#{featuresBean.orlisting}" immediate="false" onclick="showLoading()">
+            <i class="fas fa-fw fa-table"></i>
+            <span>#{menuBean.labels[17]}</span>
+          </p:commandLink>
+          		
+          		<a href="#formsSubmenuCheke" data-toggle="collapse" aria-expanded="false" class="nav-link">
+          		<i class="fas fa-fw fa-table"></i><span>Cheques</span></a>
+                    <ul class="collapse list-unstyled" id="formsSubmenuCheke">
+                        <li>
+					        <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.cheque}" disabled="#{featuresBean.cheque}" ajax="false" immediate="false" onclick="showLoading()">
+				        		<i class="fas fa-fw fa-folder"></i>
+				            	<span>Check Writing</span>
+				        	</p:commandLink>
+                        </li>
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="transmittal" disabled="#{featuresBean.cheque}" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>Transmittal</span>
+					        </p:commandLink>
+                        </li>
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="bankreport" disabled="#{featuresBean.cheque}" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>PBC</span>
+					        </p:commandLink>
+                        </li>
+                    </ul>
+          		
+          		
+          		<a href="#formsSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link">
+          		<i class="fas fa-fw fa-table"></i><span>AF Recording</span></a>
+                    <ul class="collapse list-unstyled" id="formsSubmenu">
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="stocks" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>Stocks</span>
+					        </p:commandLink>
+                        </li>
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="issuedform" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>Issued</span>
+					        </p:commandLink>
+                        </li>
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="collections" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>Collections</span>
+					        </p:commandLink>
+                        </li>
+                        <li>
+                        	<p:commandLink style="color: white" styleClass="nav-link" action="uploadrcd" ajax="false" immediate="false" onclick="showLoading()">
+					            <i class="fas fa-fw fa-table"></i>
+					            <span>Upload RCD</span>
+					        </p:commandLink>
+                        </li>
+                    </ul>
+          
+          
+          
+      </div>
+    </div>
+    	<script>
+    		$(document).ready(function(){
+    			$('#mySearch').on('keyup',function(){
+    				var value = $(this).val().toLowerCase();
+    				$("#myMenu a").filter(function(){
+    					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    				});
+    			});
+    		});
+    		
+    	</script>
+    </ui:composition>
+</html>
