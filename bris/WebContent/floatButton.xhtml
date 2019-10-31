@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    	
+    	<h:outputStylesheet>
+    		/* Style the links inside the sidenav */
+			#mySidenav a {
+			  position: absolute; /* Position them relative to the browser window */
+			  left: 0px; /* Position them outside of the screen */
+			  transition: 0.3s; /* Add transition on hover */
+			  padding: 15px; /* 15px padding */
+			  width: 100px; /* Set a specific width */
+			  text-decoration: none; /* Remove underline */
+			  font-size: 0px; /* Increase font size */
+			  color: white; /* White text color */
+			  border-radius: 0 5px 5px 0 ; /* Rounded corners on the top right and bottom right side */
+			}
+			
+			#mySidenav a:hover {
+			  left: 0; /* On mouse-over, make the elements appear as they should */
+			}
+			
+			/* The about link: 20px from the top with a green background */
+			#about {
+			  position: fixed;
+			  z-index: -1;
+			  top: 20px;
+			  background-color: #4CAF50;
+			}
+			
+			#blog {
+			  position: fixed;
+			  z-index: -1;
+			  top: 80px;
+			  background-color: #2196F3; /* Blue */
+			}
+			
+			#projects {
+			  position: fixed;
+			  z-index: -1;
+			  top: 140px;
+			  background-color: #f44336; /* Red */
+			}
+			
+			#contact {
+			  position: fixed;
+			  z-index: -1;
+			  top: 200px;
+			  background-color: #555 /* Light Black */
+			}
+						
+			
+    	</h:outputStylesheet>
+    	 
+    	 <div id="mySidenav" class="sidenav">
+		  <a href="#" id="about">About</a>
+		  <a href="#" id="blog">Blog</a>
+		  <a href="#" id="projects">Projects</a>
+		  <a href="#" id="contact">Contact</a>
+		</div> 
+    	
+    </ui:composition>
+</html>
