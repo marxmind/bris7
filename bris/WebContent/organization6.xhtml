@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="form">
+
+			<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[9]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+
+<style>
+        .ui-organigram .ui-organigram-node.division {
+            background: #93e7ff;
+            background: -moz-linear-gradient(top, #93e7ff 0%, #007efc 100%);
+            background: -webkit-linear-gradient(top, #93e7ff 0%,#007efc 100%);
+            background: linear-gradient(to bottom, #93e7ff 0%,#007efc 100%);
+        }
+ 
+        .ui-organigram .ui-organigram-node.employee {
+            background: #88c048;
+            background: -moz-linear-gradient(top, #88c048 0%, #69a038 100%);
+            background: -webkit-linear-gradient(top, #88c048 0%,#69a038 100%);
+            background: linear-gradient(to bottom, #88c048 0%,#69a038 100%);
+        }
+    </style>
+ 	
+ 	<p:growl id="msg" showDetail="true"/>
+    
+    
+    <p:layout fullPage="true">
+			
+			<p:layoutUnit position="east" size="0" visible="false" >
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="0" visible="false">
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+			
+			<p:organigram id="organigram"
+                   widgetVar="organigram"
+                   value="#{organigramView.rootNode}"
+                   var="node"
+                   leafNodeConnectorHeight="#{organigramView.leafNodeConnectorHeight}"
+                   autoScrollToSelection="#{organigramView.autoScrollToSelection}"
+                   zoom="#{organigramView.zoom}"
+                   selection="#{organigramView.selection}"
+                   style="#{organigramView.style}#{skin.chart}">
+ 
+        <p:ajax event="dragdrop" process="@this" update="@form:msg" listener="#{organigramView.nodeDragDropListener}" />
+        <p:ajax event="select" process="@this" update="@form:msg" listener="#{organigramView.nodeSelectListener}" />
+        <p:ajax event="contextmenu" process="@this" />
+        <p:ajax event="collapse" process="@this" update="@form:msg" listener="#{organigramView.nodeCollapseListener}" />
+        <p:ajax event="expand" process="@this" update="@form:msg" listener="#{organigramView.nodeExpandListener}" />
+ 
+        <p:organigramNode>
+            <h:outputText value="#{node.data}" />
+        </p:organigramNode>
+ 
+        <p:organigramNode type="root"
+                           style="border-radius: 10px;">
+            <h:outputText value="#{node.data}" />
+        </p:organigramNode>
+ 
+        <p:organigramNode type="division"
+                          styleClass="division"
+                          icon="ui-icon-suitcase"
+                          iconPos="left">
+            <h:outputText value="#{node.data}" />
+        </p:organigramNode>
+ 
+        <p:organigramNode type="employee"
+                          styleClass="employee"
+                          icon="ui-icon-person">
+            <h:outputText value="#{node.data}" />
+        </p:organigramNode>
+    </p:organigram>
+ 
+    <p:contextMenu for="organigram" nodeType="employee">
+        <p:menuitem value="fire employee"
+                    update="organigram"
+                    icon="ui-icon-close"
+                    actionListener="#{organigramView.removeEmployee()}" />
+    </p:contextMenu>
+ 
+    <p:contextMenu for="organigram" nodeType="division">
+        <p:menuitem value="Add employee"
+                    ajax="false"
+                    icon="ui-icon-plus"
+                    onclick="PF('addEmployeeDialog').show(); return false;" />
+        <p:menuitem value="Remove division"
+                    update="organigram @form:msg"
+                    icon="ui-icon-close"
+                    actionListener="#{organigramView.removeDivision()}" />
+    </p:contextMenu>
+			
+			</p:layoutUnit>
+    </p:layout>
+    
+ 
+    <p:dialog id="addEmployeeDialog"
+              widgetVar="addEmployeeDialog"
+              header="Add employee">
+ 
+        <p:inputText value="#{organigramView.employeeName}" />
+ 
+        <p:commandButton process="@parent"
+                         update=":form:organigram"
+                         value="Add"
+                         actionListener="#{organigramView.addEmployee()}"
+                         oncomplete="PF('addEmployeeDialog').hide();"/>
+ 
+    </p:dialog>	
+
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

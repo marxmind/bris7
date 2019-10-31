@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    
+    <p:dialog header="Officer Of the Day" responsive="true" widgetVar="dlgOd" fitViewport="true">
+    	
+    	<p:toolbar id="tbOD">
+		    		<f:facet name="left">
+				        <p:selectOneMenu value="#{odBean.monthId}" style="width: 15em">
+                			<f:selectItems value="#{odBean.months}"/>
+                			<p:ajax event="itemSelect" listener="#{odBean.itemSelect}" update="odData" />
+            			</p:selectOneMenu>
+            			<p:selectOneMenu value="#{odBean.yearId}" style="width: 15em">
+                			<f:selectItems value="#{odBean.years}"/>
+                			<p:ajax event="itemSelect" listener="#{odBean.itemSelect}" update="odData" />
+            			</p:selectOneMenu>
+		    		</f:facet>
+		    		<f:facet name="right"/>
+				</p:toolbar>
+    			
+    			<p:dataGrid id="odData" value="#{odBean.ods}" var="ood" stickyHeader="false" layout="grid"
+						 columns="5" emptyMessage="BRIS SOFTWARE YOUR PORTAL FOR BARANAGAY INFORMATION">
+                         
+                         <p:column>
+                         	<p:commandButton id="selectedId" value="#{ood.day} #{ood.officerName}" actionListener="#{odBean.selectedDate(ood)}" oncomplete="PF('dlgOdOff').show()" update="searchOff odDataOff"/>
+                         </p:column>
+    			</p:dataGrid>
+    </p:dialog>
+    
+    <p:dialog header="Officer List" responsive="true" widgetVar="dlgOdOff" fitViewport="true">
+    	
+    	<p:toolbar id="tbODOff">
+		    		<f:facet name="left">
+				        <p:inputText id="searchOff" value="#{odBean.searchOfficer}" autocomplete="off">
+				        	<p:ajax event="keyup" listener="#{odBean.loadOfficer}" update="odDataOff" />
+				        </p:inputText>
+		    		</f:facet>
+		    		<f:facet name="right"/>
+				</p:toolbar>
+    			
+    			<p:dataGrid id="odDataOff" value="#{odBean.employees}" var="ee" stickyHeader="false" layout="grid"
+						 columns="5" emptyMessage="BRIS SOFTWARE YOUR PORTAL FOR BARANAGAY INFORMATION">
+                         
+                         <p:column>
+                         	<p:commandButton value="#{ee.firstName} #{ee.lastName}" actionListener="#{odBean.sectedOfficer(ee)}" update="odData" oncomplete="PF('dlgOdOff').hide()"/>
+                         </p:column>
+    			</p:dataGrid>
+    </p:dialog>
+    
+    </ui:composition>
+    
+ </html>   

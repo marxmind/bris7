@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+
+<style>
+<!-- 
+
+
+ -->
+ </style>
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+
+		<p:growl id="msg" showDetail="true"/>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+	       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+	
+	<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[10]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+	
+	
+	
+				<p:overlayPanel for="idgraph">
+				
+				<p:toolbar id="tbReset" style="#{skin.toolbar}">
+			    		<f:facet name="left">
+			        			<p:selectOneMenu value="#{meterBean.year}" style="float:left; #{skin.select}">
+		        					<f:selectItems value="#{meterBean.years}"/>
+		        					<f:ajax event="change" listener="#{meterBean.loadChartIra}" render="idMeter"/>
+		        				</p:selectOneMenu>
+			    		</f:facet>
+			    		<f:facet name="right">
+			    			<p:commandButton update="idMeter msg" value="Reset to Current Year"  icon="ui-icon-note" actionListener="#{meterBean.resetIRA}"/>
+			    		</f:facet>
+				</p:toolbar>
+				<p:chart id="idMeter" type="metergauge" model="#{meterBean.model}" style="width:500px;height:350px;#{skin.chart}" widgetVar="meter"/>
+				
+				</p:overlayPanel>
+	
+<p:layout fullPage="true">
+			
+			
+			
+			<p:layoutUnit position="east" size="500" visible="false">
+			         
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="600">
+				<p:panel header="Income + IRA Recording" />
+				<p:toolbar id="tb" style="#{skin.toolbar}">
+			    		<f:facet name="left">
+			        			<p:commandButton disabled="#{featuresBean.orListing}" update="ORDataId" value="OR Listing" icon="fa fa-th-list" onclick="PF('ORDlg').show()" actionListener="#{orBean.loadORs}" title="Click this button to see the list of Issued Official Receipt"/>
+				        		<p:commandButton disabled="#{featuresBean.cedulaListing}" update="cedDataId" value="Cedula Listing" icon="fa fa-th-list" onclick="PF('cedulaListDlg').show()" actionListener="#{cedulaBean.loadCedula}" title="Click this button to see the list of issued Cedula"/>
+			    		</f:facet>
+			    		<f:facet name="right">
+			    			<p:commandButton update="clearFldId iraId" value="Clear"  icon="fa fa-trash" actionListener="#{meterBean.clearFlds}" title="Click this button to start new information"/>
+	    					<p:commandButton update="idMeter clearFldId iraId msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{meterBean.saveIra}">
+	        					<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+	        				</p:commandButton>
+	        				<p:commandButton id="idgraph" value="Graph" icon="fa fa-pie-chart" type="button" title="Click this button to see graphical presentation of the issued MOOE" />
+			    		</f:facet>
+				</p:toolbar> 
+				<br/><br/>
+				<p:panelGrid id="clearFldId" layout="grid" columns="2">
+				
+				<p:outputLabel value="Date:" />
+				<p:calendar value="#{meterBean.dateTrans}" pattern="yyyy-MM-dd" effect="slideDown" disabled="true"/>
+				
+				<p:outputLabel value="Type:" />
+				<p:selectOneMenu value="#{meterBean.type}" style="width: 15em; #{skin.select}">
+		        	<f:selectItems value="#{meterBean.types}"/>
+		        </p:selectOneMenu>
+				
+				<p:outputLabel value="Description:" />
+				<p:inputText value="#{meterBean.descriptionIra}" />
+				
+		        <p:outputLabel value="Cycle Date:" />
+				<p:selectOneMenu value="#{meterBean.day}" style="width: 15em; #{skin.select}">
+		        	<f:selectItems value="#{meterBean.days}"/>
+		        </p:selectOneMenu>
+		        
+		        <p:outputLabel value="Amount:" />
+				<p:inputNumber value="#{meterBean.amount}" />
+				
+				</p:panelGrid>
+				<p:selectOneMenu value="#{meterBean.yearIra}" style="float:left; #{skin.select}">
+		        					<f:selectItems value="#{meterBean.yearsIra}"/>
+		        					<f:ajax event="change" listener="#{meterBean.loadIra}" render="iraId"/>
+		        				</p:selectOneMenu>
+				<p:dataTable id="iraId" value="#{meterBean.iras}" var="ir" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10"
+                         scrollable="true" style="#{skin.table}"
+                         >
+                         
+                         <p:column headerText="[*]" width="50" exportable="false">
+            					<p:commandButton update=":formId:iraId :formId:idMeter :formId:clearFldId  msg" icon="fa fa-trash" title="Click this button to delete"  actionListener="#{meterBean.deleteIra(ir)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column headerText="View" width="50" exportable="false">
+            					<p:commandButton icon="fa fa-search" title="Click this button to see thea additional information" update="clearFldId idMeter" actionListener="#{meterBean.clickIra(ir)}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Year" width="70">
+            						<p:outputLabel value="#{ir.year}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Type" width="70">
+            						<p:outputLabel value="#{ir.typeName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Description" width="100">
+            						<p:outputLabel value="#{ir.description}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Cycle" width="40">
+            						<p:outputLabel value="#{ir.cycleDate}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Amount" width="100">
+            						<p:outputLabel value="#{ir.amountira}"/>
+            				</p:column>
+                         
+                </p:dataTable>         
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+			
+				<p:panel header="Maintenance Operation and Other Expenses" />
+			<p:chart id="mooebar" type="bar" model="#{meterBean.mooeModel}" style="width:400px;height:120px;#{skin.chart}" />
+			<p:toolbar id="tbmo" style="#{skin.toolbar}">
+			
+			    		<f:facet name="left">
+			        			
+			    		</f:facet>
+			    		<f:facet name="right">
+			    			<p:commandButton update="clearFldMoId mooebar" value="Clear"  icon="fa fa-trash" title="Click this button to clear information" actionListener="#{meterBean.clearFldsMooe}"/>
+	    					<p:commandButton update="clearFldMoId moId mooebar msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{meterBean.saveMooe}">
+	        					<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+	        				</p:commandButton>
+	        				
+			    		</f:facet>
+				</p:toolbar> 
+				
+				<p:panelGrid id="clearFldMoId" layout="grid" columns="2">
+				
+				<p:outputLabel value="Date:" />
+				<p:calendar value="#{meterBean.dateTransMo}" pattern="yyyy-MM-dd" effect="slideDown" disabled="true"/>
+				
+				<p:outputLabel value="Code:" />
+				<p:inputText value="#{meterBean.codeMo}" a:placeholder="000"/>
+				
+				<p:outputLabel value="Name:" />
+				<p:inputText value="#{meterBean.nameMo}" a:placeholder="MOOE Name"/>
+				
+				<p:outputLabel value="Remaining Useable Budget for current year:" />
+				<p:outputLabel value="#{meterBean.remainingMOOEUseable}" />
+				
+		        <p:outputLabel value="Amount:" />
+				<p:inputNumber value="#{meterBean.amountMo}" />
+				
+				</p:panelGrid>
+				<p:selectOneMenu value="#{meterBean.yearMo}" style="float:left; #{skin.select}">
+		        					<f:selectItems value="#{meterBean.yearsMo}"/>
+		        					<f:ajax event="change" listener="#{meterBean.init}" render="moId"/>
+		        				</p:selectOneMenu>
+				<p:dataTable id="moId" value="#{meterBean.mos}" var="mo" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10"
+                         scrollable="true" style="#{skin.table}"
+                         >
+                         
+                          <p:column headerText="[*]" width="50" exportable="false">
+            					<p:commandButton update=":formId:moId :formId:clearFldMoId  msg" icon="fa fa-trash" title="Click this button to delete"  actionListener="#{meterBean.deleteMooe(mo)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+            				<p:column headerText="View" width="50" exportable="false">
+            					<p:commandButton icon="fa fa-search" title="Click this button to see thea additional information" update="clearFldMoId mooebar" actionListener="#{meterBean.clickMooe(mo)}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Year" width="70">
+            						<p:outputLabel value="#{mo.year}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Code" width="70">
+            						<p:outputLabel value="#{mo.code}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Name" width="100">
+            						<p:outputLabel value="#{mo.name}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Amount" width="100">
+            						<p:outputLabel value="#{mo.amountMo}"/>
+            				</p:column>
+                         
+                </p:dataTable>
+					
+			</p:layoutUnit>
+</p:layout>
+
+<p:dialog header="OR Listing" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" widgetVar="ORDlg" Height="300" width="800" closable="false">
+		<p:toolbar id="tbOR">
+    		<f:facet name="left">
+    			<p:inputText value="#{orBean.searchName}" a:placeholder="Search..." style="width: 20em">
+			    					<f:ajax event="keyup" listener="#{orBean.loadORs}" render="ORDataId"/>
+			    </p:inputText>
+			    			
+		        <p:calendar value="#{orBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    <p:calendar value="#{orBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    <p:commandButton update="ORDataId" icon="ui-icon-search" actionListener="#{orBean.loadORs}"/>
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton  value="Close" icon="ui-icon-closethick"  style="width: 10em;" onclick="PF('ORDlg').hide();"/>
+    		</f:facet>
+		</p:toolbar>
+		
+		<p:dataTable id="ORDataId" value="#{orBean.orNumbers}" var="orno" stickyHeader="false"
+							rows="20" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="20,50"
+                         scrollable="true" style="#{skin.table}"
+                         >
+                         		
+                         		<f:facet name="{Exporters}">
+            						<h:commandLink title="Export OR Release in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="ORDataId" fileName="ORRelease" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export OR Release in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="ORDataId" fileName="ORRelease" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+                         	
+                         	<p:column headerText="#" width="20" sortable="true" sortBy="#{orno.cnt}">
+            						<h:outputText  value="#{orno.cnt}"/>
+            				</p:column>	
+            				<p:column headerText="Date" width="70" sortable="true" sortBy="#{orno.dateTrans}">
+            						<h:outputText  value="#{orno.dateTrans}"/>
+            				</p:column>
+            				<p:column headerText="Name" width="120" sortable="true" sortBy="#{orno.customer.fullname}">
+            						<h:outputText  value="#{orno.customer.fullname}"/>
+            				</p:column>
+            				<p:column headerText="OR Number" width="70" sortable="true" sortBy="#{orno.orNumber}">
+            						<h:outputText  value="#{orno.orNumber}"/>
+            				</p:column>
+            				<p:column headerText="Amount" width="70" sortable="true" sortBy="#{orno.amount}">
+            						<h:outputText  value="#{orno.amount}"/>
+            				</p:column>
+            			            				
+     	</p:dataTable> 
+		
+		           
+		
+</p:dialog>
+
+<p:dialog header="Cedula Listing" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" widgetVar="cedulaListDlg" Height="300" width="800" closable="false">
+		<p:toolbar id="tbCeds">
+    		<f:facet name="left">
+    			<p:inputText value="#{cedulaBean.searchParam}" a:placeholder="Search..." style="width: 20em">
+			    					<f:ajax event="keyup" listener="#{cedulaBean.loadSearch}" render="cedDataId"/>
+			    </p:inputText>
+			    			
+		        <p:calendar value="#{cedulaBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    <p:calendar value="#{cedulaBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    <p:commandButton update="cedDataId" icon="ui-icon-search" actionListener="#{cedulaBean.loadSearch}"/>
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton  value="Close" icon="ui-icon-closethick"  style="width: 10em;" onclick="PF('cedulaListDlg').hide();"/>
+    		</f:facet>
+		</p:toolbar>
+		
+		<p:dataTable id="cedDataId" value="#{cedulaBean.cedulas}" var="ced" stickyHeader="false"
+							rows="20" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="20,50"
+                         scrollable="true" style="#{skin.table}"
+                         >
+                         		
+                         		<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Cedula in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="cedDataId" fileName="ORRelease" options="#{exporter.excelOpt}"/>
+            						</h:commandLink>
+            						<h:commandLink title="Export Cedula in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                							<p:dataExporter type="pdf" target="cedDataId" fileName="ORRelease" preProcessor="#{exporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+            						</h:commandLink>
+            				</f:facet>
+                         	
+                         	<p:column headerText="#" width="20" sortable="true" sortBy="#{ced.cnt}">
+            						<h:outputText  value="#{ced.cnt}"/>
+            				</p:column>	
+            				<p:column headerText="Date" width="70" sortable="true" sortBy="#{ced.dateIssued}">
+            						<h:outputText  value="#{ced.dateIssued}"/>
+            				</p:column>
+            				<p:column headerText="Name" width="120" sortable="true" sortBy="#{ced.customer.fullname}">
+            						<h:outputText  value="#{ced.customer.fullname}"/>
+            				</p:column>
+            				<p:column headerText="Cedula Number" width="70" sortable="true" sortBy="#{ced.cedulaNo}">
+            						<h:outputText  value="#{ced.cedulaNo}"/>
+            				</p:column>
+            				<p:column headerText="Amount" width="70" sortable="true" sortBy="#{ced.totalAmount}">
+            						<h:outputText  value="#{ced.totalAmount}"/>
+            				</p:column>
+            				<p:column headerText="Address" width="100" sortable="true" sortBy="#{ced.issuedAddress}">
+            						<h:outputText  value="#{ced.issuedAddress}"/>
+            				</p:column>
+            			            				
+     	</p:dataTable>
+</p:dialog>
+
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

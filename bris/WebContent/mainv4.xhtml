@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Home</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/resume.css" target="head"/>
+            
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputScript name="jquery-easing/jquery.easing.min.js" target="head"/>
+            <h:outputScript name="js/resume.min.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Home</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+
+
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+
+<title>#{versionBean.copyright.appname} Home</title>
+
+</h:head>
+
+<h:body>
+
+<h:form prependId="false" id="formIdMain">
+
+<p:growl id="msg" life="8000" showDetail="true"/>
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>		
+<p:focus context="idsearchingHere"/>
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+	        <span class="d-block d-lg-none">#{versionBean.copyright.appname}</span>
+	        <span class="d-none d-lg-block">
+	          <p:graphicImage id="picId" name="images/photocam/#{mainBean.photoId}.jpg" rendered="#{not empty mainBean.photoId}"  styleClass="img-fluid img-profile rounded-circle mx-auto mb-2"/>
+	        </span>
+	        
+	        <br/>
+			<div class="ui-fluid">
+			
+			<p:outputLabel id="usercusId">
+				<p:button outcome="admincustomer" value="Edit Profile" rendered="#{not empty mainBean.aboutCitizen}">
+					<f:param name="editProfile" value="#{mainBean.fullName}"/>
+				</p:button>
+				<p:outputLabel  value="#{mainBean.aboutCitizen}" style="text-align:justify;#{skin.label};color: black;"/>
+			</p:outputLabel>	
+			
+			</div>
+	        
+    </nav>
+	
+	<p:layout fullPage="true" >
+		<p:layoutUnit id="idsearchingHere" position="north" size="50">
+			<p:inputText id="idSearch" value="#{mainBean.searchCustomer}" a:type="search" a:placeholder="#{mainBean.welcomeMsg}" styleClass="form-control" style="#{skin.placeholder}">
+		        	<p:ajax  event="keyup" listener="#{mainBean.init}" update="cusId picId usercusId msg"/>
+		        </p:inputText>
+		</p:layoutUnit>
+		<p:layoutUnit position="south" size="100">
+			<h:outputText value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}" style="#{skin.copyrightLabel}"/>
+		</p:layoutUnit>
+		<p:layoutUnit position="west" size="300" visible="false">
+			
+			
+		</p:layoutUnit>
+		<p:layoutUnit position="east" size="420" visible="true">
+			<p:accordionPanel id="accordId" dynamic="true">
+				
+				<p:ajax event="tabChange" listener="#{submainBean.onChange}" />
+				
+				<p:tab title="List of Created Barangay ID">
+					
+					<p:inputText value="#{submainBean.searchIDParam}" a:placeholder="Search by Name or Month Year(March 2018)" styleClass="form-control">
+						<f:ajax event="keyup" listener="#{submainBean.loadIDs}" render="cardId"/>
+					</p:inputText>
+					 <p:dataList id="cardId" value="#{submainBean.cardTrans}" var="ct" type="ordered" style="#{skin.table}" emptyMessage="No details to show...">
+					 			<p:commandLink title="Click to see details" action="card" value="#{ct.taxpayer.cardno} : #{ct.taxpayer.fullname}"><f:param name="editCard" value="#{ct.taxpayer.fullname}:#{ct.dateTrans}"/></p:commandLink>
+					 			<p:commandLink title="Print in PDF" value="  Print" target="_blank" action="#{mainBean.printCard(ct)}" ajax="false" immediate="false" />
+					 </p:dataList>
+					
+				</p:tab>
+				
+				<p:tab title="List of Created Documents">
+					<p:inputText value="#{submainBean.searchDocParam}" a:placeholder="Search Name Here..." styleClass="form-control">
+						<f:ajax event="keyup" listener="#{submainBean.loadDocuments}" render="clrId"/>
+					</p:inputText>
+					 
+					 <p:accordionPanel id="clrId" value="#{submainBean.docs}" var="dc">
+						<p:tab title="#{dc.name}">
+							<p:dataList value="#{dc.listDocs}" var="clr" type="ordered" style="#{skin.table}" rendered="#{not empty dc.listDocs}">
+					 				<p:commandLink title="Click to see details" action="clearance" value="#{clr.customer.fullname} : #{clr.clearance.issuedDate}"><f:param name="editClearance" value="#{clr.customer.fullname }:#{clr.clearance.issuedDate}:#{clr.clearance.purposeType}"/></p:commandLink>
+					 				<p:commandLink title="Print in PDF" value=" Print" target="_blank" action="#{mainBean.printClearance(clr.clearance)}" ajax="false" immediate="false" />
+					 				<p:dataList value="#{clr.clearance.multilivelihood}" var="bz" type="ordered" style="#{skin.table}" rendered="#{not empty clr.clearance.multilivelihood}">
+					 					#{bz.livelihood.businessName}
+					 				</p:dataList>
+					 		</p:dataList>
+						</p:tab>
+					</p:accordionPanel>
+					 
+					
+				</p:tab>
+				
+				<p:tab title="List of Cases">
+					<p:inputText value="#{submainBean.searchCaseParam}" a:placeholder="Search Name Here..." styleClass="form-control">
+						<f:ajax event="keyup" listener="#{submainBean.loadCases}" render="caseId"/>
+					</p:inputText>
+					 <p:dataList id="caseId" value="#{submainBean.cases}" var="ciz" type="ordered" style="#{skin.table}" emptyMessage="No details to show...">
+					 			#{ciz.kindName}
+					 			<p:outputLabel value="#{ciz.complainants} vs #{ciz.respondents}"/>
+					 			<p:outputLabel value="#{ciz.narratives}"/><p:commandLink action="cases" value=" See more..."><f:param name="editCase" value="#{ciz.complainants}:#{ciz.date}"/></p:commandLink>
+					 </p:dataList>
+				</p:tab>
+				
+				<p:tab title="Calendar of Activities">
+					<p:schedule style="#{skin.calendarSched}" locale="en" id="schedule" leftHeaderTemplate="prev,next,today"  centerHeaderTemplate="title" rightHeaderTemplate="month,agendaDay" value="#{schedBean.eventModel}" view="month" widgetVar="myschedule" timeZone="true" clientTimeZone="local">
+	 
+	            <p:ajax event="dateSelect" listener="#{schedBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+	            <p:ajax event="eventSelect" listener="#{schedBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+	            <p:ajax event="eventMove" listener="#{schedBean.onEventMove}" update="schedIdList msg" />
+	            <p:ajax event="eventResize" listener="#{schedBean.onEventResize}" update="schedIdList msg" />
+	 
+	        </p:schedule>
+			<br/>
+			<p:scrollPanel style="width:400px;height:150px" mode="native">
+			<p:dataList id="schedIdList" value="#{schedBean.rvs}" style="#{skin.table}" var="rv" itemType="asc">
+			
+					<p:commandButton update=":formIdMain:accordId:schedIdList :formIdMain:accordId:schedule msg" icon="ui-icon-circle-close"  actionListener="#{schedBean.deleteDateSched(rv)}">
+	            		<p:confirm header="Confirmation" message="Are you sure you want to delete this date scheduled?" icon="ui-icon-alert" />
+	            	</p:commandButton>
+	            	<p:commandLink actionListener="#{schedBean.onSelectEvent(rv)}" update="eventDetails" oncomplete="PF('eventDialog').show();"  >
+	            	#{rv.memos}
+	            	</p:commandLink>
+			</p:dataList>
+			</p:scrollPanel>
+			
+				</p:tab>
+				
+				
+				
+			</p:accordionPanel>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+		<div class="ui-fluid">
+			<p:dataGrid id="cusId" var="rpt" value="#{mainBean.customers}" columns="3" rows="6" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+         		<p:panel id="pnl" header="#{rpt.fullname}" style="#{mainBean.stylePicture}#{skin.panel}">
+         			
+         			<p:panelGrid columns="2" style="width:100%">
+         					<p:panelGrid columns="1" >
+	            				<p:graphicImage style="#{skin.homeDirImgaes}" name="images/photocam/#{rpt.photoid}.jpg" rendered="#{not empty rpt.photoid}" height="50px" width="50px"/>
+         					</p:panelGrid>
+         					
+         					<p:panelGrid columns="1" >
+         						<p:commandButton value="Profile" icon="ui-icon-search"  style="width: 10em;#{skin.button}" update="picId cusId usercusId msg" actionListener="#{mainBean.clickItemProfile(rpt)}"/>
+         						<p:commandButton value="Transactions" icon="ui-icon-search"  style="width: 10em;#{skin.button}" update="picId tabTrans usercusId msg" actionListener="#{mainBean.clickItem(rpt)}" oncomplete="PF('multiDialogProfile').show();"/>
+         					</p:panelGrid>
+         					
+         					<f:facet name="footer">
+         						<p:outputLabel value="#{rpt.cardno}" />
+         					</f:facet>
+         				</p:panelGrid>	
+         			
+         		</p:panel>
+         	</p:dataGrid>
+         </div>	
+		</p:layoutUnit>
+	</p:layout>
+
+<p:sidebar widgetVar="multiDialogProfile" style="#{skin.dialog}; width: 90em;" fullScreen="false" position="right">
+ 
+ 	<p:toolbar id="tbData2">
+    		<f:facet name="left">
+		        
+		        
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton update="idSearch cusId" value="Close" onclick="PF('multiDialogProfile').hide()" actionListener="#{mainBean.backView}"/>	
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+ 	<p:tabView orientation="top" id="tabTrans" cache="true" >
+		
+		<p:ajax event="tabChange" listener="#{mainBean.onTabChangeView}" update="tabTrans" />
+		
+		<p:tab title="Documents" disabled="#{featuresBean.clearance}">
+			
+			<p:dataTable id="dataClear" value="#{mainBean.clearances}" var="ct" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                         	
+                         	<p:column headerText="Print" width="20" >
+            						<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printClearance(ct)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+									</p:commandLink>
+            				</p:column>
+                         	
+            				<p:column headerText="Date Issued" width="50">
+            						<p:outputLabel value="#{ct.issuedDate}" />
+            				</p:column>
+            				
+            				<p:column headerText="Document Type" width="150">
+            						<p:outputLabel  value="#{ct.typeName}" />
+            				</p:column>
+            				
+            				<p:column headerText="Purpose" width="200">
+            						<p:outputLabel  value="#{ct.purposeName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Edit" width="30">
+	            				<p:button outcome="clearance" icon="fa fa-pencil-square-o" title="Please click here to edit the clearance details">
+									<f:param name="editClearance" value="#{mainBean.fullName}:#{ct.issuedDate}:#{ct.purposeType}"/>
+								</p:button>
+							</p:column>
+            				
+			</p:dataTable>
+			
+		</p:tab>
+		
+		<p:tab title="Business" disabled="#{featuresBean.business}">
+			
+			<p:dataTable id="bizId" value="#{mainBean.businesses}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                         	
+            				
+            				<p:column headerText="Registered" width="50">
+            						<p:outputLabel  value="#{rpt.dateRegistered}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Status" width="50">
+            					<f:view>
+                         			 		<my:if condition="#{rpt.status==1}">
+                         			 			<f:facet name="then">
+            										<p:outputLabel  value="ACTIVE"/>
+            									</f:facet>
+            								<f:facet name="else">
+            										<p:outputLabel  value="CLOSED"/>
+            								</f:facet>
+            						  		</my:if>
+            						  </f:view>
+            				</p:column>
+            				
+            				<p:column headerText="Retired" width="50">
+            						<p:outputLabel  value="#{rpt.dateRetired}"/>
+            				</p:column>
+                         	
+                         	<p:column headerText="Business" width="150">
+            						<p:outputLabel  value="#{rpt.businessLabel}"/>
+            				</p:column>
+                         	
+            				<p:column headerText="Address" width="200">
+            						<p:outputLabel  value="#{rpt.purokName}, #{rpt.barangay.name}, #{rpt.municipality.name},  #{rpt.province.name}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Edit" width="30">
+	            				<p:button outcome="adminBusiness" icon="fa fa-pencil-square-o" title="Please click here to edit the Business details">
+									<f:param name="editBusiness" value="#{mainBean.fullName}:#{rpt.dateRegistered}"/>
+								</p:button>
+							</p:column>
+            				
+		</p:dataTable>
+			
+		</p:tab>
+		
+		<p:tab title="Cards" disabled="#{featuresBean.idGeneration}">
+			
+			<p:dataTable id="cardId" value="#{mainBean.cardTrans}" var="ct" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                        	
+                        	<p:column headerText="Print" width="20">
+            						<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printCard(ct)}" ajax="false" immediate="false" >
+            				 			<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+									</p:commandLink>
+            				</p:column>
+                        	
+                        	<p:column headerText="Requested" width="70">
+            						<p:outputLabel  value="#{ct.dateTrans}"/>
+            				</p:column>
+                        	
+            				<p:column headerText="Card No" width="70">
+            						<p:outputLabel  value="#{ct.taxpayer.cardno}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid From" width="70">
+            						<p:outputLabel  value="#{ct.validDateFrom}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Valid Until" width="70">
+            						<p:outputLabel  value="#{ct.validDateTo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Edit" width="30">
+	            				<p:button outcome="card" icon="fa fa-pencil-square-o" title="Please click here to edit the ID details">
+									<f:param name="editCard" value="#{mainBean.fullName}:#{ct.dateTrans}"/>
+								</p:button>
+							</p:column>
+            				
+     </p:dataTable>     
+			
+		</p:tab>
+		
+		<p:tab title="Case Recorded" disabled="#{featuresBean.blotters}">
+		
+			<p:dataTable id="caseId" value="#{mainBean.summons}" var="kis" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" 
+                         >
+                        	
+                        	<p:column headerText="Date" width="70">
+            						<p:outputLabel  value="#{kis.date}"/>
+            				</p:column>
+                        	
+                        	<p:column headerText="Type" width="70">
+            						<p:outputLabel  value="#{kis.typeName}"/>
+            				</p:column>
+                        	
+            				<p:column headerText="Status" width="70">
+            						<p:outputLabel  value="#{kis.statusName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Kind" width="100">
+            						<p:outputLabel  value="#{kis.kindName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Narratives" width="150">
+            						<p:outputLabel  value="#{kis.narratives}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Attempt" width="200">
+            						<p:dataTable id="filData" value="#{kis.caseFilling}" var="ciz">
+            								<p:column headerText="Print" width="20" exportable="false">
+            									<p:commandLink title="Print in PDF" target="_blank" action="#{mainBean.printCase(ciz)}" ajax="false" immediate="false" >
+            				 						<p:graphicImage name="img/pdf.jpg" width="25" height="25"/>
+												</p:commandLink>
+            								</p:column>
+            								<p:column headerText="Filling" width="50">
+            									<p:outputLabel  value="#{ciz.fillingDate}"/>
+            								</p:column>
+            								<p:column headerText="Attempt" width="50">
+            									<p:outputLabel  value="#{ciz.count}"/>
+            								</p:column>
+            						</p:dataTable>
+            				</p:column>
+            				
+            				<p:column headerText="Edit" width="30">
+	            				<p:button outcome="cases" icon="fa fa-pencil-square-o" title="Please click here to edit the Case details">
+									<f:param name="editCase" value="#{mainBean.fullName}:#{kis.date}"/>
+								</p:button>
+							</p:column>
+            				
+     </p:dataTable>    
+		</p:tab>
+			
+		</p:tabView>
+</p:sidebar>
+
+ <p:sidebar widgetVar="eventDialog" fullScreen="false" position="right">
+ 
+ 		<p:toolbar id="tbSched">
+    		<f:facet name="left">
+    		</f:facet>
+    		<f:facet name="right">
+    				<p:commandButton type="reset" icon="ui-icon-refresh" title="Reset" />
+	            <p:commandButton id="addButton" update=":formIdMain:accordId:schedIdList" actionListener="#{schedBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" icon="ui-icon-disk" title="Save"/>
+	            <p:commandButton id="remButton" update=":formIdMain:accordId:schedIdList" actionListener="#{schedBean.removeEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" icon="ui-icon-trash" title="Remove"/>
+	            <p:commandButton update=":formIdMain:accordId:schedIdList" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" icon="ui-icon-close" title="Close" />
+    		</f:facet>
+		</p:toolbar>	
+ 	
+ 	<div class="ui-fluid">
+ 		<p:panelGrid id="eventDetails" columns="2" layout="grid">
+	            
+	            <p:outputLabel for="idfrom" value="From:" />
+     	       <p:calendar id="idfrom" value="#{schedBean.event.startDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm aa"/>
+ 
+	            <p:outputLabel for="idto" value="To:" />
+	            <p:calendar id="idto" value="#{schedBean.event.endDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm aa"/>
+	            
+	            <h:outputLabel for="eveTitle" value="Description:" />
+	            <h:inputTextarea id="eveTitle" value="#{schedBean.event.title}" style="width: 25em" />
+	            
+	            
+        	</p:panelGrid>
+ 	</div>
+ 	
+ 	
+        	
+ </p:sidebar>
+ 
+ 
+ 
+ <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+	<p:dialog responsive="true" style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    	<p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+	</p:dialog>
+<ui:include src="menu.xhtml" />
+<h:outputScript>
+    PrimeFaces.locales['tr'] = {
+        closeText: 'Close',
+        prevText: 'Prev',
+        nextText: 'Next',
+        currentText: 'Today',
+        monthNames: ['Enero','Pebrero','Marso','Abril','Mayo','Hunyo',
+            'Hulyo','Agusto','Setyembre','Oktubre','Nobyembre','Disyembre'],
+        monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun',
+            'Jul','Aug','Sep','Oct','Nov','Dec'],
+        dayNames: ['Linggo','Lunes','Martes','Miyerkules','Huwebes','Biyernes','Sabado'],
+        dayNamesShort: ['Lin','Lun','Mar','Mer','Huw','Biy','Sab'],
+        dayNamesMin: ['Lin','Lun','Mar','Mer','Huw','Biy','Sab'],
+        weekHeader: 'Hf',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        allDayText : 'All Day'
+    };
+    PrimeFaces.locales['en'] = {
+        closeText: 'Close',
+        prevText: 'Prev',
+        nextText: 'Next',
+        currentText: 'Today',
+        monthNames: ['January','February','March','April','May','June',
+            'July','August','September','October','November','December'],
+        monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun',
+            'Jul','Aug','Sep','Oct','Nov','Dec'],
+        dayNames: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+        dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+        dayNamesMin: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+        weekHeader: 'Hf',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        allDayText : 'All Day'
+    };
+</h:outputScript>
+</h:form>
+
+</h:body>
+</f:view>
+</html>

@@ -1,0 +1,29 @@
+#menu1 {
+	bottom: 0px;
+	left: 600px;
+}
+
+#menu2 {
+	bottom: 0px;
+	left: 700px;
+}
+
+#menu3 {
+	bottom: 0px;
+	left: 800px;
+}
+
+#menu4 {
+	bottom: 0px;
+	left: 900px;
+}
+
+.ui-stack ul li img {
+	width: 25px;
+	height: 30px;
+}
+
+.ui-stack img {
+	width: 80px;
+	height: 100px;
+}
