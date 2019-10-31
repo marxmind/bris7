@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Issuing Form Recording</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="sb-admin/font-awesome/css/all.min.css" />
+            <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
+            <h:outputStylesheet name="css/font-awesome.min.css" />
+            
+     </f:facet>
+     <f:facet name="last">       
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
+            <h:outputScript name="sb-admin/bootstrap/js/bootstrap.bundle.min.js"/>
+            <h:outputScript name="sb-admin/jquery-easing/jquery.easing.min.js"/>
+            <h:outputScript name="sb-admin/js/sb-admin.min.js"/>
+            
+            
+    </f:facet>
+        
+    <title>#{versionBean.copyright.appname} Issuing Form Recording</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+	z-index: 1500; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+    
+    -->
+ </style>
+ 
+<title>#{versionBean.copyright.appname} Issuing Form Recording</title>
+
+</h:head>
+
+<h:body id="page-top">
+<h:form prependId="false" id="formId">
+
+<p:growl id="msg" life="8000" showDetail="true" />
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>	
+ 
+ 
+ <nav class="navbar navbar-expand navbar-intel bg-intel static-top">
+
+      <a class="navbar-brand mr-1" href="main.xhtml">#{versionBean.copyright.appname}</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      
+      <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        		<!-- Search item -->
+     </div>
+
+      
+      <ui:include src="menutop.xhtml" />
+
+    </nav>
+	
+	<p:tooltip for="addButtonId" position="left" >
+		<p:outputLabel value="Click this button to create new case" />
+	</p:tooltip>
+	<p:tooltip for="clearButtonId" position="left" >
+		<p:outputLabel value="Click this button to clear the inputed information" />
+	</p:tooltip>
+	<p:tooltip for="saveButtonId" position="left" >
+		<p:outputLabel value="Click this button to save the inputed information" />
+	</p:tooltip>
+	<p:tooltip for="hideButtonId" position="left" >
+		<p:outputLabel value="Click this button to close the fill up form" />
+	</p:tooltip>
+	
+	 <!-- Scroll Menu button-->
+    <p:commandLink id="addButtonId" styleClass="create-new rounded" actionListener="#{formisBean.createNew}" update="gridId" oncomplete="addNew()">
+      <i class="fa fa-file-o"></i>
+    </p:commandLink>
+    <p:commandLink id="clearButtonId" styleClass="create-clear rounded" update="gridId" actionListener="#{formisBean.createNew}" oncomplete="addNew()">
+      <i class="fa fa-eraser"></i>
+    </p:commandLink>
+    <p:commandLink id="saveButtonId" styleClass="create-save rounded" update="gridId dataForm msg" actionListener="#{formisBean.saveData}">
+	     <p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+	     <i class="fa fa-floppy-o"></i>
+	</p:commandLink>
+    <p:commandLink id="hideButtonId" styleClass="create-hide rounded" update="gridId" actionListener="#{formisBean.createNew}">
+    	<i class="fa fa-eye-slash"></i>
+    </p:commandLink>
+	
+	<div id="wrapper">
+		
+     
+      <ui:include src="sidebarmenu.xhtml" />
+
+      <div id="content-wrapper">        
+		  <div class="container-fluid">	
+		  		    
+		  		<div id="panelHide" style="display: none">
+		  		
+				<p:panelGrid id="gridId" columns="4" layout="grid">
+				
+				<p:outputLabel value="Issued Date"/>
+			   <p:calendar value="#{formisBean.issuedDate}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<p:outputLabel value="Fund Type"/>	
+			    <p:selectOneMenu id="funId" value="#{formisBean.fundId}" style="width: 12em" filter="true" filterMatchMode="contains">
+						<f:selectItems value="#{formisBean.funds}"/>
+				</p:selectOneMenu>
+				
+			<p:outputLabel value="Select Forms"/>
+			<p:commandButton icon="fa fa-search" update="formsData" actionListener="#{formisBean.loadForms}" oncomplete="PF('formsDialog').show()"/>
+			
+			<p:outputLabel value="Quantity"/>
+			<p:inputText value="#{formisBean.quantity}" style="width: 12em">
+				<p:ajax event="keyup" listener="#{formisBean.calculateEndingNo}" update="fromId endId" />
+			</p:inputText>
+			
+			<p:outputLabel value="From Serial"/>
+			<p:inputText id="fromId" value="#{formisBean.beginningNo}" style="width: 12em" readonly="false">
+				<p:ajax event="keyup" listener="#{formisBean.calculateEndingNo}" update="endId" />
+			</p:inputText>
+			
+			<p:outputLabel value="To Serial"/>
+			<p:inputText id="endId" value="#{formisBean.endingNo}" style="width: 12em" readonly="false"/>
+			
+			<p:outputLabel value="Form Type"/>	
+		    <p:selectOneMenu id="frmId" value="#{formisBean.formTypeId}" style="width: 12em" disabled="false">
+					<f:selectItems value="#{formisBean.formTypes}"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Status"/>	
+		    <p:selectOneMenu id="statId" value="#{formisBean.statusId}" style="width: 12em">
+					<f:selectItems value="#{formisBean.status}"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Collector"/>	
+		    <p:selectOneMenu id="colId" value="#{formisBean.collectorId}" style="width: 12em" filter="true" filterMatchMode="contains">
+					<f:selectItems value="#{formisBean.collectors}"/>
+			</p:selectOneMenu>
+			
+				</p:panelGrid>
+		  			
+		  		</div><!-- Panel hide -->
+		  		
+		  		<div id="tabledInfo">
+	  
+			  <p:dataTable id="dataForm" value="#{formisBean.forms}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" scrollWidth="100%" style="#{skin.table}" paginatorPosition="top"
+                         
+                         >
+                         
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Form Report in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="dataForm" fileName="Forms" />
+            						</h:commandLink>
+            						<h:commandLink title="Export Form Report in pdf format">
+                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+                						    <p:dataExporter type="xls" target="dataForm" fileName="Forms" />
+            						</h:commandLink>
+            				</f:facet>			
+                         
+							<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update="dataForm gridId msg" icon="fa fa-trash" actionListener="#{formisBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+            				
+							<p:column headerText="View" width="20" exportable="false">
+								<p:commandButton icon="fa fa-search" update="gridId" actionListener="#{formisBean.clickItem(rpt)}" oncomplete="addNew();displayWizard();"/>
+							</p:column>
+							
+							<p:column headerText="Issued" width="70">
+            						<p:outputLabel value="#{rpt.issuedDate}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Fund" width="100">
+            						<p:outputLabel value="#{rpt.fundName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Form" width="70">
+            						<p:outputLabel value="#{rpt.formTypeName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Status" width="70">
+            						<p:outputLabel value="#{rpt.statusName}"/>
+            				</p:column>
+            				
+            				<p:column headerText="From Serial" width="70">
+            						<p:outputLabel value="#{rpt.beginningNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="To Serial" width="70">
+            						<p:outputLabel value="#{rpt.endingNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Quantity" width="70">
+            						<p:outputLabel value="#{rpt.pcs}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Collector" width="120">
+            						<p:outputLabel value="#{rpt.collector.name}"/>
+            				</p:column>
+            				
+            		</p:dataTable>	               
+	  
+	  		</div>
+		  		
+		  </div>
+		  
+		  
+		   <!-- Sticky Footer -->
+        <footer class="sticky-footer citizenBox">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>#{versionBean.copyright.copyrightname}</span>
+            </div>
+          </div>
+        </footer>
+		  
+	  </div>	  
+	  
+	  
+	  
+	</div><!-- End wrapper -->
+	
+	<!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+	
+	<p:dialog position="center top" widgetVar="formsDialog" responsive="true" header="Series Lookup" modal="false" showEffect="clip" hideEffect="clip" resizable="false">
+	<p:toolbar id="tbpay">
+    		<f:facet name="left">
+    				<p:selectOneMenu id="frmIdSearch" value="#{formisBean.formTypeIdSearch}" style="width: 12em">
+							<f:selectItems value="#{formisBean.formTypeSearch}"/>
+							<p:ajax event="change" listener="#{formisBean.loadForms}" update="formsData" />
+					</p:selectOneMenu>
+    		</f:facet>
+    		<f:facet name="right">
+    			<p:commandButton update="dataForm" value="Close" onclick="PF('formsDialog').hide()"/>
+    		</f:facet>
+		</p:toolbar>
+     
+	
+	<p:dataTable value="#{formisBean.stocks}" id="formsData" var="fm" type="ordered" itemType="none" style="#{skin.table}"
+	paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false">
+	
+		<p:column headerText="Action" width="60">
+				<p:commandButton value="Select" update="gridId" actionListener="#{formisBean.stocksSelected(fm)}" oncomplete="PF('formsDialog').hide()"/>
+	    </p:column>
+        
+        <p:column headerText="Form Type" width="70">
+            <p:outputLabel value="#{fm.formTypeName}"/>
+        </p:column>
+        
+        <p:column headerText="Quantity" width="70">
+        	<p:outputLabel value="#{fm.quantity}"/>
+        </p:column>
+        
+        <p:column headerText="Series" width="70">
+        	<p:outputLabel value="#{fm.seriesFrom}-#{fm.seriesTo}"/>
+        </p:column>
+        
+    </p:dataTable>
+</p:dialog>
+	
+	<h:outputScript>
+		 
+		 $("#addButtonId").click(function(){
+    		$("#panelHide").show(1000);
+		 }); 
+		 
+		 $("#hideButtonId").click(function(){
+    		$("#panelHide").hide(1000);
+		 });
+		 
+		 function displayWizard(){
+		 	$("#panelHide").show(1000);
+		 } 
+		 
+		$('#page-top').each(function(){
+		    $(this).click(function(){ 
+		        $('html').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('body').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('document').animate({ scrollTop: 0 }, 'slow'); return true; 
+			    $('window').animate({ scrollTop: 0 }, 'slow'); return true;  
+		    });
+		});	
+		
+		function addNew(){
+			 callTop();
+			 showButton();
+	 	}
+		
+		function hideButton(){
+			 $('#clearButtonId').fadeOut();
+		     $('#saveButtonId').fadeOut();
+		     $('#hideButtonId').fadeOut();
+		 }
+		 
+		 function showButton(){
+			 $('#clearButtonId').fadeIn();
+		     $('#saveButtonId').fadeIn();
+		     $('#hideButtonId').fadeIn();
+		 }
+		 
+		  $(".input-group").click(function(){
+		  	$("#panelHide").hide(1000);
+			 hideButton();
+			 callTop();
+		 });
+		 
+		 function callTop(){ 
+			        $('html').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('body').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('document').animate({ scrollTop: 0 }, 'slow'); return true; 
+				    $('window').animate({ scrollTop: 0 }, 'slow'); return true;
+		 }
+		 
+		 //hiding wizard when scrolling down
+		  $(document).on('scroll',function() {
+		    var scrollDistance = $(this).scrollTop();
+		    if (scrollDistance > 100) {
+		    	//$("#panelHide").hide(1000);
+		    	hideButton();
+		    } else {
+		        //$("#panelHide").show(1000);
+		    	//showButton();
+		    	
+		    	if($('#panelHide').css('display') == 'none'){
+	    			hideButton();
+		    	}else{
+		    		showButton();
+		    	}
+		    }
+		  });
+		 
+		 /*
+		 outside hide
+		 var mouse_is_inside_wizard = false;
+
+		$(document).ready(function()
+		{
+		    $('#panelHide').hover(function(){ 
+		        mouse_is_inside_wizard=true; 
+		    }, function(){ 
+		        mouse_is_inside_wizard=false; 
+		    });
+		
+		    $("body").mouseup(function(){ 
+		        if(! mouse_is_inside_wizard) $('#panelHide').hide(1000);
+		    });
+		});
+		 */
+		 
+		 </h:outputScript> 
+		 
+		 
+	 
+	<ui:include src="loader.xhtml" />
+	</h:form>
+	
+	</h:body>
+	</f:view>
+	</html>
