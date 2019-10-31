@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+ 
+    <ui:composition>
+    
+    <p:commandButton id="showNoteId" value="#{menuBean.total}" action="email.xhtml" icon="fa fa-envelope-o" style="#{notiBean.styleButton}#{skin.emailButton}" title="This is where your email or notification messages save" />
+   
+    
+	<!-- <p:notificationBar id="sideMsgId" widgetVar="notbar" autoDisplay="#{menuBean.displayMsg}" position="bottom" effect="fade"  effectSpeed="slow">
+	 	You have #{menuBean.totalMsg}<p:commandButton icon="fa fa-times" onclick="PF('notbar').hide()" />
+	</p:notificationBar> -->
+	
+</ui:composition>
+
+</html>
