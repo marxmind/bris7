@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+
+<style>
+<!-- 
+
+
+ -->
+ </style>
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+<p:growl id="msg" life="2000" />
+
+			<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[13]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+
+<p:layout fullPage="true">
+			
+			<p:layoutUnit position="east" size="0" visible="false"/>
+			<p:layoutUnit position="north" size="100"  visible="false"/>
+			<p:layoutUnit position="south" size="50" visible="false"/>
+			<p:layoutUnit position="west" size="0" visible="false"/>
+			<p:layoutUnit position="center">
+				<p:panelGrid id="FldId" columns="5" style="#{skin.grid}" layout="grid">
+					<p:inputTextarea value="#{dataBean.locationName}" a:placeholder="Location">
+						<p:ajax event="change" listener="#{dataBean.loadFiles}" update="dataId"/>
+					</p:inputTextarea>
+					<p:outputLabel value="For Database">
+					<p:selectBooleanCheckbox value="#{dataBean.forDatabase}" style="#{skin.checkbox}"/>
+					</p:outputLabel>
+					<p:inputText value="#{dataBean.database}" a:placeholder="Database Name"/>
+					<p:inputText value="#{dataBean.uname}" a:placeholder="User Name"/>
+					<p:password value="#{dataBean.epass}" a:placeholder="Password"/>
+					<p:dataList id="dataId" value="#{dataBean.forms}" var="frm" type="ordered" a:data-inset="true">
+	        			<p:commandLink value="#{frm.fileName}" ajax="false" actionListener="#{dataBean.formDownload(frm)}" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+	        				<p:fileDownload value="#{dataBean.formFile}"/>
+	        			</p:commandLink>
+	        			
+	        		</p:dataList>
+				</p:panelGrid>
+				<p:inputText id="idSearch" value="#{dataBean.inputString}" a:type="search" a:placeholder="Enter value here" styleClass="form-control" style="#{skin.placeholder}"/>
+				<p:commandButton icon="fa fa-search" update="idContent" actionListener="#{dataBean.loadInquiry}"/>
+				<p:commandButton icon="fa fa-refresh" update="idContent" actionListener="#{dataBean.refreshFile}"/>
+				<p:commandButton icon="fa fa-trash" actionListener="#{dataBean.deleteConfigFile}"/>
+				<p:commandButton icon="fa fa-refresh" update="idContent" value="Load File Details" actionListener="#{dataBean.openFile}"/>
+				<p:commandButton icon="fa fa-floppy-o" actionListener="#{dataBean.saveFile}" update="idContent msg"/>
+				<p:textEditor id="idContent" toolbarVisible="false" widgetVar="msgComposeText" value="#{dataBean.outString}" height="310" readonly="false">
+									<f:facet name="toolbar">
+										<span class="ql-formats">
+											<button class="ql-bold"></button>
+											<button class="ql-italic"></button>
+											<button class="ql-underline"></button>
+											<button class="ql-strike"></button>
+										</span>
+										<span class="ql-formats">
+											<select class="ql-font"></select>
+											<select class="ql-size"></select>
+										</span>
+										<span class="ql-formats">
+											<select class="ql-color"></select>
+											<select class="ql-align"></select>
+										</span>
+									</f:facet>
+				  </p:textEditor>
+			</p:layoutUnit>
+</p:layout>
+					
+	
+<script type="text/javascript">
+function showStatus() {
+PF('statusDialog').show();
+}
+function hideStatus() {
+PF('statusDialog').hide();
+}
+</script>		
+
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+<p:dialog style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+</p:dialog>
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>
