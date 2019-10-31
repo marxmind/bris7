@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Address</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/dataTables.bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} Address</title>
+
+<style>
+<!-- 
+
+ -->
+ </style>
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname} Address</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+<p:growl id="msg" life="2000" showDetail="true" />
+<p:panel id="panel" header="Address Maintenance" style="#{skin.panel}"/>	
+		 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+        	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	 </p:confirmDialog>		
+ 
+	<p:tabView orientation="left" id="tabAddress" style="#{skin.tabs}">
+	
+	<p:ajax event="tabChange" listener="#{addBean.onTabChangeView}" update="formId" />
+		
+	 <p:tab title="Regional">
+	 
+	 	<p:panelGrid id="regionalFldId" columns="4" columnClasses="column" cellpadding="5">
+	 		<h:outputLabel value="Regional Name:" />
+        	<p:inputText value="#{addBean.regionalName}" a:placeholder="Regional Name" style="width: 15em"/>
+        	<p:commandButton update=":formId:tabAddress:regionalFldId" value="Clear"  icon="ui-icon-note" actionListener="#{addBean.clearData}" style="width: 10em;"/>
+        	<p:commandButton update=":formId:tabAddress:regionalData :formId:tabAddress:regionalFldId msg" value="Save"  icon="ui-icon-note" actionListener="#{addBean.saveData('REGIONAL')}" style="width: 10em;">
+        		<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+        	</p:commandButton>
+	 	</p:panelGrid>
+	 	
+	 	<br/>
+	 	<p:toolbar id="tabRegional">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchRegions}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadRegional}" render="regionalData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+	 	<p:dataTable id="regionalData" value="#{addBean.regionals}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Regional in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="regionalData" fileName="Regional" />
+            						</h:commandLink>
+            				</f:facet>
+                         	
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:tabAddress:regionalData msg" icon="ui-icon-circle-close"  actionListener="#{addBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+                         	<p:column headerText="Name" width="100">
+                         		<p:commandLink update=":formId:tabAddress:regionalFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         	
+         </p:dataTable>                	
+	 	
+	 </p:tab>
+	 <p:tab title="Province">
+	 
+	 	<p:panelGrid id="provinceFldId" columns="6" columnClasses="column" cellpadding="5">
+	 		<h:outputLabel value="Regional Name:" />
+	 		<h:outputLabel value="#{addBean.regionalSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:provinceFldId" icon="ui-icon-search" onclick="PF('multiDialogRegional').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Province Name:" />
+        	<p:inputText value="#{addBean.provinceName}" a:placeholder="Province Name" style="width: 15em"/>
+        	<p:commandButton update=":formId:tabAddress:provinceFldId" value="Clear"  icon="ui-icon-note" actionListener="#{addBean.clearData}" style="width: 10em;"/>
+        	<p:commandButton update=":formId:tabAddress:provinceData :formId:tabAddress:provinceFldId msg" value="Save"  icon="ui-icon-note" actionListener="#{addBean.saveData('PROVINCE')}" style="width: 10em;">
+        		<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+        	</p:commandButton>
+	 	</p:panelGrid>
+	 	
+	 	<br/>
+	 	<p:toolbar id="tabProvince">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchProvince}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadProvince}" render="provinceData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+	 	<p:dataTable id="provinceData" value="#{addBean.provinces}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Province in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="provinceData" fileName="Province" />
+            						</h:commandLink>
+            				</f:facet>
+                         	
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:tabAddress:provinceData msg" icon="ui-icon-circle-close"  actionListener="#{addBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+                         	<p:column headerText="Province" width="100">
+                         		<p:commandLink update=":formId:tabAddress:provinceFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Region" width="100">
+                         		<p:commandLink update=":formId:tabAddress:provinceFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.regional.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         	
+         </p:dataTable>  
+	 	
+	 		<p:dialog header="Regions" position="center top" modal="true" widgetVar="multiDialogRegional" Height="500" width="500">
+		<p:toolbar id="tbReg">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchRegions}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadRegional}" render="regData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="regData" value="#{addBean.regionals}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Regional Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:provinceFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogRegional').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	 		
+	 </p:tab>	           
+	 <p:tab title="Municipality">
+	 
+	 <p:panelGrid id="municipalFldId" columns="8" columnClasses="column" cellpadding="5">
+	 		<h:outputLabel value="Regional Name:" />
+	 		<h:outputLabel value="#{addBean.regionalSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:munData" icon="ui-icon-search" onclick="PF('multiDialogRegional1').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Province Name:" />
+	 		<h:outputLabel value="#{addBean.provinceSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:provData" icon="ui-icon-search" onclick="PF('multiDialogProvince').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Municipal Name:" />
+        	<p:inputText value="#{addBean.municipalName}" a:placeholder="Municipal Name" style="width: 15em"/>
+        	
+        	<p:commandButton update=":formId:tabAddress:municipalFldId" value="Clear"  icon="ui-icon-note" actionListener="#{addBean.clearData}" style="width: 10em;"/>
+        	<p:commandButton update=":formId:tabAddress:municipalData :formId:tabAddress:municipalFldId msg" value="Save"  icon="ui-icon-note" actionListener="#{addBean.saveData('MUNICIPALITY')}" style="width: 10em;">
+        		<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+        	</p:commandButton>
+	 	</p:panelGrid>
+	 	
+	 	<br/>
+	 	<p:toolbar id="tabMunicipal">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchMunicipal}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadMunicipal}" render="municipalData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+	 	<p:dataTable id="municipalData" value="#{addBean.municipals}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Municipal in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="municipalData" fileName="Municipal" />
+            						</h:commandLink>
+            				</f:facet>
+                         	
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:tabAddress:municipalData msg" icon="ui-icon-circle-close"  actionListener="#{addBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+                         	<p:column headerText="Municipality" width="100">
+                         		<p:commandLink update=":formId:tabAddress:municipalFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Province" width="100">
+                         		<p:commandLink update=":formId:tabAddress:municipalFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.province.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Region" width="100">
+                         		<p:commandLink update=":formId:tabAddress:municipalFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.regional.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         	
+         </p:dataTable>  
+	 	
+	 	<p:dialog header="Regions" position="center top" modal="true" widgetVar="multiDialogRegional1" Height="500" width="500">
+		<p:toolbar id="tbReg1">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchRegions}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadRegional}" render="munData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="munData" value="#{addBean.regionals}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Regional Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:municipalFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogRegional1').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	
+	<p:dialog header="Province" position="center top" modal="true" widgetVar="multiDialogProvince" Height="500" width="500">
+		<p:toolbar id="tbProv">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchProvince}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadProvince}" render="provData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="provData" value="#{addBean.provinces}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Regional Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:municipalFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogProvince').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	 	
+	 </p:tab>	           	   
+	 <p:tab title="Barangay">
+	 
+	 <p:panelGrid id="barangayFldId" columns="6" columnClasses="column" cellpadding="5">
+	 		<h:outputLabel value="Regional Name:" />
+	 		<h:outputLabel value="#{addBean.regionalSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:rgData1" icon="ui-icon-search" onclick="PF('multiDialogRegional2').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Province Name:" />
+	 		<h:outputLabel value="#{addBean.provinceSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:provData1" icon="ui-icon-search" onclick="PF('multiDialogProvince1').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Municipality Name:" />
+	 		<h:outputLabel value="#{addBean.municipalSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:mnData" icon="ui-icon-search" onclick="PF('multiDialogMunicipality').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Barangay Name:" />
+        	<p:inputText value="#{addBean.barangayName}" a:placeholder="Barangay Name" style="width: 15em"/>
+        	
+        	<p:commandButton update=":formId:tabAddress:barangayFldId" value="Clear"  icon="ui-icon-note" actionListener="#{addBean.clearData}" style="width: 10em;"/>
+        	<p:commandButton update=":formId:tabAddress:barangayData :formId:tabAddress:barangayFldId msg" value="Save"  icon="ui-icon-note" actionListener="#{addBean.saveData('BARANGAY')}" style="width: 10em;">
+        		<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+        	</p:commandButton>
+	 	</p:panelGrid>
+	 	
+	 	<br/>
+	 	<p:toolbar id="tabBarangay">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchBarangay}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadBarangay}" render="barangayData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+	 	<p:dataTable id="barangayData" value="#{addBean.barangays}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export Barangay in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="barangayData" fileName="Barangay" />
+            						</h:commandLink>
+            				</f:facet>
+                         	
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:tabAddress:barangayData msg" icon="ui-icon-circle-close"  actionListener="#{addBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+                         	<p:column headerText="Barangay" width="100">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Municipality" width="100">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.municipality.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Province" width="100">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.province.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Region" width="100">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.regional.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         	
+         </p:dataTable>  
+	 
+	 
+	 	<p:dialog header="Regions" position="center top" modal="true" widgetVar="multiDialogRegional2" Height="500" width="500">
+		<p:toolbar id="tbReg2">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchRegions}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadRegional}" render="rgData1"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="rgData1" value="#{addBean.regionals}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Regional Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogRegional2').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	
+	<p:dialog header="Province" position="center top" modal="true" widgetVar="multiDialogProvince1" Height="500" width="500">
+		<p:toolbar id="tbProv1">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchProvince}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadProvince}" render="provData1"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="provData1" value="#{addBean.provinces}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Regional Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogProvince1').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	
+	<p:dialog header="Municipality" position="center top" modal="true" widgetVar="multiDialogMunicipality" Height="500" width="500">
+		<p:toolbar id="tbMunicipal">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchMunicipal}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadMunicipal}" render="mnData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="mnData" value="#{addBean.municipals}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Municipality Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:barangayFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogMunicipality').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+	</p:dialog>	
+	 
+	 </p:tab>
+	 
+	 <p:tab title="Purok/Sitio">
+	 
+	 <p:panelGrid id="purokFldId" columns="4" columnClasses="column" cellpadding="5">
+	 		
+	 		<h:outputLabel value="Municipality Name:" />
+	 		<h:outputLabel value="#{addBean.municipalSelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:mnData1" icon="ui-icon-search" onclick="PF('multiDialogMunicipality1').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Barangay Name:" />
+	 		<h:outputLabel value="#{addBean.barangaySelected.name}">
+	 			&nbsp;&nbsp;<p:commandButton update=":formId:tabAddress:purData" icon="ui-icon-search" onclick="PF('multiDialogBarangay').show();"/>
+	 		</h:outputLabel>
+	 		
+	 		<h:outputLabel value="Purok/Sitio Name:" />
+        	<p:inputText value="#{addBean.purokName}" a:placeholder="Purok/Sitio Name" style="width: 15em"/>
+        	
+        	<p:commandButton update=":formId:tabAddress:purokFldId" value="Clear"  icon="ui-icon-note" actionListener="#{addBean.clearData}" style="width: 10em;"/>
+        	<p:commandButton update=":formId:tabAddress:purokData :formId:tabAddress:purokFldId msg" value="Save"  icon="ui-icon-note" actionListener="#{addBean.saveData('PUROK')}" style="width: 10em;">
+        		<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+        	</p:commandButton>
+	 	</p:panelGrid>
+	 	
+	 	<br/>
+	 	<p:toolbar id="tabPurok">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchPurok}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadPurok}" render="purokData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		<br/>
+	 	<p:dataTable id="purokData" value="#{addBean.puroks}" var="rpt" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         	
+                         	<f:facet name="{Exporters}">
+            						<h:commandLink title="Export PurokSitio in excel format">
+                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+                							<p:dataExporter type="xls" target="purokData" fileName="PurokSitio" />
+            						</h:commandLink>
+            				</f:facet>
+                         	
+          					<p:column headerText="[*]" width="20" exportable="false">
+            					<p:commandButton update=":formId:tabAddress:purokData msg" icon="ui-icon-circle-close"  actionListener="#{addBean.deleteRow(rpt)}">
+            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
+            					</p:commandButton>
+            				</p:column>
+                         	
+                         	<p:column headerText="Purok/Sitio" width="100">
+                         		<p:commandLink update=":formId:tabAddress:purokFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.purokName}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         	
+                         	<p:column headerText="Barangay" width="100">
+                         		<p:commandLink update=":formId:tabAddress:purokFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.barangay.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				<p:column headerText="Municipality" width="100">
+                         		<p:commandLink update=":formId:tabAddress:purokFldId" actionListener="#{addBean.clickItem(rpt)}" style="color: transparent;">
+            						<h:outputText  value="#{rpt.municipality.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+            				
+            				
+                         	
+         </p:dataTable>  
+	 	
+	 	<p:dialog header="Municipality" position="center top" modal="true" widgetVar="multiDialogMunicipality1" Height="500" width="500">
+		<p:toolbar id="tbMunicipal1">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchMunicipal}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadMunicipal}" render="mnData1"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="mnData1" value="#{addBean.municipals}" var="rg" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Municipality Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:purokFldId" actionListener="#{addBean.clickItemPopup(rg)}" style="color: transparent;" oncomplete="PF('multiDialogMunicipality1').hide()">
+            						<h:outputText  value="#{rg.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+		</p:dialog>	
+		
+		
+		<p:dialog header="Barangay" position="center top" modal="true" widgetVar="multiDialogBarangay" Height="500" width="500">
+		<p:toolbar id="tbBarangay">
+    		<f:facet name="left">
+        		<p:inputText value="#{addBean.searchBarangay}" a:placeholder="Search..." style="width: 30em">
+    					<f:ajax event="keyup" listener="#{addBean.loadBarangay}" render="purData"/>
+    			</p:inputText>
+    		</f:facet>
+    		<f:facet name="right">
+    			
+    		</f:facet>
+		</p:toolbar>
+		
+		
+		<p:dataTable id="purData" value="#{addBean.barangays}" var="bar" stickyHeader="false"
+							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,50,100"
+                         scrollable="true" styleClass="dataDesignTable"
+                         >
+                         
+                         <p:column headerText="Municipality Name" width="120">
+                         		<p:commandLink update=":formId:tabAddress:purokFldId" actionListener="#{addBean.clickItemPopup(bar)}" style="color: transparent;" oncomplete="PF('multiDialogBarangay').hide()">
+            						<h:outputText  value="#{bar.name}" style="color: black;"/>
+            					</p:commandLink>		
+            				</p:column>
+                         
+         </p:dataTable>                
+		
+		</p:dialog>	
+	 	
+	 	</p:tab>
+	 	                   
+	</p:tabView>	
+			
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} About</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/menu.css"/>
+            <h:outputStylesheet name="css/resume.css" target="head"/>
+            
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputScript name="jquery-easing/jquery.easing.min.js" target="head"/>
+            <h:outputScript name="js/resume.min.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname} About</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+
+
+
+ -->
+ </style>
+ <!-- 
+ <h:outputScript library="js" name="classie.js"/>
+<h:outputStylesheet library="css" name="normalize.css" />
+<h:outputStylesheet library="css" name="set2.css" /> -->
+
+<title>#{versionBean.copyright.appname} About</title>
+
+</h:head>
+
+<h:body id="page-top">
+
+<h:form prependId="false" id="formIdMain">
+
+<p:growl id="msg" life="8000" showDetail="true"/>
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>		
+
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+		<a class="navbar-brand js-scroll-trigger" href="#page-top">
+	        <span class="d-block d-lg-none">#{versionBean.copyright.appname}</span>
+	        <span class="d-none d-lg-block">
+	          <p:graphicImage id="picId" name="images/photocam/#{mainBean.photoId}.jpg" rendered="#{not empty mainBean.photoId}"  styleClass="img-fluid img-profile rounded-circle mx-auto mb-2"/>
+	        </span>
+	     </a>   
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#aboutId">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#transactionId">Transactions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#businessId">Business</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#ids">Barangay ID Information</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#casesId">Log Cases</a>
+          </li>
+        </ul>
+      </div>	
+	        
+    </nav>
+	
+	<div class="container-fluid p-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="aboutId">
+        <div class="my-auto">
+          <h1 class="mb-0">About
+            <span class="text-primary">MARK ITALIA</span>
+          </h1>
+          <div class="subheading mb-5">BARANGAY RECORDING INFORMATION SYSTEM · VERSION ELECTED 4.0</div>
+          
+          
+          
+          
+        </div>
+      </section>
+      
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="transactionId">
+        <div class="my-auto">
+          <h1 class="mb-0">Transactions</h1>
+        </div>
+      </section>
+      
+       <section class="resume-section p-3 p-lg-5 d-flex d-column" id="businessId">
+        <div class="my-auto">
+          <h1 class="mb-0">Business</h1>
+        </div>
+      </section>
+      
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="ids">
+        <div class="my-auto">
+          <h1 class="mb-0">Barangay ID Transactions</h1>
+        </div>
+      </section>
+      
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="casesId">
+        <div class="my-auto">
+          <h1 class="mb-0">Log Cases</h1>
+        </div>
+      </section>
+      
+    </div>
+	
+ <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+	<p:dialog responsive="true" style="background: transparent; !important;" position="center center" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+    	<p:graphicImage name="/gif/loading.gif" style="width: 3em;height: 3em"/>
+	</p:dialog>
+<ui:include src="menu.xhtml" />
+
+</h:form>
+
+</h:body>
+</f:view>
+</html>
