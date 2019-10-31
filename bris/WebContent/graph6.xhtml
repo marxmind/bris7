@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui" 
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="css/menu.css"/>
+             <h:outputStylesheet name="css/pageHeaderFooter.css"/>
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+
+<style>
+<!-- 
+
+
+ -->
+ </style>
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+</h:head>
+
+<h:body>
+	
+
+<h:form prependId="false" id="formId">
+<p:growl id="msg" showDetail="true"/>
+			<div class="page-header">
+			 	<a><p:outputLabel value="#{menuBean.labels[8]}" style="#{skin.pageTitle};"/></a>
+			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
+	        </div>
+
+			<p:layout fullPage="true">
+			
+			<p:layoutUnit position="east" size="0" visible="false" >
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="north" size="100"  visible="false" >
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" size="50" visible="false" >
+				
+		     </p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="0" visible="false">
+				
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+			
+				
+		<p:toolbar id="tbsearch" style="#{skin.toolbar}">
+			<f:facet name="left">
+		        <p:selectOneMenu id="filterId" value="#{graphBean.filterId}" style="width: 10em; color: black">
+	            		<f:selectItems value="#{graphBean.filters}"/>
+	            		<f:ajax event="change" listener="#{graphBean.init}" render="idModel"/>
+	            </p:selectOneMenu>&nbsp;
+	            <p:commandButton update="idModel" icon="fa fa-search" action="#{graphBean.init}"/>
+	            
+			</f:facet>
+			<f:facet name="right">
+				 <p:commandButton type="button" value="Reset" icon="fa fa-refresh" title="Click this button to reset graph" onclick="PF('chart').resetZoom()"/>
+				 <p:commandButton type="button" value="Export" icon="fa fa-share-alt" title="Click this button to export graph" onclick="exportChart()"/>
+			</f:facet>
+		</p:toolbar>	
+	
+	<p:chart id="idModel" type="bar" model="#{graphBean.barModel}" style="width:1200px;height:400px;#{skin.chart}" widgetVar="chart" />
+				
+			</p:layoutUnit>
+			
+			</p:layout>
+	
+	
+	
+	<p:dialog widgetVar="dlg" style="#{skin.dialog}" showEffect="clip" hideEffect="clip" modal="true" header="Chart as an Image" resizable="false">
+		<!-- <p:toolbar id="tbImg">
+			<f:facet name="left">
+	            
+			</f:facet>
+			<f:facet name="right">
+				<p:commandButton value="Print" type="button" icon="ui-icon-print" style="display: block; margin-bottom: 20px">
+					<p:printer target="img"/>
+				</p:commandButton>
+			</f:facet>
+		</p:toolbar> -->	
+    		<p:outputPanel id="outputId" layout="block" style="width:1000px;height:550px;#{skin.panel}"/>
+		</p:dialog>
+	
+<h:outputScript>
+
+function exportChart() {
+    //export image
+    $('#outputId').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+
+</h:outputScript>		
+
+<ui:include src="loader.xhtml" />
+<ui:include src="menu.xhtml" />
+</h:form>
+		
+</h:body>
+</html>

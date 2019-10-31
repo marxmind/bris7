@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:my="http://java.sun.com/jsf/composite/my"  
+  >
+ <f:view contentType="text/html"> 
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname} Graph</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+			<h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="sb-admin/font-awesome/css/all.min.css" />
+            <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
+            <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
+            
+            
+     </f:facet>
+     <f:facet name="last">       
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="sb-admin/bootstrap/js/bootstrap.bundle.min.js"/>
+            <h:outputScript name="sb-admin/jquery-easing/jquery.easing.min.js"/>
+            <h:outputScript name="sb-admin/js/sb-admin.min.js"/>
+            
+            
+    </f:facet>
+        
+    <title>#{versionBean.copyright.appname} Graph</title>
+
+<style>
+<!-- 
+
+.ui-growl{
+	top: 100px;
+	right: 500px; important!;
+	z-index: 1500; important!;
+}
+
+.ui-container{
+	top: 100px;
+	right: 500px; important!;
+}
+
+
+
+ -->
+ </style>
+ 
+<title>#{versionBean.copyright.appname} Graph</title>
+
+</h:head>
+
+<h:body id="page-top">
+<h:form prependId="false" id="formIdMain">
+
+<p:growl id="msg" life="8000" showDetail="true" />
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="#{skin.msg}">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ </p:confirmDialog>	
+ 
+ 
+ <nav class="navbar navbar-expand navbar-intel bg-intel static-top">
+
+      <a class="navbar-brand mr-1" href="main.xhtml">#{versionBean.copyright.appname}</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Navbar Search -->
+      <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        
+          		<div class="input-group">
+          		<p:selectOneMenu id="filterId" value="#{graphBean.filterId}" placeholder="Select..." filter="true" filterMatchMode="contains">
+	            		<f:selectItems value="#{graphBean.filters}"/>
+	            		<f:ajax event="change" listener="#{graphBean.init}" render="idModel"/>
+	            </p:selectOneMenu>&nbsp;
+	            <p:commandButton update="idModel" icon="fa fa-search" action="#{graphBean.init}"/>
+          		<p:commandButton type="button" value="Reset" icon="fa fa-refresh" title="Click this button to reset graph" onclick="PF('chart').resetZoom()"/>
+				<p:commandButton type="button" value="Export" icon="fa fa-share-alt" title="Click this button to export graph" onclick="exportChart()"/>
+          		</div>
+     </div>
+
+      <!-- menu top-->
+      <ui:include src="menutop.xhtml" />
+
+    </nav>
+    
+    <div id="wrapper">
+		
+      <!-- Sidebar -->
+      <ui:include src="sidebarmenu.xhtml" />
+
+      <div id="content-wrapper">        
+		  <div class="container-fluid">
+		  	<div class="card mb-3">
+	            <div class="card-header">
+	              <i class="fas fa-chart-area"></i>
+	              Chart</div>
+	            <div class="card-body">
+	              <p:chart id="idModel" type="bar" model="#{graphBean.barModel}" style="#{skin.chart}" widgetVar="chart" responsive="true"/>
+	            </div>
+	            
+          </div>	
+		  </div>
+       </div>
+       
+       <!-- Sticky Footer -->
+        <footer class="sticky-footer citizenBox">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>#{versionBean.copyright.copyrightname}</span>
+            </div>
+          </div>
+        </footer>
+       
+    </div>
+    
+    <p:dialog widgetVar="dlg" style="#{skin.dialog}" showEffect="clip" fitViewport="true" hideEffect="clip" modal="true" header="Chart as an Image" resizable="false">
+		<!-- <p:toolbar id="tbImg">
+			<f:facet name="left">
+	            
+			</f:facet>
+			<f:facet name="right">
+				<p:commandButton value="Print" type="button" icon="ui-icon-print" style="display: block; margin-bottom: 20px">
+					<p:printer target="img"/>
+				</p:commandButton>
+			</f:facet>
+		</p:toolbar> -->	
+    		<p:outputPanel id="outputId" layout="block" style="width:1000px;height:550px;#{skin.panel}"/>
+		</p:dialog>
+	
+<h:outputScript>
+
+function exportChart() {
+    //export image
+    $('#outputId').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+
+</h:outputScript>		
+
+<ui:include src="loader.xhtml" />
+    </h:form>
+    </h:body>
+    </f:view>
+</html>
+ 
