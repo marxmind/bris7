@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -48,7 +49,8 @@ import com.italia.marxmind.bris.utils.DateUtils;
  *
  */
 @Named
-@org.omnifaces.cdi.ViewScoped
+//@org.omnifaces.cdi.ViewScoped
+@SessionScoped
 public class CitizenWizardBean implements Serializable{
 
 	/**

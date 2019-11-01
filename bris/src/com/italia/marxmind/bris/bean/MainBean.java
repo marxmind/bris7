@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -91,7 +92,8 @@ import net.sourceforge.barbecue.BarcodeImageHandler;
 //@ManagedBean(name="mainBean", eager=true)
 //@ViewScoped
 @Named
-@org.omnifaces.cdi.ViewScoped
+//@org.omnifaces.cdi.ViewScoped
+@SessionScoped
 public class MainBean implements Serializable{
 
 	/**
