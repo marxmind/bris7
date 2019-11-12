@@ -91,8 +91,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				<p:autoComplete id="tb" placeholder="Search..." value="#{checkBean2.searchData}" completeMethod="#{checkBean2.autoPayToName}" effect="fade" styleClass="js-tilt">
 		    		<f:ajax event="change" listener="#{checkBean2.init}" render="dataChkId"/>
 		    	</p:autoComplete>
-				<p:calendar value="#{checkBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
-		    	<p:calendar value="#{checkBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
+				<p:calendar value="#{checkBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 10em"/>
+		    	<p:calendar value="#{checkBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 10em"/>
 				<p:commandButton id="findId" update="dataChkId"  icon="fa fa-search" actionListener="#{checkBean2.init}"/>
           	  </div>
      </div>
@@ -148,56 +148,56 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         <p:panelGrid id="chequeDataId" columns="6" layout="grid" styleClass="ui-noborder">
         
         		<p:outputLabel value="Account No" style="#{skin.label}"/>
-        		<p:selectOneMenu value="#{checkBean2.accountId}"  style="#{skin.select}">
+        		<p:selectOneMenu value="#{checkBean2.accountId}"  style="width: 15em">
 					<f:selectItems value="#{checkBean2.bankAccounts}"/>
 					<f:ajax listener="#{checkBean2.processAccnt}" render="chequeDataId"/>
 				</p:selectOneMenu>
 				
 								
 				<p:outputLabel value="Check No" style="#{skin.label}"/>
-				<p:inputText value="#{checkBean2.checkNumber}" placeholder="0000000000" style="#{skin.textInput}"/>
+				<p:inputText value="#{checkBean2.checkNumber}" placeholder="0000000000" style="width: 15em"/>
 				
 				
 				<p:outputLabel value="Date" style="#{skin.label}"/>
-            	<p:calendar value="#{checkBean2.calendarTrans}" style="#{skin.calendar}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+            	<p:calendar value="#{checkBean2.calendarTrans}" inputStyle="width: 15em" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
             	
             	<p:outputLabel value="DV No" style="#{skin.label}"/>
-				<p:inputText value="#{checkBean2.dvNumber}" placeholder="00-00-000" style="#{skin.textInput}"/>
+				<p:inputText value="#{checkBean2.dvNumber}" placeholder="00-00-000" style="width: 15em"/>
             	
             	<p:outputLabel value="MOOE Budget" style="#{skin.label}"/>	
-	            <p:selectOneMenu value="#{checkBean2.moi}"  style="#{skin.select}" filterMatchMode="contains" filter="true">
+	            <p:selectOneMenu value="#{checkBean2.moi}"  style="width: 15em" filterMatchMode="contains" filter="true">
 					<f:selectItems value="#{checkBean2.moes}"/>
 				</p:selectOneMenu>
             	
             	<p:outputLabel value="Purpose" style="#{skin.label}"/>
-            	<p:inputText value="#{checkBean2.purpose}" placeholder="type here" style="#{skin.textInput}"/>
+            	<p:inputText value="#{checkBean2.purpose}" placeholder="type here" style="width: 15em"/>
             	
 				<p:outputLabel value="Amount" style="#{skin.label}"/>
-				<p:inputNumber id="amntId" maxlength="10" value="#{checkBean2.amount}" style="#{skin.textInput}">
+				<p:inputNumber id="amntId" maxlength="10" value="#{checkBean2.amount}" inputStyle="width: 15em">
 					<f:ajax  event="keyup" render="inwordsId" listener="#{checkBean2.generateWords}"/>
 				</p:inputNumber>
 				
 				<p:outputLabel value="Pay To The Order Of" style="#{skin.label}"/>
 	            <p:inputTextarea id="idpayto" completeMethod="#{checkBean2.autoPayToName}" value="#{checkBean2.issueTo}" placeholder="Pay To The Order Of" queryDelay="750" minQueryLength="4"
-	            	 style="align-text: left;#{skin.textInput}">
+	            	 style="align-text: left;width: 15em">
 				</p:inputTextarea>
 				
 				<p:outputLabel value="Amount in words" style="#{skin.label}"/>	
-            	<p:inputTextarea id="inwordsId" value="#{checkBean2.numberInToWords}"  style="#{skin.textInput}" placeholder="PESOS ONLY"/>
+            	<p:inputTextarea id="inwordsId" value="#{checkBean2.numberInToWords}"  style="width: 15em" placeholder="PESOS ONLY"/>
             	
             	<p:outputLabel value="Status" style="#{skin.label}"/>	
-	            <p:selectOneMenu value="#{checkBean2.statusId}"  style="#{skin.select}">
+	            <p:selectOneMenu value="#{checkBean2.statusId}"  style="width: 15em">
 					<f:selectItems value="#{checkBean2.status}"/>
 				</p:selectOneMenu>
 				
             				
             	<p:outputLabel value="Sign by Public Official" style="#{skin.label}"/>
-				<p:selectOneMenu value="#{checkBean2.sigId1}" style="#{skin.select}" filterMatchMode="contains" filter="true">
+				<p:selectOneMenu value="#{checkBean2.sigId1}" style="width: 15em" filterMatchMode="contains" filter="true">
 						<f:selectItems value="#{checkBean2.signatory1}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Sign by Treasurer" style="#{skin.label}"/>
-	            <p:selectOneMenu value="#{checkBean2.sigId2}" style="#{skin.select}" filterMatchMode="contains" filter="true">
+	            <p:selectOneMenu value="#{checkBean2.sigId2}" style="width: 15em" filterMatchMode="contains" filter="true">
 					<f:selectItems value="#{checkBean2.signatory2}"/>
 				</p:selectOneMenu>
 								       	    	    

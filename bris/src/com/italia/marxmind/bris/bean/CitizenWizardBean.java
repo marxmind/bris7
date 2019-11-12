@@ -106,6 +106,19 @@ public class CitizenWizardBean implements Serializable{
 	private Customer emergencyContactPerson;
 	private List<Customer> contactPersons = new ArrayList<Customer>();//Collections.synchronizedList(new ArrayList<Customer>());
 	
+	/**
+	 * adding this code to forcefully reloading the init method @see at sidemenu.xhtml actionListener="#{mainBean.reloadinit}"
+	 * this problem exist because of changing the scope from @org.omnifaces.cdi.ViewScoped to  javax.enterprise.context.SessionScoped;
+	 * PostConstruct in enterprise.sessionScope call init method once only
+	 */
+	public void reloadinit() {
+		System.out.println("Reloading init");
+		setSearchCustomer(null);
+		clearFlds();
+		init();
+		System.out.println("Reloading init end here");
+	}
+	
 	@PostConstruct
 	public void init() {
 		

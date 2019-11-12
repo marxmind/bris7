@@ -23,6 +23,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.PrimeFaces;
@@ -49,9 +50,11 @@ import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 import com.italia.marxmind.bris.utils.Numbers;
 
-@ManagedBean(name="checkBean2", eager=true)
-@SessionScoped
-public class ChequeProcessing2 implements Serializable{
+//@ManagedBean(name="checkBean2", eager=true)
+//@SessionScoped
+@Named
+@javax.enterprise.context.SessionScoped
+public class CheckBean2 implements Serializable{
 
 	/**
 	 * 

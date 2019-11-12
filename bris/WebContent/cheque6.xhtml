@@ -204,7 +204,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				
 				
 				<p:outputLabel value="Date" style="#{skin.label}"/>
-            	<p:calendar value="#{checkBean.calendarTrans}" style="width:15em;#{skin.calendar}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
+            	<p:calendar value="#{checkBean.calendarTrans}" inputStyle="width: 15em" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"/>
             	
             	<p:outputLabel value="DV No" style="#{skin.label}"/>
 				<p:inputText value="#{checkBean.dvNumber}" a:placeholder="00-00-000" style="width:15em;#{skin.textInput}"/>
@@ -224,7 +224,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				
 				
 				<p:outputLabel value="Amount" style="#{skin.label}"/>
-				<p:inputNumber id="amntId" maxlength="10" value="#{checkBean.amount}" style="width: 15em;#{skin.textInput}">
+				<p:inputNumber id="amntId" maxlength="10" value="#{checkBean.amount}" inputStyle="width: 15em">
 					<f:ajax  event="keyup" render="inwordsId" listener="#{checkBean.generateWords}"/>
 				</p:inputNumber>
 				

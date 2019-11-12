@@ -22,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.PrimeFaces;
@@ -76,8 +77,10 @@ import net.sourceforge.barbecue.BarcodeImageHandler;
  * @version 1.0
  *
  */
-@ManagedBean(name="caseBean2", eager=true)
-@SessionScoped
+//@ManagedBean(name="caseBean2", eager=true)
+//@SessionScoped
+@Named
+@javax.enterprise.context.SessionScoped
 public class CasesBean2 implements Serializable{
 
 	/**
@@ -153,6 +156,19 @@ public class CasesBean2 implements Serializable{
 	private StreamedContent tempPdfFile; 
 	
 	private boolean readySave;
+	
+	/**
+	 * adding this code to forcefully reloading the init method @see at sidemenu.xhtml actionListener="#{mainBean.reloadinit}"
+	 * this problem exist because of changing the scope from @org.omnifaces.cdi.ViewScoped to  javax.enterprise.context.SessionScoped;
+	 * PostConstruct in enterprise.sessionScope call init method once only
+	 */
+	public void reloadinit() {
+		System.out.println("Reloading init");
+		setSearchParam(null);
+		clearFlds();
+		init();
+		System.out.println("Reloading init end here");
+	}
 	
 	@PostConstruct
 	public void init(){

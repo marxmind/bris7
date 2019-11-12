@@ -45,24 +45,24 @@
           <br/>	
    		<div id="myMenu" class="sidebarMenu">
    		  
-           <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.home}" disabled="#{featuresBean.profile}" ajax="false" immediate="false" onclick="showLoading()">
+           <p:commandLink style="color: white" styleClass="nav-link" actionListener="#{mainBean.reloadinit}" action="#{menuBean.home}" disabled="#{featuresBean.profile}" ajax="false" immediate="false" onclick="showLoading()">
             	<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[0]}</span>
             </p:commandLink>
-          <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}" ajax="false" immediate="false" onclick="showLoading()">
+          <p:commandLink style="color: white" styleClass="nav-link" actionListener="#{citizenWizardBean.reloadinit}" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}" ajax="false" immediate="false" onclick="showLoading()">
             	<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[1]}</span>
             </p:commandLink>
-        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.clearance}" disabled="#{featuresBean.clearance}" ajax="false" immediate="false" onclick="showLoading()">
+        	<p:commandLink style="color: white" styleClass="nav-link" actionListener="#{documentsBean.reloadinit}" action="#{menuBean.clearance}" disabled="#{featuresBean.clearance}" ajax="false" immediate="false" onclick="showLoading()">
         		<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[2]}</span>
         	</p:commandLink>
-        	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.cards}" disabled="#{featuresBean.idGeneration}" ajax="false" immediate="false" onclick="showLoading()">
+        	<p:commandLink style="color: white" styleClass="nav-link" actionListener="#{cardBean2.reloadinit}" action="#{menuBean.cards}" disabled="#{featuresBean.idGeneration}" ajax="false" immediate="false" onclick="showLoading()">
         		<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[3]}</span>
         	</p:commandLink>
         	
-        	 <p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.blotters}" disabled="#{featuresBean.blotters}" ajax="false" immediate="false" onclick="showLoading()">
+        	 <p:commandLink style="color: white" styleClass="nav-link" actionListener="#{casesBean2.reloadinit}" action="#{menuBean.blotters}" disabled="#{featuresBean.blotters}" ajax="false" immediate="false" onclick="showLoading()">
         	 	<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[5]}</span>
         	 </p:commandLink>

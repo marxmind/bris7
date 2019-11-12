@@ -2,8 +2,10 @@ package com.italia.marxmind.bris.application;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import com.italia.marxmind.bris.controller.ThemesDecoder;
@@ -17,8 +19,10 @@ import com.italia.marxmind.bris.sessions.SessionBean;
  * @version 1.0
  *
  */
-@ApplicationScoped
-@ManagedBean(name="themeBean", eager=true)
+//@ApplicationScoped
+//@ManagedBean(name="themeBean", eager=true)
+@Named
+@SessionScoped
 public class ThemeBean implements Serializable{
 
 	/**
@@ -27,6 +31,7 @@ public class ThemeBean implements Serializable{
 	private static final long serialVersionUID = 147868854437557L;
 
 	public String getApplicationTheme(){
+	 
 		String theme = "nova-colored";
 		System.out.println("Applying theme...");
 		try{
@@ -34,9 +39,11 @@ public class ThemeBean implements Serializable{
 		    theme = ThemesDecoder.themeDecode(theme);*/
 			HttpSession session = SessionBean.getSession();
 			theme = session.getAttribute("theme").toString();
-		System.out.println("Theme " + theme + " has been applied...");}catch(Exception e){}
+			System.out.println("Theme " + theme + " has been applied...");
+		}catch(Exception e){}
 		return theme;
 	}
+	
 	/*
 	private List<Themes> themes;
 	private Themes theme;
