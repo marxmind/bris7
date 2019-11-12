@@ -34,7 +34,7 @@ import com.italia.marxmind.bris.sessions.SessionBean;
 @Named
 @javax.enterprise.context.SessionScoped
 public class MenuBean implements Serializable{
-
+ 
 	/**
 	 * 
 	 */
