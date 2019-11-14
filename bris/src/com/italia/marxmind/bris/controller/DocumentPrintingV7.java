@@ -497,22 +497,22 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			REPORT_NAME = BURIAL_ASS_DOC;
 			word = new StringBuilder();
 			word.append(Words.getTagName("asstance-burial-string-1"));
-			word.replace(word.indexOf("<diedperson>"),word.indexOf("<diedperson>")+2, beneciaryName);
+			word.replace(word.indexOf("<diedperson>"),word.indexOf("<diedperson>")+12, beneciaryName);
 			word.replace(word.indexOf("<civilstatus>"),word.indexOf("<civilstatus>")+13, civilStatus);
 			word.replace(word.indexOf("<diedpersonaddress>"),word.indexOf("<diedpersonaddress>")+19, address);
 			str.append(word);
 			
 			str.append(supportdtls);
 			word = new StringBuilder();
-			word.append(Words.getTagName("asstance-burial-string-2"));
-			word.replace(word.indexOf("<heshe>"),word.indexOf("<heshe>")+7, heshe);
+			word.append(Words.getTagName("asstance-burial-string-2").replace("<heshe>", heshe));
+			//word.replace(word.indexOf("<heshe>"),word.indexOf("<heshe>")+7, heshe);
 			str.append(word);
 			
 			word = new StringBuilder();
 			word.append(Words.getTagName("asstance-burial-string-3"));
 			word.replace(word.indexOf("<requestor>"),word.indexOf("<requestor>")+11, requestor);
 			word.replace(word.indexOf("<relationship>"),word.indexOf("<relationship>")+14, relationship);
-			word.replace(word.indexOf("<diedperson>"),word.indexOf("<diedperson>")+1, beneciaryName);
+			word.replace(word.indexOf("<diedperson>"),word.indexOf("<diedperson>")+12, beneciaryName);
 			str.append(word);
 			
 			detail_1 = str.toString();
