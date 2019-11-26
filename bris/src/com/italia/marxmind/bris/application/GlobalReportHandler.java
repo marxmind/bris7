@@ -42,7 +42,14 @@ public class GlobalReportHandler {
 				case 2:
 					report = DocumentFormatter.getTagName("v6_bank_letter");	break;
 				}
-		}
+		}else if(DocStyle.V7.getName().equalsIgnoreCase(docStyle)) {
+			switch(rpt.getId()) {
+			case 1:
+				report = DocumentFormatter.getTagName("v7_transmittal_letter"); break;
+			case 2:
+				report = DocumentFormatter.getTagName("v7_bank_letter");	break;
+			}
+	}
 		
 		return report;
 	}
