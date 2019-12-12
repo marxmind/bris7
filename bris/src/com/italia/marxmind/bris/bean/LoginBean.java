@@ -14,16 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.PrimeFaces;
 
 import com.italia.marxmind.bris.application.ClientInfo;
 import com.italia.marxmind.bris.application.DailyReport;
@@ -34,8 +31,6 @@ import com.italia.marxmind.bris.controller.UserConfigMngt;
 import com.italia.marxmind.bris.controller.UserDtls;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.enm.Feature;
-import com.italia.marxmind.bris.enm.UserAccess;
-import com.italia.marxmind.bris.enm.UserConfig;
 import com.italia.marxmind.bris.reader.ReadConfig;
 import com.italia.marxmind.bris.security.License;
 import com.italia.marxmind.bris.security.Module;
@@ -54,7 +49,7 @@ import com.italia.marxmind.bris.utils.Whitelist;
  */
 
 @Named
-@SessionScoped
+@ViewScoped
 public class LoginBean implements Serializable{
 
 	private static final long serialVersionUID = 1094801825228386363L;
@@ -102,8 +97,11 @@ public class LoginBean implements Serializable{
 		this.password = password;
 	}
 	
+	/* */
+	
 	@PostConstruct
 	public void init(){
+		System.out.println("Initialize init = u="+getName() + " p " + getPassword());
 		//invalidate session
 		//IBean.removeBean();
 		//DailyReport.runReport();
@@ -168,7 +166,7 @@ public class LoginBean implements Serializable{
 	public String validateUserNamePassword(){
 		
 		 HttpSession ses = SessionBean.getSession();
-		 ses.setAttribute("barangayid", getBusinessId());
+		 try{ses.setAttribute("barangayid", getBusinessId());}catch(Exception e) {ses.setAttribute("barangayid", "0");}
 		 boolean isOk = false;
 		
 		Login in = Login.validUser(Whitelist.remove(getName()), getPassword()); 
@@ -370,7 +368,8 @@ public class LoginBean implements Serializable{
 		logUserOut();
 		setName("");
 		setPassword("");
-		return "login";
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/login.xhtml?faces-redirect-true";
 	}
 
 
