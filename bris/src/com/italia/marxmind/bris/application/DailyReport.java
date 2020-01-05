@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.primefaces.PrimeFaces;
-
 import com.italia.marxmind.bris.bean.ReportGeneratorBean;
 import com.italia.marxmind.bris.controller.CaseFilling;
 import com.italia.marxmind.bris.controller.Cases;
@@ -607,7 +605,7 @@ public class DailyReport {
 					msg += "<br/>";
 					msg += "<p>Please see attached file for the report transactions</p>";
 					msg += "<br/>";
-					msg += "<p><a href=\"/bris/faces/attachment/"+ fileName +".html\" target=\"_blank\">Click here to see the attachment</p>";
+					msg += "<p><a href=\"/bris/marxmind/attachment/"+ fileName +".html\" target=\"_blank\">Click here to see the attachment</p>";
 					Email.emailSavePath(msg, fileName);
 					//Email.transferAttachment(fileName + ".html");
 					e.setContendId(fileName);
@@ -636,7 +634,7 @@ public class DailyReport {
 				msg += "<br/>";
 				msg += "<p>Please see attached file for the report transactions</p>";
 				msg += "<br/>";
-				msg += "<p><a href=\"/bris/faces/attachment/"+ fileName +".html\" target=\"_blank\">Click here to see the attachment</p>";
+				msg += "<p><a href=\"/bris/marxmind/attachment/"+ fileName +".html\" target=\"_blank\">Click here to see the attachment</p>";
 				Email.emailSavePath(msg, fileName);
 				//Email.transferAttachment(fileName + ".html");
 				e.setContendId(fileName);
