@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2017-09-17T17:01:37 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="blotters" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="77693a1c-9c94-4fd9-8ff9-2ac2896908d3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="PARAM_DATE_TIME_REPORTED" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_DATE_TIME" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_PLACE" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_TYPE" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_STATUS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_REPORTING_PERSONS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_REPORTED_PERSONS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_VICTIM_PERSONS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_LUPON_PERSONS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_PREPARED_BY" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_DETAILS" class="java.lang.String"/>
+	<parameter name="PARAM_INCIDENT_SOLUTIONS" class="java.lang.String"/>
+	<parameter name="PARAM_BARANGAY_NAME" class="java.lang.String"/>
+	<parameter name="PARAM_MUNICIPALITY_NAME" class="java.lang.String"/>
+	<parameter name="PARAM_PROVINCE_NAME" class="java.lang.String"/>
+	<parameter name="PARAM_BARANGAY_SEAL" class="java.io.InputStream"/>
+	<parameter name="PARAM_MUNICIPAL_SEAL" class="java.io.InputStream"/>
+	<parameter name="PARAM_PRINTED_DATE" class="java.lang.String"/>
+	<parameter name="PARAM_BARANGAY_LOGO_TRANS" class="java.io.InputStream"/>
+	<parameter name="PARAM_CAPTAIN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="f1" class="java.lang.String"/>
+	<field name="f2" class="java.lang.String"/>
+	<field name="f3" class="java.lang.String"/>
+	<field name="f4" class="java.lang.String"/>
+	<field name="f5" class="java.lang.String"/>
+	<field name="f6" class="java.lang.String"/>
+	<field name="f7" class="java.lang.String"/>
+	<field name="f8" class="java.lang.String"/>
+	<field name="f9" class="java.lang.String"/>
+	<field name="f10" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="14" width="400" height="13" uuid="45533a1a-f98c-4405-ac92-1429c45d133e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_PROVINCE_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="27" width="400" height="13" uuid="336a5811-b431-4f99-87c0-ccc3862699f2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_MUNICIPALITY_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="40" width="400" height="13" uuid="f53d37f1-03f2-4dab-9b13-1ebadef72476">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_BARANGAY_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="50" width="200" height="21" uuid="50caa3c3-e70a-408e-9723-a653690d9775"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BLOTTER REPORT]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="150" y="-5" width="50" height="50" uuid="b0616eca-f399-4f74-ac9a-06ab2008627c"/>
+				<imageExpression><![CDATA[$P{PARAM_BARANGAY_SEAL}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="363" y="-1" width="40" height="41" uuid="5a685b59-a89a-4ae4-9116-b98a7be6a7bd"/>
+				<imageExpression><![CDATA[$P{PARAM_MUNICIPAL_SEAL}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="80" y="0" width="400" height="13" uuid="c1cf866c-042d-4668-96f8-cce65476a82b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Republic Of The Philippines ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="393" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="103" y="11" width="210" height="13" uuid="6aa64994-9a3a-40dd-9faa-874c9a6a719d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_DATE_TIME_REPORTED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="11" width="103" height="13" uuid="4a081ad2-d9a8-4188-9fab-3441c954c18d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Date & Time Reported:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="120" height="13" uuid="e8b80f74-acb2-4cb9-b794-fdef6caa91a2">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Date & Time of Incident:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="120" y="24" width="193" height="13" uuid="b06bc9c4-8631-4600-98fd-7131d619b301">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_DATE_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="37" width="80" height="13" uuid="a0d4d237-29d6-41a8-a405-4bd5f795edab">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Incident Place:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="37" width="233" height="13" uuid="5b585628-6cb9-46be-93b4-5f551bc899d8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_PLACE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="35" height="13" uuid="32471987-a3d9-4ec8-befc-28d81c3bb0ce">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="35" y="50" width="145" height="13" uuid="7f890fae-b938-4b99-92a5-1e57fc371687">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_STATUS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="211" width="90" height="13" uuid="0102430f-3baf-4c1a-929c-7c623f53931b">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Incident Details:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="18" y="225" width="532" height="13" uuid="f75f1630-ed5c-4340-a8f7-ce32233a6c91">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_DETAILS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="87" width="90" height="13" uuid="4bfd0c4a-d7e5-4c57-8ee7-e0aa2d45002e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Reporting Person/s:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="100" width="550" height="13" uuid="be129d01-ca77-4e34-862e-382d26f7bb16">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_REPORTING_PERSONS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="126" width="90" height="13" uuid="a11425e8-9ab8-44af-91ee-751160b1469a">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Reported Person/s:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="139" width="550" height="13" uuid="e5fb5e38-7d91-47f6-9bbf-42ec055bc3a3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_REPORTED_PERSONS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="168" width="90" height="13" uuid="c4e8c514-8557-4ba3-80c7-b36b4cc81572">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Victim/s:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="181" width="550" height="13" uuid="96c31155-b612-4624-ba0c-3bd2b7b8c48e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_VICTIM_PERSONS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="63" width="70" height="13" uuid="4e5dcdeb-43a6-416d-8e1c-e067087cdcce">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Incident Type:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="70" y="63" width="243" height="13" uuid="3fbff6f2-f7e3-4954-b1dc-57d9bec426cf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_TYPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="262" width="90" height="13" uuid="8b3119ff-4047-4dc4-8ccf-015332b59bd2">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Solutions:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="19" y="276" width="532" height="13" uuid="157e9ec6-3c01-4fbd-9e7b-9164042efa9d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_SOLUTIONS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="303" width="390" height="13" uuid="33a97faa-fe3d-47ff-87dd-994dfa126894">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[This incident report was handled by the following barangay incident board committee:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="19" y="317" width="532" height="13" uuid="826eece2-d82a-4957-9300-91eb35221cd6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_LUPON_PERSONS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="314" y="10" width="240" height="13" uuid="e57e5dd4-1fdb-4c0f-a643-5add254aa608">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{PARAM_INCIDENT_PREPARED_BY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="380" y="-68" width="175" height="13" uuid="3eacb98d-c152-4912-bd86-af82fce9e5c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_PRINTED_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="300" y="352" width="240" height="16" uuid="6b87a589-b26b-4a3c-9742-2da8dd0d938c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAM_CAPTAIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="369" width="240" height="17" uuid="9b64a511-8fd5-4daf-bd9c-1602722c649d"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUNONG BARANGAY]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
