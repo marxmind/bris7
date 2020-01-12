@@ -40,7 +40,7 @@
             <p:commandLink styleClass="dropdown-item" value="OD Setup" oncomplete="PF('dlgOd').show()" actionListener="#{odBean.loadOD}" update="odData idComEx" onclick="showLoading()"/>
             <p:commandLink styleClass="dropdown-item" value="Commelec Directory" oncomplete="PF('dlgCom').show()" actionListener="#{comBean.loadNames}" update="comData" onclick="showLoading()"/>
             <div class="dropdown-divider"></div>
-            <p:commandLink styleClass="dropdown-item" value="#{menuBean.labels[14]}" action="#{loginBean.logout}" ajax="false" immediate="false" onclick="showLoading()"/>
+            <p:commandLink styleClass="dropdown-item" value="#{menuBean.labels[14]}" action="#{logoutBacking.logout}" ajax="false" immediate="false" onclick="showLoading()"/>
           </div>
         </li>
       </ul>

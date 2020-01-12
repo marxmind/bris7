@@ -49,7 +49,7 @@
             	<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[0]}</span>
             </p:commandLink>
-          <p:commandLink style="color: white" styleClass="nav-link" actionListener="#{citizenWizardBean.reloadinit}" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}" ajax="false" immediate="false" onclick="showLoading()">
+           <p:commandLink style="color: white" styleClass="nav-link" actionListener="#{citizenWizardBean.reloadinit}" action="#{menuBean.adminTaxpayer}" disabled="#{featuresBean.registration}" ajax="false" immediate="false" onclick="showLoading()">
             	<i class="fas fa-fw fa-folder"></i>
             	<span>#{menuBean.labels[1]}</span>
             </p:commandLink>
@@ -68,7 +68,7 @@
         	 </p:commandLink>
         	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.adminBusiness}" disabled="#{featuresBean.business}" ajax="false" immediate="false" onclick="showLoading()">
         		<i class="fas fa-fw fa-folder"></i>
-            	<span>#{menuBean.labels[6]}</span>
+            	<span>Business List</span>
         	</p:commandLink>
         	
         	<p:commandLink style="color: white" styleClass="nav-link" action="#{menuBean.moemeter}" disabled="#{featuresBean.moemeter}" ajax="false" immediate="false" onclick="showLoading()">

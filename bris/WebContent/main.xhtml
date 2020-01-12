@@ -298,18 +298,18 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				    	<div class="textInfo">
 				  			<p:commandButton styleClass="pbutton js-tilt" value="Discover" icon="fa fa-user" update="idContentProp" onclick="viewProfileDtls();" actionListener="#{mainBean.clickItemProfile(rpt)}"/>
 						  	<p:commandButton styleClass="pbutton js-tilt" value="Transactions" icon="fa fa-info-circle" update="idContent tabTrans" actionListener="#{mainBean.clickItem(rpt)}" oncomplete="PF('multiDialogProfile').show()"/>
-						    <p:button styleClass="pbutton js-tilt" outcome="admincustomer" value="Update" icon="fa fa-pencil-square-o" onclick="showLoading()">
+						    <p:commandButton styleClass="pbutton js-tilt" action="admincustomer" actionListener="#{citizenWizardBean.reloadinit}" value="Update" icon="fa fa-pencil-square-o" onclick="showLoading()">
 								<f:param name="editProfile" value="#{rpt.fullname}"/>
-							</p:button>
-							<p:commandButton styleClass="pbutton js-tilt" action="clearance" icon="fa fa-pencil-square-o"  value="Create Doc" title="Please click here to create document details" onclick="showLoading()">
+							</p:commandButton>
+							<p:commandButton styleClass="pbutton js-tilt" action="clearance" actionListener="#{documentsBean.reloadinit}" icon="fa fa-pencil-square-o"  value="Create Doc" title="Please click here to create document details" onclick="showLoading()">
 								<f:param name="addDoc" value="#{rpt.customerid}"/>
 							</p:commandButton>
-							<p:button styleClass="pbutton js-tilt" outcome="card" icon="fa fa-pencil-square-o"  value="Create ID" title="Please click here to create ID details" onclick="showLoading()">
+							<p:commandButton styleClass="pbutton js-tilt" action="card" actionListener="#{cardBean2.reloadinit}" icon="fa fa-pencil-square-o"  value="Create ID" title="Please click here to create ID details" onclick="showLoading()">
 								<f:param name="addCard" value="#{rpt.customerid}"/>
-							</p:button>
-							<p:button styleClass="pbutton js-tilt" outcome="cases" icon="fa fa-pencil-square-o"  value="Create Summon" title="Please click here to summon this person" onclick="showLoading()">
+							</p:commandButton>
+							<p:commandButton styleClass="pbutton js-tilt" action="cases" actionListener="#{casesBean2.reloadinit}" icon="fa fa-pencil-square-o"  value="Create Summon" title="Please click here to summon this person" onclick="showLoading()">
 								<f:param name="addCase" value="#{rpt.customerid}"/>
-							</p:button>  	
+							</p:commandButton>  	
 				    	</div>
 				  </div>
 				  

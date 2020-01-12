@@ -56,6 +56,7 @@ public class DocumentPrintingV7 {
 	private static final String COE_DOC = DocumentFormatter.getTagName("v7_coe-document");
 	private static final String AUTHORIZATION_DOC = DocumentFormatter.getTagName("v7_authorization-document");
 	private static final String LAND_DOC = DocumentFormatter.getTagName("v7_land-document");
+	private static final String TRIBAL_LAND_DOC = DocumentFormatter.getTagName("v7_tribal-land-document");
 	
 public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		System.out.println("============== Building on document form version 7 =====================");
@@ -1662,7 +1663,9 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		
 		detail_2 = str.toString();
 	
-	}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==clr.getPurposeType() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()==clr.getPurposeType()){
+	}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==clr.getPurposeType() 
+			|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()==clr.getPurposeType() 
+			|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()==clr.getPurposeType()){
 		
 		REPORT_NAME = LAND_DOC;
 		
@@ -1692,8 +1695,11 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		
 		if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==clr.getPurposeType()) {
 			words = words.replace("<owntype>", "owner");
-		}else {
+		}else if(com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()==clr.getPurposeType()) {
 			words = words.replace("<owntype>", "claimant");
+		}else if(com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()==clr.getPurposeType()) {
+			words = words.replace("<owntype>", "owner");
+			REPORT_NAME = TRIBAL_LAND_DOC;
 		}
 		
 		
@@ -1708,7 +1714,11 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		words = words.replace("<west>", note[6]);
 		str.append(words);
 		
-		words = Words.getTagName("land-permit-string-4");
+		if(com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()==clr.getPurposeType()) {
+			words = Words.getTagName("land-permit-string-6");
+		}else {
+			words = Words.getTagName("land-permit-string-4");
+		}
 		str.append(words);
 		
 		words = Words.getTagName("land-permit-string-5");

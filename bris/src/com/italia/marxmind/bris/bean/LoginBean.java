@@ -101,7 +101,7 @@ public class LoginBean implements Serializable{
 	
 	@PostConstruct
 	public void init(){
-		System.out.println("Initialize init = u="+getName() + " p " + getPassword());
+		//System.out.println("Initialize init = u="+getName() + " p " + getPassword());
 		//invalidate session
 		//IBean.removeBean();
 		//DailyReport.runReport();
@@ -223,7 +223,7 @@ public class LoginBean implements Serializable{
 			setPassword("");
 			result= "login";
 		}
-		System.out.println(getErrorMessage());
+		//System.out.println(getErrorMessage());
 		return result;
 	}
 	

@@ -1161,7 +1161,9 @@ public class DocumentsBean implements Serializable{
 			setLandFld(true);
 			setTreeFld(true);
 			
-		}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()== getPurposeTypeId() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId()){	
+		}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()== getPurposeTypeId() 
+				|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId()
+				|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()== getPurposeTypeId()){	
 			
 			setLargeCattleFld(true);
 			setRelationshipFld(true);
@@ -2184,8 +2186,10 @@ public class DocumentsBean implements Serializable{
 			
 			docTypes.add(new SelectItem(DocTypes.CERTIFICATE.getId(), DocTypes.CERTIFICATE.getName()));
 			
-		}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId() || 
-				com.italia.marxmind.bris.enm.Purpose.TREE_OWNERSHIP.getId()==getPurposeTypeId()){
+		}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() 
+				|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId() 
+				|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()== getPurposeTypeId()
+				|| com.italia.marxmind.bris.enm.Purpose.TREE_OWNERSHIP.getId()==getPurposeTypeId()){
 			
 			docTypes.add(new SelectItem(DocTypes.CERTIFICATE.getId(), DocTypes.CERTIFICATE.getName()));
 			
@@ -2719,7 +2723,9 @@ public class DocumentsBean implements Serializable{
 				
 				isOk = motorCycleValidation(isOk);
 				
-			}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId()){	
+			}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() 
+					|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId() 
+					|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()== getPurposeTypeId()){	
 				
 				isOk = validateLandDetails(isOk);
 				
@@ -2847,7 +2853,9 @@ public class DocumentsBean implements Serializable{
 						
 						cl.setNotes(notes.toUpperCase());
 					
-					}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId()){	
+					}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==getPurposeTypeId() 
+							|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId() 
+							|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()== getPurposeTypeId()){	
 						
 						notes = getLandTypeId()+"<:>";
 						notes += getLotNo()+"<:>";
@@ -3289,7 +3297,9 @@ public class DocumentsBean implements Serializable{
 					setMotorColor(note[2]);
 					saveMotor();
 				}catch(Exception e){}
-				}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==cl.getPurposeType() || com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId()){
+				}else if(com.italia.marxmind.bris.enm.Purpose.LAND_OWNERSHIP.getId()==cl.getPurposeType() 
+						|| com.italia.marxmind.bris.enm.Purpose.LAND_ASSESSTMENT.getId()== getPurposeTypeId() 
+						|| com.italia.marxmind.bris.enm.Purpose.TRIBAL_LAND_CERTIFICATION.getId()== getPurposeTypeId()){
 					try{
 					String[] note = cl.getNotes().split("<:>");
 					setLandTypeId(Integer.valueOf(note[0]));
