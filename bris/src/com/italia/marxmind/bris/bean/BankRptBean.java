@@ -40,7 +40,6 @@ import com.italia.marxmind.bris.enm.Positions;
 import com.italia.marxmind.bris.qrcode.QRCode;
 import com.italia.marxmind.bris.reader.ReadConfig;
 import com.italia.marxmind.bris.reports.ChequesRpt;
-import com.italia.marxmind.bris.reports.ClearanceRpt;
 import com.italia.marxmind.bris.reports.ReadXML;
 import com.italia.marxmind.bris.reports.ReportCompiler;
 import com.italia.marxmind.bris.reports.ReportTag;
