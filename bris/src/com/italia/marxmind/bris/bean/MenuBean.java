@@ -6,10 +6,6 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -29,8 +25,6 @@ import com.italia.marxmind.bris.sessions.SessionBean;
  * @version 1.0
  *
  */
-//@ManagedBean(name="menuBean", eager=true)
-//@ViewScoped
 @Named
 @javax.enterprise.context.SessionScoped
 public class MenuBean implements Serializable{
