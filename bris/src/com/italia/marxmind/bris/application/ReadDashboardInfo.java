@@ -128,7 +128,6 @@ public class ReadDashboardInfo {
 					
 					info.put("Start", Double.valueOf(prop.getProperty("cit-start-record")));
 					
-					
 				}catch(IOException e) {}
 				
 			}else if("zones".equalsIgnoreCase(key)) {
@@ -138,7 +137,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("cit-zones").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 			}catch(IOException e) {}
@@ -149,7 +150,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("cit-brackets").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -161,7 +164,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("doc-types").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -173,7 +178,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("doc-months").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -185,7 +192,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("id-month-zones").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -197,7 +206,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("id-months").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -209,7 +220,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("cases-pending").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -221,7 +234,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("cases-months-last-year").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -233,7 +248,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("cases-months-this-year").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -245,7 +262,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("case-status").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -266,7 +285,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("check-mooe").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -278,7 +299,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("check-months-used").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -290,7 +313,9 @@ public class ReadDashboardInfo {
 				
 				String[] vals = prop.getProperty("check-months-lastyear-used").split(",");
 				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					try {
+						info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+					}catch(ArrayIndexOutOfBoundsException e) {}
 				}
 				
 				
@@ -301,9 +326,11 @@ public class ReadDashboardInfo {
 				prop.load(new FileInputStream(fileName));
 				
 				String[] vals = prop.getProperty("doc-common").split(",");
-				for(String a : vals) {
-					info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
-				}
+					for(String a : vals) {
+						try {
+							info.put(a.split("=")[0], Double.valueOf(a.split("=")[1]));
+						}catch(ArrayIndexOutOfBoundsException e) {}
+					}
 				
 				
 			}catch(IOException e) {}
