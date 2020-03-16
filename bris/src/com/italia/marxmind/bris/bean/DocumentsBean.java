@@ -2893,7 +2893,18 @@ public class DocumentsBean implements Serializable{
 					}else if(com.italia.marxmind.bris.enm.Purpose.MULTIPURPOSE.getId()==getPurposeTypeId()){
 						
 						int cnt =1;
-						//for(Purpose p : getPurSelected()){
+						for(Object o : getMultipurposeSelected()) {
+							int p = (Integer)o;
+							if(cnt>1){
+								notes += "<:>"+ p;
+							}else{
+								notes = p+"";
+							}
+							cnt++;
+						}
+						cl.setNotes(notes);
+						
+						/*change by above codes i dont know why this code wont work - java 8 works perfectly not on java 11
 						for(String p : getMultipurposeSelected()) {
 							if(cnt>1){
 								notes += "<:>"+ p;
@@ -2903,6 +2914,7 @@ public class DocumentsBean implements Serializable{
 							cnt++;
 						}
 						cl.setNotes(notes);
+						*/
 						
 						
 					}else{
