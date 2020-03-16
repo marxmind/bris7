@@ -269,7 +269,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             								<p:rowToggler />
             							 </p:column>
 				                         
-				                         <p:column headerText="[*]" width="20">
+				                          	<p:column headerText="[*]" width="20">
 				            					<p:commandButton update=":formId:businessDataId :formId:bizId msg" icon="fa fa-trash"  actionListener="#{clearBean.deleteBizRow(biz)}" title="Click this button to delete">
 				            						<p:confirm header="Confirmation" message="Are you sure you want to delete this data?" icon="ui-icon-alert" />
 				            					</p:commandButton>
