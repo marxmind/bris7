@@ -53,7 +53,8 @@ public enum Bris {
 	YEARLY_BUDGET("yearlybudget"),
 	THEMES("themes.xml"),
 	MENUSTYLE("menustyle"),
-	RESERVATION_FILE_XML("reservation.xml");
+	RESERVATION_FILE_XML("reservation.xml"),
+	DB_TIMEZONE("serverTimezone=UTC");
 	
 	private String name;
 	

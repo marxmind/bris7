@@ -29,6 +29,7 @@ import com.italia.marxmind.bris.controller.BarangayConf;
 import com.italia.marxmind.bris.controller.Login;
 import com.italia.marxmind.bris.controller.UserConfigMngt;
 import com.italia.marxmind.bris.controller.UserDtls;
+import com.italia.marxmind.bris.database.Conf;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.enm.Feature;
 import com.italia.marxmind.bris.reader.ReadConfig;
@@ -101,19 +102,12 @@ public class LoginBean implements Serializable{
 	
 	@PostConstruct
 	public void init(){
-		//System.out.println("Initialize init = u="+getName() + " p " + getPassword());
-		//invalidate session
-		//IBean.removeBean();
-		//DailyReport.runReport();
-		//load business wallpaper
-		//String wallpaper = ReadConfig.value(Bris.BUSINESS_WALLPAPER_FILE);
-		
-		//copyWallpaperImg(wallpaper);
-		
-		//String path = REPORT_PATH + ReadConfig.value(Bris.BARANGAY_NAME).replace(" ", "") + Bris.SEPERATOR.getName();
-		//String filoLogo = path + "logo.png";
-		//copyLogo(filoLogo);
-		
+		//if("".equalsIgnoreCase(getUi())) {
+			  System.out.println("Running report");
+			  System.out.println("=======================================BEFORE TIME " + DateUtils.getCurrentDateYYYYMMDDTIME());
+			  DailyReport.runReport(); 
+			  System.out.println("=======================================AFTER TIME " + DateUtils.getCurrentDateYYYYMMDDTIME());
+		 //}
 	}
 	
 	public void copyWallpaperImg(String wallpaper){
@@ -165,6 +159,8 @@ public class LoginBean implements Serializable{
 	//validate login
 	public String validateUserNamePassword(){
 		
+		Conf.refreshDBInformation();//refresh database information
+		
 		 HttpSession ses = SessionBean.getSession();
 		 try{ses.setAttribute("barangayid", getBusinessId());}catch(Exception e) {ses.setAttribute("barangayid", "0");}
 		 boolean isOk = false;
@@ -199,12 +195,12 @@ public class LoginBean implements Serializable{
 			}
 			
 			//run report once everyday
-			  if("".equalsIgnoreCase(getUi())) {
+			 /* if("".equalsIgnoreCase(getUi())) {
 				  System.out.println("Running report");
 				  System.out.println("=======================================BEFORE TIME " + DateUtils.getCurrentDateYYYYMMDDTIME());
 				  DailyReport.runReport(); 
 				  System.out.println("=======================================AFTER TIME " + DateUtils.getCurrentDateYYYYMMDDTIME());
-			  }
+			  }*/
 			
 			//recording user configuration file
 			String confUser = UserConfigMngt.logUserConfig(getIdThemes(),getUi());

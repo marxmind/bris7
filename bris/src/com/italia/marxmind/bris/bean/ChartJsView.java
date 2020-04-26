@@ -8,9 +8,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.charts.ChartData;
@@ -26,7 +25,6 @@ import org.primefaces.model.charts.bar.BarChartModel;
 import org.primefaces.model.charts.bar.BarChartOptions;
 import org.primefaces.model.charts.bubble.BubbleChartDataSet;
 import org.primefaces.model.charts.bubble.BubbleChartModel;
-import org.primefaces.model.charts.bubble.BubblePoint;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
 import org.primefaces.model.charts.donut.DonutChartModel;
 import org.primefaces.model.charts.hbar.HorizontalBarChartDataSet;
@@ -52,8 +50,8 @@ import com.italia.marxmind.bris.application.ReadDashboardInfo;
 import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 
-@ManagedBean(name="chartJsView", eager=true)
-@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class ChartJsView implements Serializable {
      
 	//MOOE Budget
@@ -179,12 +177,12 @@ public class ChartJsView implements Serializable {
         ChartData data = new ChartData();
          
         LineChartDataSet dataSet = new LineChartDataSet();
-        List<Number> values = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
         
         
         
         LineChartDataSet dataSet2 = new LineChartDataSet();
-        List<Number> values2 = new ArrayList<>();
+        List<Object> values2 = new ArrayList<>();
         
         
         
@@ -246,7 +244,7 @@ public class ChartJsView implements Serializable {
         ChartData data = new ChartData();
          
         LineChartDataSet dataSet = new LineChartDataSet();
-        List<Number> values = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
         values.add(20);
         values.add(50);
         values.add(100);
@@ -258,7 +256,7 @@ public class ChartJsView implements Serializable {
         dataSet.setYaxisID("left-y-axis");
          
         LineChartDataSet dataSet2 = new LineChartDataSet();
-        List<Number> values2 = new ArrayList<>();
+        List<Object> values2 = new ArrayList<>();
         values2.add(0.1);
         values2.add(0.5);
         values2.add(1.0);
@@ -861,7 +859,8 @@ public class ChartJsView implements Serializable {
         radarModel2.setData(data);
         radarModel2.setExtender("skinRadarChart");
     }
-     
+    
+    /*
     public void createBubbleModel() {
         bubbleModel = new BubbleChartModel();
         ChartData data = new ChartData();
@@ -875,7 +874,7 @@ public class ChartJsView implements Serializable {
         dataSet.setLabel("First Dataset");
         data.addChartDataSet(dataSet);
         bubbleModel.setData(data);
-    }
+    }*/
      
     public void createMixedModel() {
         mixedModel = new BarChartModel();
@@ -893,7 +892,7 @@ public class ChartJsView implements Serializable {
         dataSet.setBackgroundColor("rgba(255, 99, 132, 0.2)");
          
         LineChartDataSet dataSet2 = new LineChartDataSet();
-        List<Number> values2 = new ArrayList<>();
+        List<Object> values2 = new ArrayList<>();
         values2.add(50);
         values2.add(50);
         values2.add(50);

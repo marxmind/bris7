@@ -19,24 +19,22 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import com.italia.marxmind.bris.application.Application;
-import com.italia.marxmind.bris.controller.Forms;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.reader.ReadConfig;
 import com.italia.marxmind.bris.reports.Reports;
 import com.italia.marxmind.bris.security.SecureChar;
 import com.italia.marxmind.bris.utils.DateUtils;
 
-@ManagedBean(name="utilBean", eager=true)
-@ViewScoped
-public class BrisUtility implements Serializable{
+@Named
+@javax.faces.view.ViewScoped
+public class UtilBean implements Serializable{
 
 	/**
 	 * 
@@ -45,6 +43,8 @@ public class BrisUtility implements Serializable{
 	
 	private List<Reports> slqData;
 	private StreamedContent sqlFile;
+	
+	private static final String DB_PATH = Bris.PRIMARY_DRIVE.getName() + Bris.SEPERATOR.getName() + "Program Files" + Bris.SEPERATOR.getName() + "MariaDB 10.4" + Bris.SEPERATOR.getName() + "bin";
 	
 	private  String DOC_PATH = Bris.PRIMARY_DRIVE.getName() + 
 			Bris.SEPERATOR.getName() + 
@@ -97,8 +97,11 @@ public class BrisUtility implements Serializable{
 	
 	public void downloadData(){
 		String sep = File.separator;
-		String bat = "cd "+Bris.PRIMARY_DRIVE.getName()+sep+"Program Files"+sep+"MySQL"+sep+"MySQL Server 5.7"+sep+"bin" + "\n";
-			   bat += "mysqldump.exe -e -u"+getUserName()+" -p"+getPassword()+" -hlocalhost "+getDBName()+" > "+DOC_PATH+sep+getDBName()+"_"+ DateUtils.getCurrentDateMMDDYYYYTIMEPlain() +".sql";
+		//String bat = "cd "+Bris.PRIMARY_DRIVE.getName()+sep+"Program Files"+sep+"MySQL"+sep+"MySQL Server 5.7"+sep+"bin" + "\n";
+			   //bat += "mysqldump.exe -e -u"+getUserName()+" -p"+getPassword()+" -hlocalhost "+getDBName()+" > "+DOC_PATH+sep+getDBName()+"_"+ DateUtils.getCurrentDateMMDDYYYYTIMEPlain() +".sql";
+		String bat = "cd " + DB_PATH + "\n";
+			   //bat = "cd "+Bris.PRIMARY_DRIVE.getName()+sep+"Program Files"+sep+"MariaDB 10.4"+sep+"bin" + "\n";
+			   bat += "mysqldump.exe -e -u"+getUserName()+" -p"+getPassword()+" -hlocalhost "+getDBName()+" > "+DOC_PATH+getDBName()+"_"+ DateUtils.getCurrentDateMMDDYYYYTIMEPlain() +".sql";	   
 		try{	 
 				File dir = new File(DOC_PATH);
 				dir.mkdir();
@@ -108,7 +111,16 @@ public class BrisUtility implements Serializable{
 			    pw.println(bat);
 		        pw.flush();
 		        pw.close();
-		        try{Runtime.getRuntime().exec(DOC_PATH +  "download.bat");}catch(Exception e){Application.addMessage(3, "Error", "Error downloading data");}
+		        try{
+		        	//Runtime.getRuntime().exec(DOC_PATH +  "download.bat");
+		        	
+		        Process proc = Runtime.getRuntime().exec("cmd /c download.bat", null, new File(DOC_PATH));
+		        
+		        if(proc.exitValue()==0) {
+		        	System.out.println("Normal termination");
+		        }
+		        
+		        }catch(Exception e){Application.addMessage(3, "Error", "Error downloading data");}
 		        Application.addMessage(1, "Success", "Data has been successfully downloaded");
 		        init();
 		}catch(Exception e){ Application.addMessage(3, "Error", "Error downloading data");}	        
@@ -122,7 +134,8 @@ public class BrisUtility implements Serializable{
 			dir.mkdir();
 			
 			File fileUp = new File(DOC_PATH +  "uploadData.bat");
-			String bat = "cd "+Bris.PRIMARY_DRIVE.getName()+sep+"Program Files"+sep+"MySQL"+sep+"MySQL Server 5.7"+sep+"bin" + "\n" +
+			String bat = "cd " + DB_PATH + "\n" + 
+			    //bat = "cd "+Bris.PRIMARY_DRIVE.getName()+sep+"Program Files"+sep+"MySQL"+sep+"MySQL Server 5.7"+sep+"bin" + "\n" +
 	    		"mysql -u"+getUserName()+" -p"+getPassword()+" -e \"use "+getDBName()+"; source "+DOC_PATH.replace("\\", "/")+file.getName()+";"+"\"";
 	    PrintWriter pw = new PrintWriter(new FileWriter(fileUp));
 	    pw.println(bat);
@@ -143,7 +156,7 @@ public class BrisUtility implements Serializable{
 	public void uploadData(FileUploadEvent event){
 		
 		 try {
-			 InputStream stream = event.getFile().getInputstream();
+			 InputStream stream = event.getFile().getInputStream();
 			 //String ext = FilenameUtils.getExtension(event.getFile().getFileName());
 			 String file = event.getFile().getFileName();
 			 

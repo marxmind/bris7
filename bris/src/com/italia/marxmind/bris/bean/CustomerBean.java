@@ -1,6 +1,5 @@
 package com.italia.marxmind.bris.bean;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,25 +9,20 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.inject.Named;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.TabChangeEvent;
-import org.primefaces.model.DefaultStreamedContent;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Barangay;
@@ -37,13 +31,11 @@ import com.italia.marxmind.bris.controller.Login;
 import com.italia.marxmind.bris.controller.Municipality;
 import com.italia.marxmind.bris.controller.Province;
 import com.italia.marxmind.bris.controller.Purok;
-import com.italia.marxmind.bris.controller.Regional;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.enm.CivilStatus;
 import com.italia.marxmind.bris.enm.Relationships;
 import com.italia.marxmind.bris.reader.ReadConfig;
 import com.italia.marxmind.bris.utils.DateUtils;
-import com.italia.marxmind.bris.utils.Whitelist;
 /**
  * 
  * @author mark italia
@@ -52,7 +44,7 @@ import com.italia.marxmind.bris.utils.Whitelist;
  * 
  * @see om.italia.marxmind.bris.bean.CitizenWizardBean
  */
-@ManagedBean(name="customerBean", eager=true)
+@Named
 @ViewScoped
 public class CustomerBean implements Serializable {
 
@@ -859,7 +851,7 @@ public class CustomerBean implements Serializable {
 
         try {
             BufferedImage image = ImageIO
-                    .read(event.getFile().getInputstream());
+                    .read(event.getFile().getInputStream());
             if (image != null) {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 ImageIO.write(image, "jpg", outputStream);

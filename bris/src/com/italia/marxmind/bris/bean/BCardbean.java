@@ -6,11 +6,14 @@ import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,8 +26,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -49,8 +54,11 @@ import com.italia.marxmind.bris.reports.ReportCompiler;
 import com.italia.marxmind.bris.reports.ReportTag;
 import com.italia.marxmind.bris.utils.DateUtils;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeFactory;
@@ -397,14 +405,35 @@ public class BCardbean implements Serializable{
 		
 		HashMap param = new HashMap();
 		
+		ReportCompiler.sendPdfReportToBrowser(REPORT_NAME, path, new HashMap(), new JRBeanCollectionDataSource(rpts));
 		
+		/* ok but calling pdf reader not in browser
+		  try {
+		  FacesContext faces = FacesContext.getCurrentInstance();
+		  ExternalContext context = faces.getExternalContext();
+		  HttpServletResponse response = (HttpServletResponse)context.getResponse();
+		  response.reset();
+		  response.setHeader("Content-Type", "application/pdf");
+		  response.addHeader("Content-disposition", "attachment; filename="+REPORT_NAME+".pdf");
+		  System.out.println("assigning pdf to stream ... " + REPORT_NAME+".pdf");
+
+		  ServletOutputStream servletOutputStream=response.getOutputStream(); 
+		  JasperPrint jasperPrint = compiler.report(jrxmlFile, param, beanColl);  
+	  	  JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
+	  	  		
+	  	  servletOutputStream.flush();
+	      servletOutputStream.close(); 
+	  	  faces.responseComplete();
+		  }catch(Exception eio) {
+			  eio.printStackTrace();
+		  }
+		  */
+		/* original soluton
 		try{
 	  		String jrprint = JasperFillManager.fillReportToFile(jrxmlFile, param, beanColl);
 	  	    JasperExportManager.exportReportToPdfFile(jrprint,path+ REPORT_NAME +".pdf");
-	  	    
-	  	    /*PrimeFaces pm = PrimeFaces.current();
-	  	    pm.executeScript("PF('multiDialogPdf').show();");*/
-	  	    
+	  	     
+	  	 
 	  		}catch(Exception e){e.printStackTrace();}
 		
 				try{
@@ -453,11 +482,13 @@ public class BCardbean implements Serializable{
 				}catch(Exception ioe){
 					ioe.printStackTrace();
 				}
-		
+		*/
 		
 		}else{
 			Application.addMessage(3, "Please select Person details in order to print Barangay ID", "");
 		}
+		
+		
 		
 	}
 	

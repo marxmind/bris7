@@ -23,8 +23,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/font-awesome/css/all.min.css" />
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
-            <h:outputStylesheet name="css/font-awesome.min.css" />
             
+            <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -47,7 +47,24 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 	right: 500px; important!;
 }
 
+.top {
+    filter:alpha(opacity=80);
+    opacity:80;
+    padding:50px 0 0 50px;
+    z-index: 1000;
+}
 
+.graphPos{
+	left:0;
+    right:0;
+	position: absolute;
+	margin:0 auto;
+	width: 50%; 
+	height: 500%; 
+	background-color: black;
+	text-overflow:ellipsis;
+    overflow:hidden;
+}
 
  -->
  </style>
@@ -65,6 +82,23 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
  </p:confirmDialog>	
  
+ <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="citizenNot">
+ 	<p:commandButton value="Hide" onclick="PF('citizenNot').hide()" type="button" icon="pi pi-arrow-up"/>
+    <p:barChart id="citizenId" model="#{chartJsView.hbarModel}" styleClass="graphPos"/>
+</p:notificationBar>
+
+<p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="dlgDoc">
+	<p:commandButton value="Hide" onclick="PF('dlgDoc').hide()" type="button" icon="pi pi-arrow-up"/>
+ 	<p:donutChart id="docOtherId" model="#{chartJsView.donutModel}" styleClass="graphPos"/>
+</p:notificationBar>
+<p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="dlgSettlement">
+	<p:commandButton value="Hide" onclick="PF('dlgSettlement').hide()" type="button" icon="pi pi-arrow-up"/>
+	<p:lineChart id="settleId" model="#{chartJsView.lineModel}" styleClass="graphPos"/>
+</p:notificationBar>
+<p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="dlgDisburse">
+	<p:commandButton value="Hide" onclick="PF('dlgDisburse').hide()" type="button" icon="pi pi-arrow-up"/>
+	<p:barChart id="disChkId" model="#{chartJsView.barModel2}" styleClass="graphPos"/>
+</p:notificationBar>
  
  <nav class="navbar navbar-expand navbar-intel bg-intel static-top">
 		
@@ -137,7 +171,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <div class="col-xl-3 col-sm-6 mb-3 js-tilt">
               <div class="card text-white bg-primary o-hidden h-100">
 	                <div class="card-body">	
-	                <p:commandLink  onclick="PF('dlgCit').show()" update="citizenId" title="Click to Zoom the graph" >	
+	                <p:commandLink  onclick="PF('citizenNot').show()" update="citizenId" title="Click to Zoom the graph" >	
 	                  <div class="card-body-icon">
 	                    <i class="fas fa-fw fa-user-circle"></i>
 	                  </div>
@@ -187,18 +221,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             </div>
             
            </div> 
-            <p:dialog closeOnEscape="true" widgetVar="dlgCit" position="center center" responsive="true" showEffect="clip" hideEffect="fade" modal="false" header="Common Document Graph" resizable="false">
-            	<p:barChart id="citizenId" model="#{chartJsView.hbarModel}" style="width: 800px; height: 500px;"/>
-            </p:dialog>
-        	<p:dialog closeOnEscape="true" widgetVar="dlgDoc" position="center center" responsive="true" showEffect="clip" hideEffect="fade" modal="false" header="Common Document Graph" resizable="false">
-    		 	<p:donutChart id="docOtherId" model="#{chartJsView.donutModel}" style="width: 800px; height: 500px;"/>
-			</p:dialog>
-			<p:dialog closeOnEscape="true" widgetVar="dlgSettlement" position="center center" responsive="true" showEffect="clip" hideEffect="fade" modal="false" header="Settlement Graph" resizable="false">
-        		<p:lineChart id="settleId" model="#{chartJsView.lineModel}" style="width: 800px; height: 500px;"/>
-        	</p:dialog>
-        	<p:dialog closeOnEscape="true" widgetVar="dlgDisburse" position="center center" responsive="true" showEffect="clip" hideEffect="fade" modal="false" header="Check Disbursement Graph" resizable="false">
-        		<p:barChart id="disChkId" model="#{chartJsView.barModel2}" style="width: 800px; height: 500px;"/>
-        	</p:dialog>
+            
+        	
             <!-- 
             <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-primary o-hidden h-100">
@@ -296,18 +320,18 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				  	
 					<div class="overlayInfo">
 				    	<div class="textInfo">
-				  			<p:commandButton styleClass="pbutton js-tilt" value="Discover" icon="fa fa-user" update="idContentProp" onclick="viewProfileDtls();" actionListener="#{mainBean.clickItemProfile(rpt)}"/>
-						  	<p:commandButton styleClass="pbutton js-tilt" value="Transactions" icon="fa fa-info-circle" update="idContent tabTrans" actionListener="#{mainBean.clickItem(rpt)}" oncomplete="PF('multiDialogProfile').show()"/>
-						    <p:commandButton styleClass="pbutton js-tilt" action="admincustomer" actionListener="#{citizenWizardBean.reloadinit}" value="Update" icon="fa fa-pencil-square-o" onclick="showLoading()">
+				  			<p:commandButton styleClass="pbutton js-tilt" value="Discover" icon="pi pi-user" update="idContentProp" onclick="viewProfileDtls();" actionListener="#{mainBean.clickItemProfile(rpt)}"/>
+						  	<p:commandButton styleClass="pbutton js-tilt" value="Transactions" icon="pi pi-info" update="idContent tabTrans" actionListener="#{mainBean.clickItem(rpt)}" oncomplete="PF('multiDialogProfile').show()"/>
+						    <p:commandButton styleClass="pbutton js-tilt" action="admincustomer" actionListener="#{citizenWizardBean.reloadinit}" value="Update" icon="pi pi-pencil" onclick="showLoading()">
 								<f:param name="editProfile" value="#{rpt.fullname}"/>
 							</p:commandButton>
-							<p:commandButton styleClass="pbutton js-tilt" action="clearance" actionListener="#{documentsBean.reloadinit}" icon="fa fa-pencil-square-o"  value="Create Doc" title="Please click here to create document details" onclick="showLoading()">
+							<p:commandButton styleClass="pbutton js-tilt" action="clearance" actionListener="#{documentsBean.reloadinit}" icon="pi pi-file"  value="Create Doc" title="Please click here to create document details" onclick="showLoading()">
 								<f:param name="addDoc" value="#{rpt.customerid}"/>
 							</p:commandButton>
-							<p:commandButton styleClass="pbutton js-tilt" action="card" actionListener="#{cardBean2.reloadinit}" icon="fa fa-pencil-square-o"  value="Create ID" title="Please click here to create ID details" onclick="showLoading()">
+							<p:commandButton styleClass="pbutton js-tilt" action="card" actionListener="#{cardBean2.reloadinit}" icon="pi pi-users"  value="Create ID" title="Please click here to create ID details" onclick="showLoading()">
 								<f:param name="addCard" value="#{rpt.customerid}"/>
 							</p:commandButton>
-							<p:commandButton styleClass="pbutton js-tilt" action="cases" actionListener="#{casesBean2.reloadinit}" icon="fa fa-pencil-square-o"  value="Create Summon" title="Please click here to summon this person" onclick="showLoading()">
+							<p:commandButton styleClass="pbutton js-tilt" action="cases" actionListener="#{casesBean2.reloadinit}" icon="pi pi-folder"  value="Create Summon" title="Please click here to summon this person" onclick="showLoading()">
 								<f:param name="addCase" value="#{rpt.customerid}"/>
 							</p:commandButton>  	
 				    	</div>
@@ -324,7 +348,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 	       	<!-- The actual snackbar -->
 			<div id="snackbar">				
 				<p:scrollPanel style="height:450px" mode="native">
-				<p:textEditor id="idContentProp" toolbarVisible="false" widgetVar="msgComposeText" value="#{mainBean.personDtls}" readonly="true"/>
+				<!-- note texteditor secure=true if true needed owasp-java-html-sanitizer and guava jar -->
+				<p:textEditor secure="true" id="idContentProp" toolbarVisible="false" widgetVar="msgComposeText" value="#{mainBean.personDtls}" readonly="true"/>
 				</p:scrollPanel>
 				<span class="pbutton js-tilt" onclick="document.getElementById('snackbar').className =''">Close</span>
 			</div>
@@ -335,8 +360,9 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <div class="card-header citizenBox" style="color: white">
               <i class="fas fa-user-circle"></i>
               Search Details</div>
-            	
-	         	<p:textEditor id="idContent" styleClass="citizenBox" toolbarVisible="false" widgetVar="msgComposeText" value="#{mainBean.personDtls}" readonly="true"/>  
+              	<!-- https://github.com/primefaces/primefaces/issues/5163 -->
+            	<!-- note texteditor secure=true if true needed owasp-java-html-sanitizer and guava jar -->
+	         	<p:textEditor secure="true" id="idContent" styleClass="citizenBox" toolbarVisible="false" widgetVar="msgComposeText" value="#{mainBean.personDtls}" readonly="true"/>  
 	            
 	          </div>
          	</div>
@@ -434,12 +460,11 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		            <div class="card-body citizenBox">
 		              <div class="table-responsive">
 		                <p:commandButton value="Show Calendar" update="schedule" actionListener="#{eventBean.init}" styleClass="js-tilt"/>
-		              	<p:schedule style="#{skin.calendarSched}" locale="en" id="schedule" leftHeaderTemplate="prev,next,today"  centerHeaderTemplate="title" rightHeaderTemplate="month,agendaDay" value="#{eventBean.eventModel}" view="month" widgetVar="myschedule" timeZone="true" clientTimeZone="local">
+		              	<p:schedule style="#{skin.calendarSched}" locale="en" id="schedule" leftHeaderTemplate="today" rightHeaderTemplate="prev,next" centerTemplate="dayGridMonth, timeGridWeek, timeGridDay" value="#{eventBean.eventModel}" view="dayGridMonth" widgetVar="myschedule">
 	 
 				            <p:ajax event="dateSelect" listener="#{eventBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 				            <p:ajax event="eventSelect" listener="#{eventBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-				            <p:ajax event="eventMove" listener="#{eventBean.onEventMove}" update="schedIdList msg" />
-				            <p:ajax event="eventResize" listener="#{eventBean.onEventResize}" update="schedIdList msg" />
+				            
 				 
 				        </p:schedule>
 				        <br/>
@@ -499,10 +524,10 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 	 		<p:panelGrid id="eventDetails" columns="2" layout="grid">
 		            
 		            <p:outputLabel for="idfrom" value="From:" />
-	     	       <p:calendar id="idfrom" value="#{eventBean.event.startDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm aa"/>
+	     	       <p:calendar id="idfrom" value="#{eventBean.event.startDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm"/>
 	 
 		            <p:outputLabel for="idto" value="To:" />
-		            <p:calendar id="idto" value="#{eventBean.event.endDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm aa"/>
+		            <p:calendar id="idto" value="#{eventBean.event.endDate}" timeZone="GMT+8" pattern="MM/dd/yyyy HH:mm"/>
 		            
 		            <h:outputLabel for="eveTitle" value="Description:" />
 		            <p:inputTextarea id="eveTitle" value="#{eventBean.event.title}"/>

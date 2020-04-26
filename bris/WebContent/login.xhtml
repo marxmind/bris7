@@ -174,8 +174,12 @@ xmlns:p="http://primefaces.org/ui"
 							<div class="modal-content">
 								
 								<div class="modal-header">
-									
-										<p:graphicImage name="logo/logo.png" alt="Avatar" styleClass="avatar"/>
+										<div id="lg" style="display: block">
+											<p:graphicImage name="logo/logo.png" alt="Avatar" styleClass="avatar"/>
+										</div>
+										<div id="lod" style="display: none">
+											<p:graphicImage name="/gif/loader.gif" styleClass="avatar"/>
+										</div>
 									<h4 class="modal-title">User Login</h4>
 								</div>
 								<div class="modal-body">
@@ -190,12 +194,14 @@ xmlns:p="http://primefaces.org/ui"
 								          		<f:selectItems value="#{loginBean.themes}"/>
 								            </p:selectOneMenu>
 										</div>
-										<div class="form-group">
-											<p:inputText id="idUName" placeholder="Username" value="#{loginBean.name}" autocomplete="off" required="true" styleClass="form-control text-primary"/>		
-										</div>
-										<div class="form-group">
-											<p:password id="idPass" placeholder="Password" value="#{loginBean.password}" autocomplete="off" required="true" styleClass="form-control text-primary"/>	
-										</div>
+										<span class="form-group ui-float-label">
+											<p:inputText id="idUName"  value="#{loginBean.name}" autocomplete="off" required="true" styleClass="form-control text-primary"/>
+											<p:outputLabel for="@previous" value="Username" />
+										</span>
+										<span class="form-group ui-float-label">
+											<p:password id="idPass" value="#{loginBean.password}" autocomplete="off" required="true" styleClass="form-control text-primary"/>
+											<p:outputLabel for="@previous" value="Password" />
+										</span>
 										<div class="form-group">
 										<p:selectOneMenu value="#{loginBean.businessId}" id="biz" styleClass="form-control text-primary" style="width: 25em">
 				                		  <f:selectItems value="#{loginBean.business}"/>
@@ -215,7 +221,7 @@ xmlns:p="http://primefaces.org/ui"
 						</div>
 					</div>    
 					
-					</section>  
+					</section>
 					
 				</h:form>
 				
@@ -366,17 +372,25 @@ xmlns:p="http://primefaces.org/ui"
   </footer>
 	
 	
-	
+	<p:ajaxStatus widgetVar="loadWidget" styleClass="ui-noborder" onstart="showLoading();" onsuccess="hideLoading();" />
 	<h:outputScript name="v6-library/tilt/tilt.jquery.min.js"/>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
+		function showLoading() {
+			$('#lg').hide(1000);
+			$('#lod').show(1000);
+		}
+		function hideLoading() {
+			$('#lg').show(1000);
+			$('#lod').hide(1000);
+		}
 	</script>
 	
 
-
+<!-- 
 <ui:include src="dailyreport.xhtml" />
-
+ -->
 </h:body>	
 </html>

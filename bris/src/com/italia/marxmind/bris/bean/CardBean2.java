@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -20,11 +21,13 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.util.SerializableSupplier;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.BCard;
@@ -48,6 +51,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeFactory;
@@ -420,20 +424,21 @@ public class CardBean2 implements Serializable{
 			rpts.add(rpt);
 		}
 			
-		ReportCompiler compiler = new ReportCompiler();
-		String jrxmlFile = compiler.compileReport(REPORT_NAME, REPORT_NAME, path);
+		//ReportCompiler compiler = new ReportCompiler();
+		//String jrxmlFile = compiler.compileReport(REPORT_NAME, REPORT_NAME, path);
 		
-		JRBeanCollectionDataSource beanColl = new JRBeanCollectionDataSource(rpts);
+		//JRBeanCollectionDataSource beanColl = new JRBeanCollectionDataSource(rpts);
 		
-		HashMap param = new HashMap();
+		//HashMap param = new HashMap();
 		
+		ReportCompiler.sendPdfReportToBrowser(REPORT_NAME, path, new HashMap(), new JRBeanCollectionDataSource(rpts));
 		
+		/*
 		try{
 	  		String jrprint = JasperFillManager.fillReportToFile(jrxmlFile, param, beanColl);
 	  	    JasperExportManager.exportReportToPdfFile(jrprint,path+ REPORT_NAME +".pdf");
 	  	    
-	  	    /*PrimeFaces pm = PrimeFaces.current();
-	  	    pm.executeScript("PF('multiDialogPdf').show();");*/
+	  	    
 	  	    
 	  		}catch(Exception e){e.printStackTrace();}
 		
@@ -483,7 +488,7 @@ public class CardBean2 implements Serializable{
 				}catch(Exception ioe){
 					ioe.printStackTrace();
 				}
-		
+		*/
 		
 		}else{
 			Application.addMessage(3, "Please select Person details in order to print Barangay ID", "");
@@ -850,8 +855,22 @@ public class CardBean2 implements Serializable{
 		
 	    File testPdfFile = new File(pdf);
   	    
-	    return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
-		
+	    var df =  DefaultStreamedContent.builder()
+	    .contentType("application/pdf")
+	    .name(REPORT_NAME+".pdf")
+	    .stream(()-> {
+			try {
+				return new FileInputStream(testPdfFile);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		})
+	    .build();
+	    
+	    //return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
+		return df;
 	  }
 	public void setTempPdfFile(StreamedContent tempPdfFile) {
 		this.tempPdfFile = tempPdfFile;

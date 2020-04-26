@@ -192,7 +192,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		    		 <p:inputText value="#{eBean.title}" readonly="#{eBean.sendToEnable}" a:placeholder="Title of Email" style="#{skin.textInput}" styleClass="form-control"/>
 					 
 				</p:panelGrid>
-				<p:textEditor id="idContent" toolbarVisible="#{eBean.editorToolbar}" widgetVar="msgComposeText" value="#{eBean.contentMsg}" readonly="#{eBean.sendToEnable}">
+				<!-- note texteditor secure=true if true needed owasp-java-html-sanitizer and guava jar -->
+				<p:textEditor secure="true" id="idContent" toolbarVisible="#{eBean.editorToolbar}" widgetVar="msgComposeText" value="#{eBean.contentMsg}" readonly="#{eBean.sendToEnable}">
 									<f:facet name="toolbar">
 										<span class="ql-formats">
 											<button class="ql-bold"></button>

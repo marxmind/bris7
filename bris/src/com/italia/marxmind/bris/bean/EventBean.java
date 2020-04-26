@@ -1,19 +1,19 @@
 package com.italia.marxmind.bris.bean;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -24,8 +24,6 @@ import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import com.italia.marxmind.bris.controller.Reservation;
-import com.italia.marxmind.bris.controller.ReservationXML;
 import com.italia.marxmind.bris.controller.Scheduler;
 import com.italia.marxmind.bris.utils.DateUtils;
 
@@ -37,9 +35,9 @@ import com.italia.marxmind.bris.utils.DateUtils;
  *
  */
 
-@ManagedBean(name="eventBean", eager=true)
-@ViewScoped
-public class EventsBean implements Serializable{
+@Named
+@javax.faces.view.ViewScoped
+public class EventBean implements Serializable{
 
 	/**
 	 * 
@@ -72,7 +70,7 @@ public class EventsBean implements Serializable{
 		 
 		 eventModel = new LazyScheduleModel() {
      		@Override
-     		public void loadEvents(Date start, Date end) {
+     		public void loadEvents(LocalDateTime start, LocalDateTime end) {
      			for(ScheduleEvent event : sched) {
      				System.out.println("lazy id " + event.getId());
      				addEvent(event);
@@ -153,11 +151,24 @@ public class EventsBean implements Serializable{
 			String eventEnd = notes[1];
 			String title = notes[2];
 			
-	    	DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
-			Date dateFrom = formatter.parse(eventStart);
-	        Date dateTo = formatter.parse(eventEnd);
+			
+	    	//DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
+	    	
+	    	//LocalDateTime dateFrom = formatter.parse(eventStart);
+	    	//LocalDateTime dateTo = formatter.parse(eventEnd);
+	    	//LocalDateTime dateFrom = LocalDateTime.parse(eventStart,formatter);
+	    	//LocalDateTime dateTo = LocalDateTime.parse(eventEnd,formatter);
 	        
-	        eve = new DefaultScheduleEvent(title, dateFrom, dateTo); 
+	        //eve = new DefaultScheduleEvent(title, dateFrom, dateTo);
+	    	
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//DateTimeFormatter.ofPattern("dd-MM-yyyy,HH:mm:ss a");
+	    	eve = DefaultScheduleEvent.builder()
+	        		.title(title)
+	        		.startDate(LocalDateTime.parse(eventStart,formatter))
+	        		.endDate(LocalDateTime.parse(eventEnd,formatter))
+	        		.build();
+	    	
+	    	
 	        eve.setId(sc.getId()+"");
 	        
 	        System.out.println("loadEvent id sc : " + sc.getId());
@@ -168,7 +179,7 @@ public class EventsBean implements Serializable{
 		return eve;
 	}
 	
-	public void addEvent(ActionEvent actionEvent) {
+	public void addEvent() {
         if(event.getId() == null){
         	event = save(event,1);
             eventModel.addEvent(event); 
@@ -205,18 +216,31 @@ public class EventsBean implements Serializable{
     	
 		System.out.println("save event : event id : " + event.getId() + " type:  " + type);
 		
-    	Date dateStart = event.getStartDate();
-    	Date dateNext = event.getEndDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
+		
+    	LocalDateTime dateStart = event.getStartDate();
+    	LocalDateTime dateNext = event.getEndDate();
     	
-    	String dbStartDate = new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
-    	String dbEndDate = new SimpleDateFormat("yyyy-MM-dd").format(dateNext);
+    	String f = formatter.format(dateStart);
+    	String t = formatter.format(dateNext);
+    	System.out.println("save date from " + f.split("T")[0] + " = " + f.split("T")[1]);
+    	System.out.println("save date to " + t.split("T")[0] + " = " + t.split("T")[1]);
     	
-    	String dateFromValue = new SimpleDateFormat("dd-MMM-yyyy").format(dateStart);
-        String dateToValue = new SimpleDateFormat("dd-MMM-yyyy").format(dateNext);
+    	//String dbStartDate = new SimpleDateFormat("yyyy-MM-dd").format(f.split("T")[0]);
+    	//String dbEndDate = new SimpleDateFormat("yyyy-MM-dd").format(t.split("T")[0]);
+    	String dbStartDate = f.split("T")[0];
+    	String dbEndDate = t.split("T")[0];
+    	
+    	//String dateFromValue = new SimpleDateFormat("dd-MMM-yyyy").format(f.split("T")[0]);
+        //String dateToValue = new SimpleDateFormat("dd-MMM-yyyy").format(t.split("T")[0]);
         
-        String timeFromValue = new SimpleDateFormat("HH:mm:ss aaa").format(dateStart);
-        String timeToValue = new SimpleDateFormat("HH:mm:ss aaa").format(dateNext);
-               
+        String dateFromValue = f.split("T")[0];
+        String dateToValue = t.split("T")[0];
+        
+        //String timeFromValue = new SimpleDateFormat("HH:mm:ss aaa").format(f.split("T")[1]);
+        //String timeToValue = new SimpleDateFormat("HH:mm:ss aaa").format(t.split("T")[1]);
+        String timeFromValue = f.split("T")[1];
+        String timeToValue = t.split("T")[1];       
         String checkTime = timeFromValue.split(":")[0];
         
         if("00".equalsIgnoreCase(checkTime)){
@@ -230,9 +254,14 @@ public class EventsBean implements Serializable{
         
         String fromDate = dateFromValue+","+timeFromValue;
         String toDate = dateToValue+","+timeToValue;
-        DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
-        Date dateFrom = formatter.parse(fromDate);
-        Date dateTo = formatter.parse(toDate);
+       // DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
+       // Date dateFrom = formatter.parse(fromDate);
+        //Date dateTo = formatter.parse(toDate);
+        
+        //DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//DateTimeFormatter.ofPattern("d-MMM-yyyy,HH:mm:ss a");
+        //LocalDateTime dateFrom = LocalDateTime.parse(fromDate,formatter);
+        //LocalDateTime dateTo = LocalDateTime.parse(toDate,formatter);
+        
         String title = event.getTitle()==null? "" : (event.getTitle().isEmpty()? "" : event.getTitle());
         Scheduler sc = new Scheduler();
         
@@ -258,7 +287,13 @@ public class EventsBean implements Serializable{
         	sc.save();
         }
         
-        event = new DefaultScheduleEvent(title, dateFrom, dateTo);
+        DefaultScheduleEvent def = DefaultScheduleEvent.builder()
+        		.title(title)
+        		.startDate(LocalDateTime.parse(fromDate,formatter))
+        		.endDate(LocalDateTime.parse(toDate,formatter))
+        		.build();
+       event = def; 
+       // event = new DefaultScheduleEvent(title, dateFrom, dateTo);
         
         }catch(Exception e){}
         
@@ -280,13 +315,22 @@ public class EventsBean implements Serializable{
     	
     	String fromDate = dateFromValue+","+timeFromValue;
         String toDate = dateToValue+","+timeToValue;
-        DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
+       // DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
         try{
-        Date dateFrom = formatter.parse(fromDate);
-        Date dateTo = formatter.parse(toDate);
+        //Date dateFrom = formatter.parse(fromDate);
+        //Date dateTo = formatter.parse(toDate);
         event.setId(sc.getId()+"");
         eventModel.deleteEvent(event);
-        ScheduleEvent ev = new DefaultScheduleEvent(title, dateFrom, dateTo); 
+        //ScheduleEvent ev = new DefaultScheduleEvent(title, dateFrom, dateTo);
+        
+        
+        DateTimeFormatter formatter =DateTimeFormatter.ISO_LOCAL_DATE_TIME;// DateTimeFormatter.ofPattern("dd-MM-yyyy,HH:mm:ss a");
+        ScheduleEvent ev = DefaultScheduleEvent.builder()
+        		.title(title)
+        		.startDate(LocalDateTime.parse(fromDate,formatter))
+        		.endDate(LocalDateTime.parse(toDate,formatter))
+        		.build();
+        
         ev.setId(sc.getId()+"");
         event = ev;
         
@@ -295,15 +339,25 @@ public class EventsBean implements Serializable{
         }catch(Exception e){}
     }
 	
-	public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
+	public void onEventSelect(SelectEvent<ScheduleEvent> selectEvent) {
+        event = selectEvent.getObject();
         
         System.out.println("Event select : " + event.getId());
     }
 	
-	public void onDateSelect(SelectEvent selectEvent) {
-        Date date = (Date) selectEvent.getObject();
-        event = new DefaultScheduleEvent("", date, date);
+	public void onDateSelect(SelectEvent<LocalDateTime> selectEvent) {
+        //Date date = (Date) selectEvent.getObject();
+       // event = new DefaultScheduleEvent("", date, date);
+       
+		/*LocalDateTime date = (LocalDateTime)selectEvent.getObject();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy,HH:mm:ss aaa");
+        event = DefaultScheduleEvent.builder()
+        		.title("")
+        		.startDate(date)
+        		.endDate(date)
+        		.build();*/
+		event = DefaultScheduleEvent.builder().startDate(selectEvent.getObject()).endDate(selectEvent.getObject().plusHours(1)).build(); 
     }
 	
 	public void onEventMove(ScheduleEntryMoveEvent event) {
@@ -318,7 +372,7 @@ public class EventsBean implements Serializable{
     	
     	ScheduleEvent ev = save(event.getScheduleEvent(),3);
     	System.out.println("onEventResize : id is " + ev.getId());
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDeltaStart() + ", Minute delta:" + event.getDayDeltaEnd());
          init();
         addMessage(message);
     }

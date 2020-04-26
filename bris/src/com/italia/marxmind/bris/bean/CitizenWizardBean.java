@@ -591,7 +591,7 @@ public class CitizenWizardBean implements Serializable{
 
         try {
             BufferedImage image = ImageIO
-                    .read(event.getFile().getInputstream());
+                    .read(event.getFile().getInputStream());
             if (image != null) {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 ImageIO.write(image, "jpg", outputStream);

@@ -10,13 +10,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -41,9 +39,9 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @since 01/19/2019
  *
  */
-@ManagedBean(name="comBean", eager=true)
+@Named
 @ViewScoped
-public class CommelecBean implements Serializable{
+public class ComBean implements Serializable{
 
 	/**
 	 * 
@@ -62,7 +60,7 @@ public class CommelecBean implements Serializable{
 	
 	public static void main(String[] args) {
 		File file = new File("C:/bris/commelec.xls");
-		CommelecBean.readXLSFile(file, 0);
+		ComBean.readXLSFile(file, 0);
 	}
 	
 	public void loadNames() {
@@ -85,7 +83,7 @@ public class CommelecBean implements Serializable{
 	public void uploadData(FileUploadEvent event){
 		
 		 try {
-			 InputStream stream = event.getFile().getInputstream();
+			 InputStream stream = event.getFile().getInputStream();
 			 //String ext = FilenameUtils.getExtension(event.getFile().getFileName());
 			 String file = event.getFile().getFileName();
 			 
@@ -104,7 +102,7 @@ public class CommelecBean implements Serializable{
 	
 	private boolean writeDocToFile(FileUploadEvent event){
 		try{
-		InputStream stream = event.getFile().getInputstream();
+		InputStream stream = event.getFile().getInputStream();
 		String fileExt = event.getFile().getFileName().split("\\.")[1];
 		String filename = "commelecData-" + DateUtils.getCurrentDateMMDDYYYYTIMEPlain() + "."+fileExt.toLowerCase();
 		

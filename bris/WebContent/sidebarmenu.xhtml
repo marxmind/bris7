@@ -8,36 +8,7 @@
  
     <ui:composition>
     	
-    	<h:outputStylesheet>
-    		.sidebarMenu {
-			  margin: 0;
-			  padding: 0;
-			  width: 120px;
-			  background-color: transparent;
-			  position: fixed;
-			  height: 100%;
-			  overflow: auto;
-			  z-index: 0;
-			}
-    		.sidebarMenu a {
-				display: block;
-				color: black;
-				padding: 4px;
-				text-decoration: none;
-			}
-				 
-			.sidebarMenu a.active {
-				background-color: transparent;
-				color: red;
-			}
-				
-			.sidebarMenu a:hover:not(.active) {
-			  background-color: #555;
-			  color: white;
-			}
-			
-			
-    	</h:outputStylesheet>
+    	
     	
     	<div class="sidebar bg-intel">
     	
@@ -100,7 +71,7 @@
             <span>#{menuBean.labels[17]}</span>
           </p:commandLink>
           		
-          		<a href="#formsSubmenuCheke" data-toggle="collapse" aria-expanded="false" class="nav-link">
+          		<a href="#formsSubmenuCheke" data-toggle="collapse" aria-expanded="false" class="nav-link" style="color: black">
           		<i class="fas fa-fw fa-table"></i><span>Cheques</span></a>
                     <ul class="collapse list-unstyled" id="formsSubmenuCheke">
                         <li>
@@ -124,7 +95,7 @@
                     </ul>
           		
           		
-          		<a href="#formsSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link">
+          		<a href="#formsSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link" style="color: black">
           		<i class="fas fa-fw fa-table"></i><span>AF Recording</span></a>
                     <ul class="collapse list-unstyled" id="formsSubmenu">
                         <li>

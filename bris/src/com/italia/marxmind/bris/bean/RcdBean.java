@@ -16,6 +16,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -43,9 +45,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @since 06/20/2019
  *
  */
-@ManagedBean(name="rcdBean", eager=true)
-@SessionScoped
-public class UploadRCDBean implements Serializable{
+@Named
+@ViewScoped
+public class RcdBean implements Serializable{
 
 	/**
 	 * 
@@ -66,7 +68,7 @@ public class UploadRCDBean implements Serializable{
 	public void uploadFile(FileUploadEvent event){
 		
 		 try {
-			 InputStream stream = event.getFile().getInputstream();
+			 InputStream stream = event.getFile().getInputStream();
 			 //String ext = FilenameUtils.getExtension(event.getFile().getFileName());
 			 String file = event.getFile().getFileName();
 			 

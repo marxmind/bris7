@@ -1,28 +1,21 @@
 package com.italia.marxmind.bris.bean;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.inject.Named;
+
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.model.CroppedImage;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 /**
  * 
  * @author mark italia
@@ -33,10 +26,14 @@ import org.primefaces.model.UploadedFile;
 
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.reader.ReadConfig;
-@ManagedBean(name="photoCamViewBean")
+@Named
 @SessionScoped
-public class PhotoCamViewBean {
+public class PhotoCamViewBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 16576879864L;
 	private String filename;
 	private String capturedImagePathName;
 	private final static String IMAGE_PATH = ReadConfig.value(Bris.APP_IMG_FILE); 
