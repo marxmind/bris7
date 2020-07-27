@@ -165,12 +165,12 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 			                 	<p:autoComplete inputStyleClass="panelClassInput"  id="lname"  value="#{citizenWizardBean.citizen.lastname}" completeMethod="#{citizenWizardBean.autoLast}" minQueryLength="7" maxResults="5" label="Last name" placeholder="Your lastname.." inputStyle="width: 15em"/>
 			                 	
 			                 	<p:outputLabel for="genId" value="Gender"/>
-			                 	<p:selectOneMenu id="genId" panelStyleClass="panelClassInput"  value="#{citizenWizardBean.citizen.gender}" required="true" style="width: 15em">
+			                 	<p:selectOneMenu id="genId"  value="#{citizenWizardBean.citizen.gender}" required="true" style="width: 15em">
 				                		<f:selectItems value="#{citizenWizardBean.genderList}"/>
 				            	</p:selectOneMenu>
 				            	
 				            	<p:outputLabel for="civId" value="Civil Status"/>
-				            	<p:selectOneMenu id="civId" panelStyleClass="panelClassInput"  value="#{citizenWizardBean.citizen.civilStatus}" required="true" filter="true" filterMatchMode="contains" style="width: 15em">
+				            	<p:selectOneMenu id="civId"  value="#{citizenWizardBean.citizen.civilStatus}" required="true" filter="true" filterMatchMode="contains" style="width: 15em">
 				                		<f:selectItems value="#{citizenWizardBean.civils}"/>
 				            	</p:selectOneMenu>
 				            	

@@ -334,6 +334,16 @@ public class CitizenWizardBean implements Serializable{
 					copyDefaultImage();
 				}
 				
+				String f, m, l = "";
+				f = cit.getFirstname().toUpperCase().strip();
+				m = cit.getMiddlename().toUpperCase().strip();
+				l = cit.getLastname().toUpperCase().strip();
+				cit.setFirstname(f);
+				cit.setMiddlename(m);
+				cit.setLastname(l);
+					
+					
+					
 					cit.setPhotoid(getPhotoId());
 					cit.setBirthdate(DateUtils.convertDate(getBirthdate(), DateFormat.YYYY_MM_DD()));
 					cit.setFullname(cit.getFirstname() + " " + cit.getLastname());

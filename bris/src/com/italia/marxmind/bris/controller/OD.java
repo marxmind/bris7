@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.italia.marxmind.bris.database.ConnectDB;
+import com.italia.marxmind.bris.utils.DateUtils;
 import com.italia.marxmind.bris.utils.LogU;
 
 /**
@@ -28,6 +29,7 @@ public class OD{
 	private int isActive;
 	
 	private String officerName;
+	private String buttonStyle;
 	
 	public String getOfficerName() {
 		return officerName;
@@ -36,7 +38,29 @@ public class OD{
 	public void setOfficerName(String officerName) {
 		this.officerName = officerName;
 	}
-
+	
+	
+	public static boolean hasCurrentSetOfficer() {
+		
+		String sql = "SELECT * FROM odassignment WHERE isactiveod=1 AND monthod=" + DateUtils.getCurrentMonth() + " AND dayod=" + DateUtils.getCurrentDay() + " AND yearod=" + DateUtils.getCurrentYear();
+		boolean hasOfficerSet=false;
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		try{
+		conn = ConnectDB.getConnection();
+		ps = conn.prepareStatement(sql);
+		
+		rs = ps.executeQuery();
+		hasOfficerSet = rs.next()==true? true : false;
+		rs.close();
+		ps.close();
+		ConnectDB.close(conn);
+		}catch(Exception e){e.getMessage();}	
+			
+		return hasOfficerSet;
+	}
+	
 	public static List<OD> retrieve(String sqlAdd, String[] params){
 		List<OD> ods = new ArrayList<OD>();
 		
@@ -575,6 +599,14 @@ public class OD{
 	}
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getButtonStyle() {
+		return buttonStyle;
+	}
+
+	public void setButtonStyle(String buttonStyle) {
+		this.buttonStyle = buttonStyle;
 	}
 	
 }

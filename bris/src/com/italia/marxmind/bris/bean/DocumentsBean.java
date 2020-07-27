@@ -3184,9 +3184,24 @@ public class DocumentsBean implements Serializable{
 				clickItem(clearances.get(0));
 				ins.executeScript("$('#panelHide').show(1000);showButton();");
 			}else{	
-				clearFields();
-				ins.executeScript("$('#panelHide').hide(1000);hideButton();");
-				Collections.reverse(clearances);
+				
+				if(clearances!=null && clearances.size()==0) {
+					
+					clearFields();
+					Customer cus = Customer.getLatestCitizen();
+					if(cus!=null) {
+						setTaxPayer(cus);
+						clickItemOwner();
+					}else {
+						System.out.println("Empty records....");
+					}
+					ins.executeScript("$('#panelHide').show(1000);showButton();");
+				}else {
+					clearFields();
+					ins.executeScript("$('#panelHide').hide(1000);hideButton();");
+					Collections.reverse(clearances);
+				}
+				
 			}
 			
 			//do not move this code this is for create doc functionality

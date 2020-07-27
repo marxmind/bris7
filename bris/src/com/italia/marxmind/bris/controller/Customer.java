@@ -125,6 +125,12 @@ public class Customer {
 		return cardNum;
 	}
 	
+	public static Customer getLatestCitizen() {
+		String sql = " AND cus.cusisactive=1 AND cus.cusdateregistered='"+ DateUtils.getCurrentDateYYYYMMDD() +"' ORDER BY cus.customerid DESC LIMIT 1";
+		try{Customer cus = Customer.retrieve(sql, new String[0]).get(0); return cus;}catch(Exception e) {}
+		return null;
+	}
+	
 	public static int firstYearData(){
 		String sql = "SELECT cusdateregistered FROM customer limit 1";
 		

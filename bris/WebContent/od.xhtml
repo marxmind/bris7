@@ -8,27 +8,27 @@
  
     <ui:composition>
     
-    <p:dialog header="Officer Of the Day" responsive="true" widgetVar="dlgOd" fitViewport="true">
+    <p:dialog header="Set Officer Of the Day" responsive="true" widgetVar="dlgOd" fitViewport="true" position="center center">
     	
     	<p:toolbar id="tbOD">
 		    		<f:facet name="left">
-				        <p:selectOneMenu value="#{odBean.monthId}" style="width: 15em">
-                			<f:selectItems value="#{odBean.months}"/>
-                			<p:ajax event="itemSelect" listener="#{odBean.itemSelect}" update="odData" />
+				        <p:selectOneMenu value="#{officerBean.monthId}" style="width: 15em">
+                			<f:selectItems value="#{officerBean.months}"/>
+                			<p:ajax event="itemSelect" listener="#{officerBean.itemSelect}" update="odData" />
             			</p:selectOneMenu>
-            			<p:selectOneMenu value="#{odBean.yearId}" style="width: 15em">
-                			<f:selectItems value="#{odBean.years}"/>
-                			<p:ajax event="itemSelect" listener="#{odBean.itemSelect}" update="odData" />
+            			<p:selectOneMenu value="#{officerBean.yearId}" style="width: 15em">
+                			<f:selectItems value="#{officerBean.years}"/>
+                			<p:ajax event="itemSelect" listener="#{officerBean.itemSelect}" update="odData" />
             			</p:selectOneMenu>
 		    		</f:facet>
 		    		<f:facet name="right"/>
 				</p:toolbar>
     			
-    			<p:dataGrid id="odData" value="#{odBean.ods}" var="ood" stickyHeader="false" layout="grid"
+    			<p:dataGrid id="odData" value="#{officerBean.ods}" var="ood" stickyHeader="false" layout="grid"
 						 columns="5" emptyMessage="BRIS SOFTWARE YOUR PORTAL FOR BARANAGAY INFORMATION">
                          
                          <p:column>
-                         	<p:commandButton id="selectedId" value="#{ood.day} #{ood.officerName}" actionListener="#{odBean.selectedDate(ood)}" oncomplete="PF('dlgOdOff').show()" update="searchOff odDataOff"/>
+                         	<p:commandButton id="selectedId" value="#{ood.day} #{ood.officerName}" style="#{ood.buttonStyle}" actionListener="#{officerBean.selectedDate(ood)}" oncomplete="PF('dlgOdOff').show()" update="searchOff odDataOff"/>
                          </p:column>
     			</p:dataGrid>
     </p:dialog>
@@ -37,18 +37,18 @@
     	
     	<p:toolbar id="tbODOff">
 		    		<f:facet name="left">
-				        <p:inputText id="searchOff" value="#{odBean.searchOfficer}" autocomplete="off">
-				        	<p:ajax event="keyup" listener="#{odBean.loadOfficer}" update="odDataOff" />
+				        <p:inputText id="searchOff" value="#{officerBean.searchOfficer}" autocomplete="off">
+				        	<p:ajax event="keyup" listener="#{officerBean.loadOfficer}" update="odDataOff" />
 				        </p:inputText>
 		    		</f:facet>
 		    		<f:facet name="right"/>
 				</p:toolbar>
     			
-    			<p:dataGrid id="odDataOff" value="#{odBean.employees}" var="ee" stickyHeader="false" layout="grid"
+    			<p:dataGrid id="odDataOff" value="#{officerBean.employees}" var="ee" stickyHeader="false" layout="grid"
 						 columns="5" emptyMessage="BRIS SOFTWARE YOUR PORTAL FOR BARANAGAY INFORMATION">
                          
                          <p:column>
-                         	<p:commandButton value="#{ee.firstName} #{ee.lastName}" actionListener="#{odBean.sectedOfficer(ee)}" update="odData" oncomplete="PF('dlgOdOff').hide()"/>
+                         	<p:commandButton value="#{ee.firstName} #{ee.lastName}" actionListener="#{officerBean.sectedOfficer(ee)}" update="odData" oncomplete="PF('dlgOdOff').hide()"/>
                          </p:column>
     			</p:dataGrid>
     </p:dialog>

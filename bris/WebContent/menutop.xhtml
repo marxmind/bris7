@@ -37,7 +37,7 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <p:commandLink styleClass="dropdown-item" value="#{menuBean.labels[13]}" action="#{menuBean.bris}" disabled="#{featuresBean.brisFeatures}" ajax="false" immediate="false" onclick="showLoading()"/>
             <p:commandLink styleClass="dropdown-item" value="#{menuBean.labels[12]}" action="#{menuBean.adminUser}" disabled="#{featuresBean.userRegistration}" ajax="false" immediate="false" onclick="showLoading()"/>
-            <p:commandLink styleClass="dropdown-item" value="OD Setup" oncomplete="PF('dlgOd').show()" actionListener="#{odBean.loadOD}" update="odData idComEx" onclick="showLoading()"/>
+            <p:commandLink styleClass="dropdown-item" value="OD Setup" oncomplete="PF('dlgOd').show()" actionListener="#{officerBean.loadOD}" update="odData tbOD" onclick="showLoading()"/>
             <p:commandLink styleClass="dropdown-item" value="Commelec Directory" oncomplete="PF('dlgCom').show()" actionListener="#{comBean.loadNames}" update="comData" onclick="showLoading()"/>
             <div class="dropdown-divider"></div>
             <p:commandLink styleClass="dropdown-item" value="#{menuBean.labels[14]}" action="#{logoutBacking.logout}" ajax="false" immediate="false" onclick="showLoading()"/>

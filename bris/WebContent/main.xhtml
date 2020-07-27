@@ -576,9 +576,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             				<p:column headerText="Purpose" width="200">
             						<p:outputLabel  value="#{ct.purposeName}"/>
             				</p:column>
-            				
             				<p:column headerText="Edit" width="20">
-	            				<p:button outcome="clearance" icon="fa fa-pencil-square-o" title="Please click here to edit the clearance details">
+	            				<p:button outcome="clearance" icon="pi pi-pencil" title="Please click here to edit the clearance details">
 									<f:param name="editClearance" value="#{mainBean.fullName}:#{ct.issuedDate}:#{ct.purposeType}"/>
 								</p:button>
 							</p:column>
@@ -626,7 +625,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             				</p:column>
             				
             				<p:column headerText="Edit" width="20">
-	            				<p:button outcome="adminBusiness" icon="fa fa-pencil-square-o" title="Please click here to edit the Business details">
+	            				<p:button outcome="adminBusiness" icon="pi pi-pencil" title="Please click here to edit the Business details">
 									<f:param name="editBusiness" value="#{mainBean.fullName}:#{rpt.dateRegistered}"/>
 								</p:button>
 							</p:column>
@@ -666,7 +665,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             				</p:column>
             				
             				<p:column headerText="Edit" width="20">
-	            				<p:button outcome="card" icon="fa fa-pencil-square-o" title="Please click here to edit the ID details">
+	            				<p:button outcome="card" icon="pi pi-pencil" title="Please click here to edit the ID details">
 									<f:param name="editCard" value="#{mainBean.fullName}:#{ct.dateTrans}"/>
 								</p:button>
 							</p:column>
@@ -707,7 +706,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             				</p:column>
             				
             				<p:column headerText="Edit" width="30">
-	            				<p:button outcome="cases" icon="fa fa-pencil-square-o" title="Please click here to edit the Case details">
+	            				<p:button outcome="cases" icon="pi pi-pencil" title="Please click here to edit the Case details">
 									<f:param name="editCase" value="#{mainBean.fullName}:#{kis.date}"/>
 								</p:button>
 							</p:column>
