@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themes>
+	<style id="0">
+		<name>YnJpc2FmdGVybWFyeG1pbmRkYXJrbWFyeG1pbmQ=</name>
+	</style>
+	<style id="1">
+		<name>bWFyeG1pbmRhZnRlcml0YWxpYW5vb25tYXJ4bWluZA==</name>
+	</style>
+	<style id="2">
+		<name>bWFyeG1pbmRhZnRlcm1hcnhtaW5kd29ya3JpdmVyYQ==</name>
+	</style>
+	<style id="3">
+		<name>aXRhbGlhYXJpaXRhbGlhc3RvbWFyaw==</name>
+	</style>
+	<style id="4">
+		<name>YnJpc2JsYWNrLW1hcnhtaW5kdGllcml2ZXJh</name>
+	</style>
+	<style id="5">
+		<name>bWFyeG1pbmRibGl0cml2ZXJhemVyYnJpcw==</name>
+	</style>
+	<style id="6">
+		<name>cml2ZXJhYmx1ZW1hcmtza3ltYXJr</name>
+	</style>
+	<style id="7">
+		<name>cml2ZXJhYm9vdGJyaXNzdHJhcHJpdmVyYQ==</name>
+	</style>
+	<style id="8">
+		<name>aXRhbGlhY2FzYWJyaXNibGFuY2FtYXJ4bWluZA==</name>
+	</style>
+	<style id="9">
+		<name>cml2ZXJhY3J1bWFyeG1pbmR6ZWl0YWxpYQ==</name>
+	</style>
+	<style id="10">
+		<name>cml2ZXJhY3VwZXJtYXJ4bWluZHRpbm9tYXJ4bWluZA==</name>
+	</style>
+	<style id="11">
+		<name>YnJpc2RhcmstbWFya2hpdmVicmlz</name>
+	</style>
+	<style id="12">
+		<name>aXRhbGlhZGVtYXJrbHRhcml2ZXJh</name>
+	</style>
+	<style id="13">
+		<name>YnJpc2RvdC1tYXJ4bWluZGx1dm1hcms=</name>
+	</style>
+	<style id="14">
+		<name>bWFyeG1pbmRlZ2dicmlzcGxhbnRicmlz</name>
+	</style>
+	<style id="15">
+		<name>YnJpc2V4Y2l0ZS1tYXJ4bWluZGJpa2VtYXJr</name>
+	</style>
+	<style id="16">
+		<name>YnJpc2ZsaXRhbGlhaWNrbWFyaw==</name>
+	</style>
+	<style id="17">
+		<name>bWFyeG1pbmRnbGFzc21hcnhtaW5kLXhyaXZlcmE=</name>
+	</style>
+	<style id="18">
+		<name>YnJpc2hvaXRhbGlhbWVpdGFsaWE=</name>
+	</style>
+	<style id="19">
+		<name>aXRhbGlhaG90LWJyaXNzbmVha3NtYXJr</name>
+	</style>
+	<style id="20">
+		<name>aXRhbGlhaHVtYWJyaXNuaXR5bWFyeG1pbmQ=</name>
+	</style>
+	<style id="21">
+		<name>aXRhbGlhbGUtYnJpc2Zyb2dicmlz</name>
+	</style>
+	<style id="22">
+		<name>aXRhbGlhbWlkcml2ZXJhbmlnaHRicmlz</name>
+	</style>
+	<style id="23">
+		<name>YnJpc21pbnQtcml2ZXJhY2hvY21hcnhtaW5k</name>
+	</style>
+	<style id="24">
+		<name>bWFya292ZXJtYXJ4bWluZGNhc3RyaXZlcmE=</name>
+	</style>
+	<style id="25">
+		<name>bWFya3BlcHBlci1tYXJ4bWluZGdyaW5kZXJpdGFsaWE=</name>
+	</style>
+	<style id="26">
+		<name>bWFya3JlZGl0YWxpYW1vbmRtYXJ4bWluZA==</name>
+	</style>
+	<style id="27">
+		<name>bWFyeG1pbmRyb2Nrcml2ZXJhZXRicmlz</name>
+	</style>
+	<style id="28">
+		<name>bWFya3NhbWFya21pdGFsaWE=</name>
+	</style>
+	<style id="29">
+		<name>YnJpc3Ntb290bWFya2huZXNzbWFyeG1pbmQ=</name>
+	</style>
+	<style id="30">
+		<name>cml2ZXJhc291dGgtbWFyeG1pbmRzdHJlZXRtYXJ4bWluZA==</name>
+	</style>
+	<style id="31">
+		<name>bWFyeG1pbmRzdGFtYXJ4bWluZHJ0bWFyaw==</name>
+	</style>
+	<style id="32">
+		<name>bWFyeG1pbmRzdW5tYXJ4bWluZG55cml2ZXJh</name>
+	</style>
+	<style id="33">
+		<name>aXRhbGlhc3dhbmt5LW1hcmtwdXJzZWJyaXM=</name>
+	</style>
+	<style id="34">
+		<name>aXRhbGlhdHJvbnJpdmVyYXRhc3RpY21hcnhtaW5k</name>
+	</style>
+	<style id="35">
+		<name>cml2ZXJhdWltYXJ4bWluZC1kYXJrbmVzc3JpdmVyYQ==</name>
+	</style>
+	<style id="36">
+		<name>cml2ZXJhdWltYXJrLWxpZ2h0bmVzc21hcms=</name>
+	</style>
+	<style id="37">
+		<name>bWFyeG1pbmR2YWRicmlzZXJtYXJ4bWluZA==</name>
+	</style>
+	<style id="38">
+		<name>bWFyeG1pbmRhZG1pbmJyaXNpdGFsaWE=</name>
+	</style>
+	
+	<!-- new themes on version 6 -->
+	<style id="39">
+		<name>bWFyeG1pbmRsdW5hbWFyay1hbWJlcml0YWxpYQ==</name>
+	</style>
+	<style id="40">
+		<name>YnJpc2x1bmEtaXRhbGlhYmx1ZW1hcms=</name>
+	</style>
+	<style id="41">
+		<name>aXRhbGlhbHVuYS1icmlzZ3JlZW5tYXJr</name>
+	</style>
+	<style id="42">
+		<name>bWFyeG1pbmRsdW5hLWl0YWxpYXBpbmticmlz</name>
+	</style>
+	<style id="43">
+		<name>bWFya25vdmEtaXRhbGlhY29sb3JlZG1hcnhtaW5k</name>
+	</style>
+	<style id="44">
+		<name>bWFya25vdmFpdGFsaWEtZGFya21hcnhtaW5k</name>
+	</style>
+	<style id="45">
+		<name>bWFya25vdmFicmlzLWxpZ2h0bWFyeG1pbmQ=</name>
+	</style>
+</themes>

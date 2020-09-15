@@ -1,0 +1,65 @@
+Barangay Profile
+Created September 30, 2019
+
+numberOfBarangay=3
+barangayRegName=Poblacion-Lake Sebu,Talisay-Lake Sebu,Lamdalag-Lake Sebu
+
+databaseName0=bris_poblacion
+driver0=org.mariadb.jdbc.Driver
+url0=jdbc:mariadb://localhost
+port0=MzMwNg==
+SSL0=useSSL=false
+username0=cm9vdA==
+password0=b2N0b2JlcjE4MTk4Nio=
+applicationExp0=02r03i-01a08i-02r00m01a07l
+includeLog0=yes
+logPath0=C:~bris~log~
+imgPath0=C:~bris~img~
+reports0=C:~bris~reports~
+barangayName0=Poblacion-Lake Sebu
+themeStyle0=1357251
+idcode0=PLS
+province0=South Cotabato
+municipality0=Lake Sebu
+barangay0=Poblacion
+menustyle0=BOOT
+
+databaseName1=bris_talisay
+driver1=org.mariadb.jdbc.Driver
+url1=jdbc:mariadb://localhost
+port1=MzMwNg==
+SSL1=useSSL=false
+username1=cm9vdA==
+password1=b2N0b2JlcjE4MTk4Nio=
+applicationExp1=02r03i-01a08i-02r00m01a07l
+includeLog1=yes
+logPath1=C:~bris~log~
+imgPath1=C:~bris~img~
+reports1=C:~bris~reports~
+barangayName1=Talisay-Lake Sebu
+themeStyle1=1357251
+idcode1=TLS
+province1=South Cotabato
+municipality1=Lake Sebu
+barangay1=Talisay
+menustyle1=BOOT
+
+databaseName2=bris_lamdalag
+driver2=org.mariadb.jdbc.Driver
+url2=jdbc:mariadb://localhost
+port2=MzMwNg==
+SSL2=useSSL=false
+username2=cm9vdA==
+password2=b2N0b2JlcjE4MTk4Nio=
+applicationExp2=02r03i-01a08i-02r00m01a07l
+includeLog2=yes
+logPath2=C:~bris~log~
+imgPath2=C:~bris~img~
+reports2=C:~bris~reports~
+barangayName2=Lamdalag-Lake Sebu
+themeStyle2=1357251
+idcode2=LLS
+province2=South Cotabato
+municipality2=Lake Sebu
+barangay2=Lamdalag
+menustyle2=BOOT

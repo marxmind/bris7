@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<reports>
+	<bizclearance>bizclearanceV5</bizclearance>
+	<cageclearance>cageclearanceV5</cageclearance>
+	<assclearance>assclearanceV5</assclearance>
+	<largecattle>largecattleV5</largecattle>
+	<latebirthreg>latebirthregV5</latebirthreg>
+	<othclearance>othclearance</othclearance>
+	<businesspermit>businesspermitV5</businesspermit>
+	<bid>bidV5</bid>
+	<check>L360check</check><!-- L360check -->
+	<blotters>blotters</blotters>
+	<authorization>authorizationV5</authorization>
+	<bankreport>bankreportV5-long</bankreport>
+	<land>landV5</land>
+	<cases>cases</cases>
+	<casenotice>casenoticeV2</casenotice>
+	<endorsementcase>endorsementcase</endorsementcase>
+	<docopentitle>docopentitleV5</docopentitle>
+</reports>

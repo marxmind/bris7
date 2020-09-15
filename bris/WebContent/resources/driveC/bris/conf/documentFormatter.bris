@@ -1,0 +1,101 @@
+Author: Mark Italia
+Company: MARXMIND I.T. SOLUTIONS
+Created: 07/13/2018
+Version 1.0
+
+This configuration file is use for document layout of the certificate, clearance , indigent certification etc
+
+This file applicable only start from BRIS version 5 and above
+
+Available content source words.bris, wordsV6.bris
+words.bris can use from version 5 and below jrxml file at C:/bris/reports/barangayname/
+wordsV6.bris can use only version 6 jrxml file at C:/bris/reports/barangayname/
+
+initialize version
+documentContentSource=C:/bris/conf/wordsV7.bris
+documentLayout=V7
+
+document V5
+C:/bris/conf/words.bris
+C:/bris/conf/reports.xml - reports configuration file
+assclearanceV5.jrxml
+authorizationV5.jrxml
+bankreportV5.jrxml
+bidV5.jrxml
+bizclearanceV5.jrxml
+businesspermitV5.jrxml
+cageclearanceV5.jrxml
+casenotice.jrxml
+cases.jrxml
+docopentitleV5.jrxml
+endorsementcase.jrxml
+landV5.jrxml
+largecattleV5.jrxml
+latebirthregV5.jrxml
+
+document V6
+C:/bris/conf/wordsV6.bris
+clearance/certificate
+v6_business-municipal=bizclearanceV6
+v6_business-certification=bizclearance-certificateV6
+v6_business-permit=businesspermitV6
+v6_fishcage-permit=cageclearanceV6
+v6_death-document=deathdocV6
+v6_burial-indigent=burialdocV6
+v6_hospital-financial-document=financialdocV6
+v6_generic-document=assclearanceV6
+v6_generic-open-document=docopentitleV6
+v6_largecattle-document=largecattleV6
+v6_birth-document=latebirthregV6
+v6_residency-document=residencyV6
+v6_coe-document=coeV6
+v6_authorization-document=authorizationV6
+v6_land-document=landV6
+
+v7_business-municipal=bizclearanceV7
+v7_business-certification=bizclearance-certificateV7
+v7_business-permit=businesspermitV7
+v7_fishcage-permit=cageclearanceV7
+v7_death-document=deathdocV7
+v7_burial-indigent=burialdocV7
+v7_hospital-financial-document=financialdocV7
+v7_generic-document=assclearanceV7
+v7_generic-open-document=docopentitleV7
+v7_largecattle-document=largecattleV7
+v7_birth-document=latebirthregV7
+v7_residency-document=residencyV7
+v7_coe-document=coeV7
+v7_authorization-document=authorizationV7
+v7_land-document=landV7
+v7_tribal-land-document=triballandV7
+
+cheques
+v6_transmittal_letter=transmittalV6-long
+v6_bank_letter=bankreportV6-long
+
+v7_transmittal_letter=transmittalV7-long
+v7_bank_letter=bankreportV7-long
+
+cases filing
+v6_kpform7=kpform7
+v6_kpform8=kpform8
+v6_kpform9=kpform9
+v6_kpform10=kpform10
+v6_kpform12=kpform12
+v6_kpform13=kpform13
+v6_kpform14=kpform14
+v6_kpform15=kpform15
+v6_kpform16=kpform16
+v6_kpform17=kpform17
+v6_kpform18=kpform18
+v6_kpform19=kpform19
+v6_kpform20=kpform20
+v6_kpform20-A=kpform20-A
+v6_kpform20-B=kpform20-B
+v6_kpform21=kpform21
+v6_kpform22=kpform22
+v6_kpform23=kpform23
+v6_kpform24=kpform24
+v6_kpform25=kpform25
+v6_kpform0=cases
+v6_invitationform=invitationform

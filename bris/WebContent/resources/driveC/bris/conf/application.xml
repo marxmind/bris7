@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><databaseDetails>
+	<databaseName>bris_talisay</databaseName>
+	<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+	<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+	<port>MzMwNg==</port>
+	<SSL>useSSL=false</SSL>
+	<username>cm9vdA==</username>
+	<password>b2N0b2JlcjE4MTk4Nio=</password>
+	<applicationExp>02r03i-01a08i-02r00m01a07l</applicationExp>
+	<applicationVersion>Version 1.0</applicationVersion>
+	<copyright>Copyright © 2016. All Rights Reserved.</copyright>
+	<author>Mark Italia</author>
+	<supportEamil>markritalia@gamil.com</supportEamil>
+	<supportNo>09175121252</supportNo>
+	<includeLog>yes</includeLog>
+	<logPath>C:\bris\log\</logPath>
+	<imgPath>C:\bris\img\</imgPath>
+	<reports>C:\bris\reports\</reports>
+	<businessType>0</businessType><!--default [0]open [1]specific-->
+	<barangayName>Talisay-Lake Sebu</barangayName>
+	<businessWallpaperFile>wallpaper.png</businessWallpaperFile>
+	<themeStyle>1357251</themeStyle>
+	<receiptLog>C:\bris\receipts\</receiptLog>
+	<idcode>TLS</idcode>
+	<province>South Cotabato</province>
+	<municipality>Lake Sebu</municipality>
+	<barangay>Talisay</barangay>
+	<yearlybudget>6000000</yearlybudget>
+	<menustyle>BOOT</menustyle>
+</databaseDetails>

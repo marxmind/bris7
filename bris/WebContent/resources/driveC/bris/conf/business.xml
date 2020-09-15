@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<business>
+	<line id="0">
+		<name>Poblacion-Lake Sebu</name>
+		<description>Poblacion, Lake Sebu Barangay Hall</description>
+		<address>Poblacion, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_poblacion</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>PLS</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Poblacion</barangay>
+		<yearlybudget>6000000</yearlybudget>
+	</line>
+	<line id="1">
+		<name>Talisay-Lake Sebu</name>
+		<description>Talisay, Lake Sebu Barangay Hall</description>
+		<address>Talisay, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_talisay</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>TLS</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Talisay</barangay>
+		<yearlybudget>6000000</yearlybudget>
+	</line>
+	<line id="2">
+		<name>Lamdalag-Lake Sebu</name>
+		<description>Lamdalag, Lake Sebu Barangay Hall</description>
+		<address>Lamdalag, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_lamdalag</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>LAM</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Lamdalag</barangay>
+		<yearlybudget>6000000</yearlybudget>
+	</line>
+	<line id="3">
+		<name>Lake Lahit-Lake Sebu</name>
+		<description>Lake Lahit, Lake Sebu Barangay Hall</description>
+		<address>Lake Lahit, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_lakelahit</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>LLS</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Lake Lahit</barangay>
+		<yearlybudget>6000000</yearlybudget>
+	</line>
+	<line id="4">
+		<name>Lake Seloton-Lake Sebu</name>
+		<description>Lake Seloton, Lake Sebu Barangay Hall</description>
+		<address>Lake Seloton, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_lakeseloton</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>LSS</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Lake Seloton</barangay>
+		<yearlybudget>6000000</yearlybudget>
+	</line>
+	
+	<line id="5">
+		<name>Ned-Lake Sebu</name>
+		<description>Ned, Lake Sebu Barangay Hall</description>
+		<address>Ned, Lake Sebu</address>
+		<owner>LGU</owner>
+		<contact>0</contact>
+		<database>bris_ned</database>
+		<driver>Y29tLm15c3FsLmpkYmMuRHJpdmVy</driver>
+		<url>amRiYzpteXNxbDovL2xvY2FsaG9zdA==</url>
+		<port>MzMwNg==</port>
+		<SSL>useSSL=false</SSL>
+		<username>cm9vdA==</username>
+		<password>b2N0b2JlcjE4MTk4Nio=</password>
+		<idcode>NLS</idcode>
+		<province>South Cotabato</province>
+		<municipality>Lake Sebu</municipality>
+		<barangay>Ned</barangay>
+		<yearlybudget>12000000</yearlybudget>
+	</line>
+	
+	
+</business>

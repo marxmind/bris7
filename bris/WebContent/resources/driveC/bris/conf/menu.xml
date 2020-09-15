@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+	
+	<selection id="0">
+		<label>Directory</label>
+	</selection>
+	<selection id="1">
+		<label>Citizens</label>
+	</selection>
+	<selection id="2">
+		<label>Documentation</label>
+	</selection>
+	<selection id="3">
+		<label>ID's</label>
+	</selection>
+	<selection id="4">
+		<label>Cheques</label>
+	</selection>
+	<selection id="5">
+		<label>Cases</label>
+	</selection>
+	<selection id="6">
+		<label>Business</label>
+	</selection>
+	<selection id="7">
+		<label>Assistant</label>
+	</selection>
+	<selection id="8">
+		<label>Graphing</label>
+	</selection>
+	<selection id="9">
+		<label>Structure</label>
+	</selection>
+	<selection id="10">
+		<label>Income+IRA=MOOE</label>
+	</selection>
+	<selection id="11">
+		<label>Employee</label>
+	</selection>
+	<selection id="12">
+		<label>Users</label>
+	</selection>
+	<selection id="13">
+		<label>Settings</label>
+	</selection>
+	<selection id="14">
+		<label>Exit</label>
+	</selection>
+	<selection id="15">
+		<label>File Explorer</label>
+	</selection>
+	<selection id="16">
+		<label>Cedula</label>
+	</selection>
+	<selection id="17">
+		<label>OR Listing</label>
+	</selection>
+	<selection id="18">
+		<label>Reports</label>
+	</selection>
+</menu>
