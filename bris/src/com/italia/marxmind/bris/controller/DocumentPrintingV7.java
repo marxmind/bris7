@@ -419,10 +419,10 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 				word.append(Words.getTagName("asstance-death-string-2"));
 				word.replace(word.indexOf("<requestor>"),word.indexOf("<requestor>")+11, requestor);
 				word.replace(word.indexOf("<civilstatus>"),word.indexOf("<civilstatus>")+13, civilStatus);
-				word.replace(word.indexOf("<requestoraddress>"),word.indexOf("<requestoraddress>")+18, address);
+				//word.replace(word.indexOf("<requestoraddress>"),word.indexOf("<requestoraddress>")+18, address);
 				word.replace(word.indexOf("<relationship>"),word.indexOf("<relationship>")+14, relationship);
 				word.replace(word.indexOf("<diedperson>"),word.indexOf("<diedperson>")+12, beneciaryName);
-				word.replace(word.indexOf("<diedpersonaddress>"),word.indexOf("<diedpersonaddress>")+19, benAddress);
+				//word.replace(word.indexOf("<diedpersonaddress>"),word.indexOf("<diedpersonaddress>")+19, benAddress);
 			}
 			
 			str.append(word);

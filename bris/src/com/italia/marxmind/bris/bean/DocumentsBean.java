@@ -380,20 +380,24 @@ public class DocumentsBean implements Serializable{
         }
     }
 	
-	public void clickItemOwner(){
-		try {
-		Customer cuz = getTaxPayer();
-		setPhotoId(cuz.getPhotoid());
-		shots = new ArrayList<>();
-		shots.add(cuz.getPhotoid());
-		
-		Cedula cedula = Cedula.loadCedulaIfExist(cuz);
+	public void loadCedula() {
+		Cedula cedula = Cedula.loadCedulaIfExist(getTaxPayer());
 		if(cedula!=null){
 			setCedulaFld(false);
 			setCedulaDetails((cedula.getCedulaType()==1? "Individual" : "Corporation") + ": " + cedula.getCedulaNo()+", Issued: "+cedula.getDateIssued() + " at " + cedula.getIssuedAddress());
 			setCedulaIssued(DateUtils.convertDateString(cedula.getDateIssued(), DateFormat.YYYY_MM_DD()));
 			setCedulaNumber(cedula.getCedulaNo());
 		}
+	}
+	
+	public void clickItemOwner(){
+		try {
+		Customer cuz = getTaxPayer();
+		setPhotoId(cuz.getPhotoid());
+		shots = new ArrayList<>();
+		shots.add(cuz.getPhotoid());	
+			
+		loadCedula();
 		ORTransaction ort = ORTransaction.loadORIfExist(cuz);
 		if(ort!=null){
 			setPayableFld(true);
@@ -1300,6 +1304,7 @@ public class DocumentsBean implements Serializable{
 			}
 			
 		}
+		
 	}
 	
 	public void loadMultipurpose(){

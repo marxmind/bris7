@@ -226,7 +226,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 						<p:outputLabel  value="Cedula" style="#{skin.label}"/>
 						<p:outputLabel>
 						<p:outputLabel id="cedId" value="#{documentsBean.cedulaDetails}" placeholder="CEDULA NUMBER/ISSUED DATE" style="#{skin.label}"/>
-						&nbsp;&nbsp;<p:commandButton style="#{skin.button}" update="cedFld" icon="fa fa-search" onclick="PF('cedulaDlg').show()" disabled="#{documentsBean.cedulaFld}" />
+						&nbsp;&nbsp;<p:commandButton style="#{skin.button}" actionListener="#{documentsBean.loadCedula}" update="cedFld" icon="fa fa-search" onclick="PF('cedulaDlg').show()" disabled="#{documentsBean.cedulaFld}" />
 						</p:outputLabel>
 						
 						<p:outputLabel  value="Born Details" style="#{skin.label}"/>
