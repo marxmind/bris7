@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,9 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.FacesException;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -75,7 +75,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  */
 
 @Named
-@javax.enterprise.context.SessionScoped
+@SessionScoped
 public class DocumentsBean implements Serializable{
 
 	/**
@@ -327,7 +327,7 @@ public class DocumentsBean implements Serializable{
 		if(size>=3){
 			return Clearance.retrieve(query, "ornumber"," ORDER BY ornumber DESC limit 10");
 		}else{
-			return Collections.synchronizedList(new ArrayList<String>());
+			return new ArrayList<String>();
 		}
 	}
 	
@@ -2063,7 +2063,10 @@ public class DocumentsBean implements Serializable{
 											com.italia.marxmind.bris.enm.Purpose.TO_TAKE_BOARD_LICENSE.getId()==getPurposeTypeId() ||
 													com.italia.marxmind.bris.enm.Purpose.AFP_TRAINING.getId()==getPurposeTypeId() ||
 														com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN.getId()==getPurposeTypeId() ||
-															com.italia.marxmind.bris.enm.Purpose.SSS_LOAN.getId()==getPurposeTypeId()){		
+															com.italia.marxmind.bris.enm.Purpose.SSS_LOAN.getId()==getPurposeTypeId() ||
+																	com.italia.marxmind.bris.enm.Purpose.BANK_REQUIREMENT.getId()==getPurposeTypeId() || 
+																			com.italia.marxmind.bris.enm.Purpose.PNP_APPLICATION.getId()==getPurposeTypeId()
+															){		
 			
 			docTypes.add(new SelectItem(DocTypes.CERTIFICATE.getId(), DocTypes.CERTIFICATE.getName()));
 			docTypes.add(new SelectItem(DocTypes.CLEARANCE.getId(), DocTypes.CLEARANCE.getName()));
@@ -2207,7 +2210,8 @@ public class DocumentsBean implements Serializable{
 				docTypes.add(new SelectItem(DocTypes.INCOME.getId(), DocTypes.INCOME.getName()));
 				
 		}else if(com.italia.marxmind.bris.enm.Purpose.CERTIFICATE_RESIDENCY.getId()==getPurposeTypeId() ||
-				com.italia.marxmind.bris.enm.Purpose.DIRECT_SELLER_AGENT_APPLICATION.getId()==getPurposeTypeId()){
+				com.italia.marxmind.bris.enm.Purpose.DIRECT_SELLER_AGENT_APPLICATION.getId()==getPurposeTypeId() ||
+				com.italia.marxmind.bris.enm.Purpose.TES_APPLICATION.getId()==getPurposeTypeId()){
 			System.out.println("Residency.....");
 			docTypes.add(new SelectItem(DocTypes.RESIDENCY.getId(), DocTypes.RESIDENCY.getName()));
 		
@@ -4245,8 +4249,24 @@ public class DocumentsBean implements Serializable{
 		  			
 		  	    String pdfName = REPORT_NAME +".pdf";
 			    File pdfFile = new File(path+ REPORT_NAME +".pdf");
-			    tempPdfFile = new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
-		  	    
+			    
+			    tempPdfFile =  DefaultStreamedContent.builder()
+			    	    .contentType("application/pdf")
+			    	    .name(REPORT_NAME+".pdf")
+			    	    .stream(()-> {
+			    			try {
+			    				return new FileInputStream(pdfFile);
+			    			} catch (FileNotFoundException e) {
+			    				// TODO Auto-generated catch block
+			    				e.printStackTrace();
+			    			}
+			    			return null;
+			    		})
+			    	    .build();
+			    
+			    		//new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+			    System.out.println("path>> " + path  +" REPORT_NAME " + REPORT_NAME);
+		  	    System.out.println("Printing certification " + pdfName);
 		  	    PrimeFaces pm = PrimeFaces.current();
 		  	    pm.executeScript("showPdf();hideButton();");
 		  	    
@@ -4293,12 +4313,17 @@ public class DocumentsBean implements Serializable{
 			if(tempPdfFile==null) {
 				String pdfName = "assclearanceV6.pdf";
 				String pdf = ReadConfig.value(Bris.REPORT) + ReadConfig.value(Bris.BARANGAY_NAME).replace(" ", "") + Bris.SEPERATOR.getName();
-				pdf += pdfName;
+				//pdf += pdfName;
 				System.out.println("pdf file >>>> " + pdf);
 				
 			    File pdfFile = new File(pdf);
 	  	    
-			    return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+			    //return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+			    return DefaultStreamedContent.builder()
+			    		.contentType("application/pdf")
+			    		.name(pdfName)
+			    		.stream(()-> this.getClass().getResourceAsStream(pdf + pdfName))
+			    		.build();
 			}else {
 				return tempPdfFile;
 			}

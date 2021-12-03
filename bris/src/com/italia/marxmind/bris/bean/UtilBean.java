@@ -196,7 +196,12 @@ public class UtilBean implements Serializable{
 		try{
 			InputStream is = new FileInputStream(DOC_PATH + fileName);
 			String ext = fileName.split("\\.")[1];
-			sqlFile = new DefaultStreamedContent(is, "application/"+ext,fileName);
+			sqlFile = DefaultStreamedContent.builder()
+					.contentType("application/"+ext)
+					.name(fileName)
+					.stream(()-> this.getClass().getResourceAsStream(DOC_PATH + fileName))
+					.build(); 
+					//new DefaultStreamedContent(is, "application/"+ext,fileName);
 			//is.close();
 		}catch(FileNotFoundException e){
 			

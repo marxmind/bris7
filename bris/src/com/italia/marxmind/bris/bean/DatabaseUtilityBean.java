@@ -190,7 +190,12 @@ public class DatabaseUtilityBean implements Serializable{
 		try{
 			InputStream is = new FileInputStream(getLocationName() + File.separator + fileName);
 			String ext = fileName.split("\\.")[1];
-			formFile = new DefaultStreamedContent(is, "application/"+ext,fileName);
+			formFile = DefaultStreamedContent.builder()
+					.contentType("application/"+ext)
+					.name(fileName+ext)
+					.stream(()-> this.getClass().getResourceAsStream(getLocationName() + File.separator + fileName + ext))
+					.build();
+					//new DefaultStreamedContent(is, "application/"+ext,fileName);
 			//is.close(); Cause of error when downloading file
 			
 			setSelectedFileInformation(getLocationName() + File.separator + form.getFileName());

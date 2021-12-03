@@ -38,10 +38,11 @@ public class BankChequeRpt {
 	
 	private String totalChequesAmount;
 	private List<BankChequeTrans> banksCheques;
+	private int accountId;
 	
-	public static String getLastPBCNo(){
+	public static String getLastPBCNo(int accountId){
 		
-		String sql = "SELECT pbcno FROM bankchequerpt WHERE bankrptisactive=1 ORDER BY pbcno DESC limit 1";
+		String sql = "SELECT pbcno FROM bankchequerpt WHERE bankrptisactive=1 AND accountid="+ accountId +" ORDER BY bankchkid DESC limit 1";
 		
 		Connection conn = null;
 		ResultSet rs = null;
@@ -50,7 +51,7 @@ public class BankChequeRpt {
 		conn = ConnectDB.getConnection();
 		ps = conn.prepareStatement(sql);
 		
-		
+		System.out.println("PBC Query: " + ps.toString());
 		rs = ps.executeQuery();
 		
 		while(rs.next()){
@@ -111,6 +112,7 @@ public class BankChequeRpt {
 			try{bnk.setBankName(rs.getString("bankname"));}catch(NullPointerException e){}
 			try{bnk.setBankLocation(rs.getString("bankloc"));}catch(NullPointerException e){}
 			try{bnk.setBankProvince(rs.getString("bankprov"));}catch(NullPointerException e){}
+			try{bnk.setAccountId(rs.getInt("accountid"));}catch(NullPointerException e){}
 			
 			Employee emp = new Employee();
 			try{emp.setId(rs.getLong("empid"));}catch(NullPointerException e){}
@@ -186,6 +188,7 @@ public class BankChequeRpt {
 			try{bnk.setBankName(rs.getString("bankname"));}catch(NullPointerException e){}
 			try{bnk.setBankLocation(rs.getString("bankloc"));}catch(NullPointerException e){}
 			try{bnk.setBankProvince(rs.getString("bankprov"));}catch(NullPointerException e){}
+			try{bnk.setAccountId(rs.getInt("accountid"));}catch(NullPointerException e){}
 			
 			Employee emp = new Employee();
 			try{emp.setId(rs.getLong("empid"));}catch(NullPointerException e){}
@@ -279,8 +282,9 @@ public class BankChequeRpt {
 				+ "userdtlsid,"
 				+ "bankname,"
 				+ "bankloc,"
-				+ "bankprov) " 
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "bankprov,"
+				+ "accountid) " 
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement ps = null;
 		Connection conn = null;
@@ -316,6 +320,7 @@ public class BankChequeRpt {
 		ps.setString(cnt++, bnk.getBankName());
 		ps.setString(cnt++, bnk.getBankLocation());
 		ps.setString(cnt++, bnk.getBankProvince());
+		ps.setInt(cnt++, bnk.getAccountId());
 		
 		LogU.add(bnk.getDateTrans());
 		LogU.add(bnk.getDateApplying());
@@ -330,6 +335,7 @@ public class BankChequeRpt {
 		LogU.add(bnk.getBankName());
 		LogU.add(bnk.getBankLocation());
 		LogU.add(bnk.getBankProvince());
+		LogU.add(bnk.getAccountId());
 		
 		LogU.add("executing for saving...");
 		ps.execute();
@@ -359,8 +365,9 @@ public class BankChequeRpt {
 				+ "userdtlsid,"
 				+ "bankname,"
 				+ "bankloc,"
-				+ "bankprov) " 
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "bankprov,"
+				+ "accountid) " 
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement ps = null;
 		Connection conn = null;
@@ -396,6 +403,7 @@ public class BankChequeRpt {
 			ps.setString(cnt++, getBankName());
 			ps.setString(cnt++, getBankLocation());
 			ps.setString(cnt++, getBankProvince());
+			ps.setInt(cnt++, getAccountId());
 			
 			LogU.add(getDateTrans());
 			LogU.add(getDateApplying());
@@ -410,6 +418,7 @@ public class BankChequeRpt {
 			LogU.add(getBankName());
 			LogU.add(getBankLocation());
 			LogU.add(getBankProvince());
+			LogU.add(getAccountId());
 			
 			LogU.add("executing for saving...");
 			ps.execute();
@@ -436,7 +445,8 @@ public class BankChequeRpt {
 				+ "userdtlsid=?,"
 				+ "bankname=?,"
 				+ "bankloc=?,"
-				+ "bankprov=?" 
+				+ "bankprov=?,"
+				+ "accountid=?" 
 				+ " WHERE bankchkid=?";
 		
 		PreparedStatement ps = null;
@@ -463,6 +473,7 @@ public class BankChequeRpt {
 		ps.setString(cnt++, bnk.getBankName());
 		ps.setString(cnt++, bnk.getBankLocation());
 		ps.setString(cnt++, bnk.getBankProvince());
+		ps.setInt(cnt++, bnk.getAccountId());
 		ps.setLong(cnt++, bnk.getId());
 		
 		LogU.add(bnk.getDateTrans());
@@ -477,6 +488,7 @@ public class BankChequeRpt {
 		LogU.add(bnk.getBankName());
 		LogU.add(bnk.getBankLocation());
 		LogU.add(bnk.getBankProvince());
+		LogU.add(bnk.getAccountId());
 		LogU.add(bnk.getId());
 		
 		LogU.add("executing for saving...");
@@ -505,7 +517,8 @@ public class BankChequeRpt {
 				+ "userdtlsid=?,"
 				+ "bankname=?,"
 				+ "bankloc=?,"
-				+ "bankprov=?" 
+				+ "bankprov=?,"
+				+ "accountid=?" 
 				+ " WHERE bankchkid=?";
 		
 		PreparedStatement ps = null;
@@ -532,6 +545,7 @@ public class BankChequeRpt {
 		ps.setString(cnt++, getBankName());
 		ps.setString(cnt++, getBankLocation());
 		ps.setString(cnt++, getBankProvince());
+		ps.setInt(cnt++, getAccountId());
 		ps.setLong(cnt++, getId());
 		
 		LogU.add(getDateTrans());
@@ -546,6 +560,7 @@ public class BankChequeRpt {
 		LogU.add(getBankName());
 		LogU.add(getBankLocation());
 		LogU.add(getBankProvince());
+		LogU.add(getAccountId());
 		LogU.add(getId());
 		
 		LogU.add("executing for saving...");
@@ -802,6 +817,14 @@ public class BankChequeRpt {
 
 	public void setBankProvince(String bankProvince) {
 		this.bankProvince = bankProvince;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 
 	

@@ -1273,7 +1273,8 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			
 		}else if(com.italia.marxmind.bris.enm.Purpose.CERTIFICATE_RESIDENCY.getId()== clr.getPurposeType() || 
 				com.italia.marxmind.bris.enm.Purpose.POSTAL.getId()== clr.getPurposeType() ||
-				com.italia.marxmind.bris.enm.Purpose.DIRECT_SELLER_AGENT_APPLICATION.getId()== clr.getPurposeType()){	
+				com.italia.marxmind.bris.enm.Purpose.DIRECT_SELLER_AGENT_APPLICATION.getId()== clr.getPurposeType() ||
+				com.italia.marxmind.bris.enm.Purpose.TES_APPLICATION.getId()== clr.getPurposeType()){	
 		
 		REPORT_NAME = RESIDENCY_DOC;
 		
@@ -1298,6 +1299,8 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			purpose = Words.getTagName("residency-string-5");
 		}else if(com.italia.marxmind.bris.enm.Purpose.DIRECT_SELLER_AGENT_APPLICATION.getId()== clr.getPurposeType()){
 			purpose = Words.getTagName("residency-string-6");
+		}else if(com.italia.marxmind.bris.enm.Purpose.TES_APPLICATION.getId()== clr.getPurposeType()){
+			purpose = Words.getTagName("residency-string-7");
 		}
 		
 		ClearanceRpt rpt = new ClearanceRpt();
@@ -2288,12 +2291,19 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			
 			File folder = new File(path + "qrcode" + File.separator);
 			folder.mkdir();
-			String content = "Name: " + clr.getTaxPayer().getLastname() + ", " + clr.getTaxPayer().getFirstname() + " " + clr.getTaxPayer().getMiddlename() +"\n";
+			String content = "";
+			/*
+			content = "Name: " + clr.getTaxPayer().getLastname() + ", " + clr.getTaxPayer().getFirstname() + " " + clr.getTaxPayer().getMiddlename() +"\n";
 			content += "Address: "+ address +"\n";
 			content += "Purpose: " + purpose + "\n";
 			content += "Printed: "+ DateUtils.convertDateToMonthDayYear(clr.getIssuedDate()) +"\n";
 			content += "Please report for violation of this document.\n";
 			content += "Provider: MARXMIND I.T. SOLUTIONS";
+			*/
+			
+			//revised content value
+			content = clr.getTaxPayer().getCardno();
+			
 			File pdf = QRCode.createQRCode(content, 200, 200, path + "qrcode" + File.separator, clr.getTaxPayer().getCardno());
 			qrPdf = new FileInputStream(pdf);
 			param.put("PARAM_QRCODE", qrPdf);

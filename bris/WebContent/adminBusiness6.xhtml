@@ -112,6 +112,14 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             					<p:commandButton icon="fa fa-search" title="Click this button to see the additional information" update="usercusId" actionListener="#{bizBean.clickItem(rpt)}"/>
             				</p:column>
             				
+            				<p:column headerText="Registered" width="150" sortable="false" sortBy="#{rpt.businessName}">
+            						<h:outputText  value="#{rpt.dateRegistered}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Owner" width="150" sortable="false" sortBy="#{rpt.businessName}">
+            						<h:outputText  value="#{rpt.taxPayer.fullname}"/>
+            				</p:column>
+            				
                          	<p:column headerText="Business" width="150" sortable="false" sortBy="#{rpt.businessName}">
             						<h:outputText  value="#{rpt.businessName}"/>
             				</p:column>

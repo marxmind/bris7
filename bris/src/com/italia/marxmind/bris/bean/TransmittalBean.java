@@ -9,27 +9,25 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletOutputStream;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.application.GlobalReportHandler;
 import com.italia.marxmind.bris.application.GlobalReportHandler.GlobalReport;
+import com.italia.marxmind.bris.controller.BankAccounts;
 import com.italia.marxmind.bris.controller.BankChequeRpt;
 import com.italia.marxmind.bris.controller.BankChequeTrans;
-import com.italia.marxmind.bris.controller.Chequedtls;
 import com.italia.marxmind.bris.controller.Employee;
 import com.italia.marxmind.bris.controller.Login;
 import com.italia.marxmind.bris.controller.NumberToWords;
@@ -37,7 +35,6 @@ import com.italia.marxmind.bris.controller.Transmittal;
 import com.italia.marxmind.bris.controller.TransmittalRpt;
 import com.italia.marxmind.bris.controller.Words;
 import com.italia.marxmind.bris.enm.Bris;
-import com.italia.marxmind.bris.enm.DateFormat;
 import com.italia.marxmind.bris.enm.Positions;
 import com.italia.marxmind.bris.qrcode.QRCode;
 import com.italia.marxmind.bris.reader.ReadConfig;
@@ -45,10 +42,8 @@ import com.italia.marxmind.bris.reports.ReportCompiler;
 import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
@@ -58,7 +53,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @version 1.0
  *
  */
-@ManagedBean(name="tranBean", eager=true)
+//@ManagedBean(name="tranBean", eager=true)
+//@ViewScoped
+@Named("tranBean")
 @ViewScoped
 public class TransmittalBean implements Serializable {
 
@@ -79,7 +76,9 @@ public class TransmittalBean implements Serializable {
 	private List<TransmittalRpt> checkSelected;
 	private double amount;
 	private List<TransmittalRpt> transmittals = Collections.synchronizedList(new ArrayList<TransmittalRpt>());
-	private int year;
+	
+	private int yearId;
+	private List years;
 	
 	private String rcdDate1;
 	private String rcdDate2;
@@ -100,6 +99,9 @@ public class TransmittalBean implements Serializable {
 	
 	private Transmittal transData;
 	private List<Transmittal> transactions = Collections.synchronizedList(new ArrayList<Transmittal>());
+	
+	private List bankAccounts;
+	private int accountId;
 	
 	@PostConstruct
 	public void init() {
@@ -136,7 +138,8 @@ public class TransmittalBean implements Serializable {
 		int year = Integer.valueOf(date[0]);
 		
 		setMonthId(month);
-		setYear(year);
+		//setYear(year);
+		setYearId(year);
 		
 		loadMonthCheques();
 		
@@ -327,7 +330,7 @@ public class TransmittalBean implements Serializable {
 		setMonthId(DateUtils.getCurrentMonth());
 		setCheckSelected(null);
 		setAmount(0.00);
-		setYear(DateUtils.getCurrentYear());
+		setYearId(DateUtils.getCurrentYear());
 		
 		setRcdDate1(null);
 		setRcdDate2(null);
@@ -353,7 +356,7 @@ public class TransmittalBean implements Serializable {
 	
 	public void loadMonthCheques() {
 		transmittals = Collections.synchronizedList(new ArrayList<TransmittalRpt>());
-		String sql = " AND bnk.bankrptisactive=1 AND (bnk.dateapplying>=? ANd bnk.dateapplying<=?)";
+		String sql = " AND bnk.bankrptisactive=1 AND (bnk.dateapplying>=? ANd bnk.dateapplying<=?) ";
 		String month = "";
 		if(getMonthId()<=9) {
 			month = "0"+getMonthId();
@@ -361,17 +364,17 @@ public class TransmittalBean implements Serializable {
 			month = getMonthId()+"";
 		}
 		String[] params = new String[2];
-		if(year==0) {
-			year = DateUtils.getCurrentYear();
+		if(yearId==0) {
+			yearId = DateUtils.getCurrentYear();
 		}
-		System.out.println("Year selected >> " + year);
-		params[0] = year +"-" + month +"-01";
-		params[1] = year +"-" + month +"-31";
+		System.out.println("Year selected >> " + yearId);
+		params[0] = yearId +"-" + month +"-01";
+		params[1] = yearId +"-" + month +"-31";
 		
 		Map<String, BankChequeTrans> unsortCheck = Collections.synchronizedMap(new HashMap<String, BankChequeTrans>());
 		
 		for(BankChequeRpt pbc : BankChequeRpt.retrieve(sql, params)) {
-			sql = " AND tran.bankisactivetrans=1 AND bnk.bankchkid="+pbc.getId() +" ORDER BY chk.checkno";
+			sql = " AND chk.bankid="+getAccountId()+" AND tran.bankisactivetrans=1 AND bnk.bankchkid="+pbc.getId() +" ORDER BY chk.checkno";
 			for(BankChequeTrans chk : BankChequeTrans.retrieve(sql, new String[0])){
 				unsortCheck.put(chk.getChequedtls().getCheckNo(), chk);
 				amount += chk.getChequedtls().getAmount();
@@ -439,7 +442,7 @@ public class TransmittalBean implements Serializable {
 		bodyletter = bodyletter.replace("<municipality>", MUNICIPALITY);
 		bodyletter = bodyletter.replace("<province>", PROVINCE);
 		bodyletter = bodyletter.replace("<month>", DateUtils.getMonthName(getMonthId()));
-		bodyletter = bodyletter.replace("<year>", getYear()+"");
+		bodyletter = bodyletter.replace("<year>", getYearId()+"");
 		param.put("PARAM_BODY_LETTER", bodyletter.replace("<monthcovered>", DateUtils.getMonthName(datePrinted.split("-")[1]) + " " + datePrinted.split("-")[0]));
 		
 		param.put("PARAM_TOTAL", "Grand Total: Php "+Currency.formatAmount(amount));
@@ -448,7 +451,7 @@ public class TransmittalBean implements Serializable {
 		
 		String documentNote="";
 		documentNote += "Brgy. Document\n";
-		documentNote += "Series of " + getYear()+"\n";
+		documentNote += "Series of " + getYearId()+"\n";
 		try{param.put("PARAM_DOCUMENT_NOTE", documentNote);}catch(NullPointerException e) {}
 		try{param.put("PARAM_TAGLINE", Words.getTagName("tagline"));}catch(NullPointerException e) {}
 		//background
@@ -602,7 +605,7 @@ public class TransmittalBean implements Serializable {
 		
 		String[] date = trn.getDateTrans().split("-");
 		setMonthId(Integer.valueOf(date[1]));
-		setYear(Integer.valueOf(date[0]));
+		setYearId(Integer.valueOf(date[0]));
 		
 		List<TransmittalRpt> transRpt = Collections.synchronizedList(new ArrayList<TransmittalRpt>());
 		String sql = " AND bnk.bankrptisactive=1 AND (bnk.dateapplying>=? ANd bnk.dateapplying<=?)";
@@ -613,12 +616,12 @@ public class TransmittalBean implements Serializable {
 			month = getMonthId()+"";
 		}
 		String[] params = new String[2];
-		if(year==0) {
-			year = DateUtils.getCurrentYear();
+		if(yearId==0) {
+			yearId = DateUtils.getCurrentYear();
 		}
-		System.out.println("Year selected >> " + year);
-		params[0] = year +"-" + month +"-01";
-		params[1] = year +"-" + month +"-31";
+		System.out.println("Year selected >> " + yearId);
+		params[0] = yearId +"-" + month +"-01";
+		params[1] = yearId +"-" + month +"-31";
 		
 		Map<String, BankChequeTrans> unsortCheck = Collections.synchronizedMap(new HashMap<String, BankChequeTrans>());
 		
@@ -973,7 +976,8 @@ public class TransmittalBean implements Serializable {
 	public void setCheckSelected(List<TransmittalRpt> checkSelected) {
 		this.checkSelected = checkSelected;
 	}
-
+	
+	/*
 	public int getYear() {
 		if(year==0) {
 			year = DateUtils.getCurrentYear();
@@ -983,7 +987,7 @@ public class TransmittalBean implements Serializable {
 
 	public void setYear(int year) {
 		this.year = year;
-	}
+	}*/
 
 	public String getRcdDate1() {
 		return rcdDate1;
@@ -1121,6 +1125,57 @@ public class TransmittalBean implements Serializable {
 		this.transactions = transactions;
 	}
 	
+	public List getBankAccounts() {
+		
+		    bankAccounts = new ArrayList<>();
+		for(BankAccounts account : BankAccounts.retrieve("SELECT * FROM bankaccounts", new String[0]) ){
+			bankAccounts.add(new SelectItem(account.getId(), account.getBankAccntNo()));
+		}
+		
+		return bankAccounts;
+	}
+
+
+	public void setBankAccounts(List bankAccounts) {
+		this.bankAccounts = bankAccounts;
+	}
+
+
+	public int getAccountId() {
+		if(accountId==0){
+			accountId = 1;
+		}
+		return accountId;
+	}
+
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+	
+	public int getYearId() {
+		if(yearId==0) {
+			yearId = DateUtils.getCurrentYear();
+		}
+		return yearId;
+	}
+
+	public void setYearId(int yearId) {
+		this.yearId = yearId;
+	}
+
+	public List getYears() {
+		years = new ArrayList<>();
+		for(int year=2018; year<=DateUtils.getCurrentYear(); year++) {
+			years.add(new SelectItem(year, year+""));
+		}
+		return years;
+	}
+
+	public void setYears(List years) {
+		this.years = years;
+	}
+
 	public static void main(String[] args) {
 		
 		String rcdsContent = "May 1, 2019<:>1<:>100<a>May 2 2019<:>2<:>200<a>May 3, 2019<:>3<:>300";

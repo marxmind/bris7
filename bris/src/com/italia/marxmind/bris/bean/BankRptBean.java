@@ -21,11 +21,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.application.GlobalReportHandler;
 import com.italia.marxmind.bris.application.GlobalReportHandler.GlobalReport;
+import com.italia.marxmind.bris.controller.BankAccounts;
 import com.italia.marxmind.bris.controller.BankChequeRpt;
 import com.italia.marxmind.bris.controller.BankChequeTrans;
 import com.italia.marxmind.bris.controller.Chequedtls;
@@ -104,17 +106,37 @@ public class BankRptBean implements Serializable{
 	
 	private Map<Long, Chequedtls> mapProcessedCheques = Collections.synchronizedMap(new HashMap<Long, Chequedtls>());
 	
+	private List bankAccounts;
+	private int accountId;
+	
+	private List bankAccountsSearch;
+	private int accountIdSearch;
+	
 	public void search(){
 		if(getSearchParam()!=null && !getSearchParam().isEmpty()){
 			int len = getSearchParam().length();
 			if(len>=10){
-				init();
+				loadData();
 			}
 		}
 	}
 	
 	@PostConstruct
 	public void init(){
+		
+		bankAccounts = new ArrayList<>();
+		bankAccountsSearch = new ArrayList<>();
+		bankAccountsSearch.add(new SelectItem(0, "All Accounts"));
+		for(BankAccounts account : BankAccounts.retrieve("SELECT * FROM bankaccounts", new String[0]) ){
+			bankAccounts.add(new SelectItem(account.getId(), account.getBankAccntNo()));
+			bankAccountsSearch.add(new SelectItem(account.getId(), account.getBankAccntNo()));
+		}
+		
+		loadData();
+		
+	}
+	
+	public void loadData() {
 		rpts = Collections.synchronizedList(new ArrayList<BankChequeRpt>());
 		
 		String sql = " AND bnk.bankrptisactive=1 AND (bnk.dateapplying>=? AND bnk.dateapplying<=?) ";
@@ -123,6 +145,10 @@ public class BankRptBean implements Serializable{
 		params[1] = DateUtils.convertDate(getCalendarToSearch(),DateFormat.YYYY_MM_DD());
 		if(getSearchParam()!=null){
 			sql += " AND bnk.pbcno like '%"+ getSearchParam() +"%'";
+		}
+		
+		if(getAccountIdSearch()>0) {
+			sql += " AND bnk.accountid=" + getAccountIdSearch();
 		}
 		
 		List<BankChequeRpt> banks = BankChequeRpt.retrieve(sql, params);
@@ -134,7 +160,6 @@ public class BankRptBean implements Serializable{
 			//clearFlds();
 			rpts = bankLoad(banks);
 		//}
-		
 	}
 	
 	private List<BankChequeRpt> bankLoad(List<BankChequeRpt> banks){
@@ -156,6 +181,7 @@ public class BankRptBean implements Serializable{
 	}
 	
 	public void clearFlds(){
+		setAccountId(1);//barangay account
 		setRemoveCheckSelected(null);
 		setCheckSelectedTemp(null);
 		setCheckData(null);
@@ -173,16 +199,18 @@ public class BankRptBean implements Serializable{
 		setCalendarTo(null);
 		setChecks(Collections.synchronizedList(new ArrayList<Chequedtls>()));
 		setCheckSelected(Collections.synchronizedList(new ArrayList<Chequedtls>()));
+		
 	}
 	
 	private String generateNewPBCNo(){
 		
-		String pbcNo = BankChequeRpt.getLastPBCNo();
+		String pbcNo = BankChequeRpt.getLastPBCNo(getAccountId());
 		
 		if("".equalsIgnoreCase(pbcNo)){
 			pbcNo = DateUtils.getCurrentYear() +"-" + BARANGAY.toUpperCase() + "-000";
 		}
 		
+		String name = pbcNo.split("-")[1];
 		int pbcYear = Integer.valueOf(pbcNo.split("-")[0]);
 		int cnt = Integer.valueOf(pbcNo.split("-")[2]);
 		cnt +=1;
@@ -198,9 +226,11 @@ public class BankRptBean implements Serializable{
 		}
 		
 		if(pbcYear==DateUtils.getCurrentYear()){
-			return pbcYear +"-" + BARANGAY.toUpperCase() + "-" + topUp;
+			//return pbcYear +"-" + BARANGAY.toUpperCase() + "-" + topUp;
+			return pbcYear +"-" + name.toUpperCase() + "-" + topUp;
 		}else if(pbcYear!=DateUtils.getCurrentYear()){
-			return DateUtils.getCurrentYear() +"-" + BARANGAY.toUpperCase() + "-001";
+			//return DateUtils.getCurrentYear() +"-" + BARANGAY.toUpperCase() + "-001";
+			return DateUtils.getCurrentYear() +"-" + name.toUpperCase() + "-001";
 		}
 		
 		return "";
@@ -284,7 +314,7 @@ public class BankRptBean implements Serializable{
 			
 			rpt.setCtaxIssuedAt(MUNICIPALITY.toUpperCase() + ", " + PROVINCE.toUpperCase());
 			rpt.setUserDtls(getUser());
-			
+			rpt.setAccountId(getAccountId());
 			if(rpt.getBanksCheques()!=null){
 				for(BankChequeTrans trans : rpt.getBanksCheques()){
 					String sql = "DELETE FROM bankchequetrans where btid=?";
@@ -310,8 +340,10 @@ public class BankRptBean implements Serializable{
 			setCheckData(trans);
 			setCalendarFromSearch(getDateApplying());
 			setCalendarToSearch(getDateApplying());
-			init();
+			//init();
+			loadData();
 			Application.addMessage(1, "Transaction has been successfully saved.", "");
+			setAccountIdSearch(getAccountId());
 		}
 		
 	}
@@ -328,7 +360,7 @@ public class BankRptBean implements Serializable{
 		setCedulaDate(DateUtils.convertDateString(rpt.getCtaxIssuedDate(),DateFormat.YYYY_MM_DD()));
 		setCedulaNo(rpt.getCtaxNo());
 		setCheckSelected(Collections.synchronizedList(new ArrayList<Chequedtls>()));
-		
+		setAccountId(rpt.getAccountId());
 		String sql = " AND tran.bankisactivetrans=1 AND bnk.bankchkid="+rpt.getId();
 		List<BankChequeTrans> trans = BankChequeTrans.retrieve(sql, new String[0]);
 		
@@ -346,7 +378,8 @@ public class BankRptBean implements Serializable{
 		for(BankChequeTrans tran : rpt.getBanksCheques()){
 			tran.delete();
 		}
-		init();
+		//init();
+		loadData();
 		Application.addMessage(1, "Bank Transaction Data has been successfully removed.", "");
 	}
 	
@@ -359,6 +392,9 @@ public class BankRptBean implements Serializable{
 		params[0] = DateUtils.convertDate(getCalendarFrom(), com.italia.marxmind.bris.enm.DateFormat.YYYY_MM_DD());
 		params[1] = DateUtils.convertDate(getCalendarTo(), com.italia.marxmind.bris.enm.DateFormat.YYYY_MM_DD());
 		
+		if(getAccountId()>0) {
+			sql += " AND bank.bankid="+getAccountId();
+		}
 		
 		if(getSearchData()!=null && !getSearchData().isEmpty()){
 			sql += " AND (chk.checkno like '%"+ getSearchData().replace("--", "") +
@@ -387,6 +423,7 @@ public class BankRptBean implements Serializable{
 	public void updateTempCheckSelected(){
 		//for(Chequedtls chk : getCheckSelected()){
 			setCheckSelectedTemp(getCheckSelected());
+			setPbcNo(generateNewPBCNo());
 		//}
 	}
 	
@@ -409,7 +446,8 @@ public class BankRptBean implements Serializable{
 			getCheckSelected().remove(chk);
 			getCheckSelectedTemp().remove(chk);
 		}
-		init();
+		//init();
+		loadData();
 		clickItem(getBankData());
 		Application.addMessage(1, "Check has been successfully removed.", "");
 		}
@@ -838,5 +876,40 @@ public class BankRptBean implements Serializable{
 
 	public void setCheckSelectedTemp(List<Chequedtls> checkSelectedTemp) {
 		this.checkSelectedTemp = checkSelectedTemp;
+	}
+
+	public List getBankAccounts() {	    
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(List bankAccounts) {
+		this.bankAccounts = bankAccounts;
+	}
+
+	public int getAccountId() {
+		if(accountId==0){
+			accountId = 1;
+		}
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+
+	public List getBankAccountsSearch() {
+		return bankAccountsSearch;
+	}
+
+	public void setBankAccountsSearch(List bankAccountsSearch) {
+		this.bankAccountsSearch = bankAccountsSearch;
+	}
+
+	public int getAccountIdSearch() {
+		return accountIdSearch;
+	}
+
+	public void setAccountIdSearch(int accountIdSearch) {
+		this.accountIdSearch = accountIdSearch;
 	}
 }

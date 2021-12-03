@@ -728,8 +728,14 @@ public class CollectionFormBean implements Serializable{
 	  	    JasperExportManager.exportReportToPdfFile(jrprint,path+ REPORT_NAME +".pdf");
 	  	    
 	  	    String pdfFile = REPORT_NAME + ".pdf";
-			 File file = new File(path + pdfFile);
-			 tempPdfFile = new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
+			 //File file = new File(path + pdfFile);
+			 tempPdfFile = DefaultStreamedContent.builder()
+					 .contentType("application/pdf")
+					 .name(pdfFile)
+					 .stream(()-> this.getClass().getResourceAsStream(path + pdfFile))
+					 .build();
+					 
+					 //new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
 		  	    
 		  	    PrimeFaces pm = PrimeFaces.current();
 		  	    pm.executeScript("showPdf();");
@@ -1278,8 +1284,14 @@ public class CollectionFormBean implements Serializable{
 	  	    
 	  	    
 	  	    String pdfFile = REPORT_NAME + ".pdf";
-			 File file = new File(path + pdfFile);
-			 tempPdfFile = new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
+			// File file = new File(path + pdfFile);
+			 tempPdfFile = DefaultStreamedContent.builder()
+					 .contentType("application/pdf")
+					 .name(pdfFile)
+					 .stream(()-> this.getClass().getResourceAsStream(path + pdfFile))
+					 .build();
+					 
+					 //new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
 		  	    
 		  	    PrimeFaces pm = PrimeFaces.current();
 		  	    pm.executeScript("showPdf();");
@@ -2483,12 +2495,17 @@ if(FormType.CT_2.getId()==isform.getFormType() || FormType.CT_5.getId()==isform.
 		if(tempPdfFile==null) {
 			String pdf = REPORT_PATH + ReadConfig.value(Bris.BARANGAY_NAME).replace(" ", "") + Bris.SEPERATOR.getName();
 			String REPORT_NAME = "rcd";
-			pdf += REPORT_NAME + ".pdf";
+			//pdf += REPORT_NAME + ".pdf";
 			System.out.println("pdf file >>>> " + pdf);
 			
 		    File testPdfFile = new File(pdf);
   	    
-	    	return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
+	    	//return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
+		    return DefaultStreamedContent.builder()
+		    		.contentType("application/pdf")
+		    		.name(REPORT_NAME+".pdf")
+		    		.stream(()-> this.getClass().getResourceAsStream(pdf + REPORT_NAME + ".pdf"))
+		    		.build();
 		}else {
 			return tempPdfFile;
 		}

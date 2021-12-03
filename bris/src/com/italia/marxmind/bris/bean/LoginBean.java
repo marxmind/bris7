@@ -488,6 +488,9 @@ public List getThemes() {
 		
 		themes = new ArrayList<>();
 		
+		themes.add(new SelectItem("arya","ARYA"));
+		themes.add(new SelectItem("saga","SAGA"));
+		themes.add(new SelectItem("vela","VELA"));
 		themes.add(new SelectItem("luna-amber","LUNA AMBER"));
 		themes.add(new SelectItem("luna-blue","LUNA BLUE"));
 		themes.add(new SelectItem("luna-green","LUNA GREEN"));

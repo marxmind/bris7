@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -1851,7 +1852,22 @@ public void printCase(CaseFilling fil){
 		  	    
 		  	    String pdfName = REPORT_NAME +".pdf";
 			    File pdfFile = new File(path+ REPORT_NAME +".pdf");
-			    tempPdfFile = new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+			    tempPdfFile = DefaultStreamedContent.builder()
+			    	    .contentType("application/pdf")
+			    	    .name(pdfName)
+			    	    .stream(()-> {
+			    			try {
+			    				return new FileInputStream(pdfFile);
+			    			} catch (FileNotFoundException e) {
+			    				// TODO Auto-generated catch block
+			    				e.printStackTrace();
+			    			}
+			    			return null;
+			    		})
+			    	    .build();
+			    		
+			    		
+			    		//new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
 		  	    
 		  	    PrimeFaces pm = PrimeFaces.current();
 		  	    pm.executeScript("showPdf();");
@@ -1869,12 +1885,17 @@ public void printCase(CaseFilling fil){
 		if(tempPdfFile==null) {
 			String pdfName = "kpform9.pdf";
 			String pdf = ReadConfig.value(Bris.REPORT) + ReadConfig.value(Bris.BARANGAY_NAME).replace(" ", "") + Bris.SEPERATOR.getName();
-			pdf += pdfName;
+			//pdf += pdfName;
 			System.out.println("pdf file >>>> " + pdf);
 			
-		    File pdfFile = new File(pdf);
+		    //File pdfFile = new File(pdf);
   	    
-		    return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+		    //return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", pdfName);
+		    return DefaultStreamedContent.builder()
+    		.contentType("application/pdf")
+    		.name(pdfName)
+    		.stream(()-> this.getClass().getResourceAsStream(pdf + pdfName))
+    		.build(); 
 		}else {
 			return tempPdfFile;
 		}

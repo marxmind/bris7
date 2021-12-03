@@ -52,7 +52,7 @@ public class BankChequeTrans {
 			}
 			
 		}
-		
+		System.out.println("List<BankChequeTrans> retrieve SQL " + ps.toString());
 		rs = ps.executeQuery();
 		
 		while(rs.next()){

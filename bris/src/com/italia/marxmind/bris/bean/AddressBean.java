@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.event.TabChangeEvent;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Barangay;
 import com.italia.marxmind.bris.controller.Municipality;
@@ -24,9 +22,13 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @author mark italia
  * @since 09/14/2017
  * @version 1.0
+ * 
+ * @author mark italia
+ * @since 07/11/2021
+ * @version 2.0
  *
  */
-@ManagedBean(name="addBean", eager=true)
+@Named("addBean")
 @ViewScoped
 public class AddressBean implements Serializable{
 

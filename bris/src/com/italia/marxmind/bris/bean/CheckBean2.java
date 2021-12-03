@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -1021,7 +1022,21 @@ public class CheckBean2 implements Serializable{
 		
 		String pdfFile = REPORT_NAME + ".pdf";
 		 File file = new File(REPORT_PATH, pdfFile);
-		 tempPdfFile = new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
+		 tempPdfFile = DefaultStreamedContent.builder()
+		    	    .contentType("application/pdf")
+		    	    .name(pdfFile)
+		    	    .stream(()-> {
+		    			try {
+		    				return new FileInputStream(file);
+		    			} catch (FileNotFoundException e) {
+		    				// TODO Auto-generated catch block
+		    				e.printStackTrace();
+		    			}
+		    			return null;
+		    		})
+		    	    .build();
+				 
+				 //new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
 	  	    
 	  	    PrimeFaces pm = PrimeFaces.current();
 	  	    pm.executeScript("PF('multiDialogPdf').show();");
@@ -1046,8 +1061,13 @@ public class CheckBean2 implements Serializable{
 			String REPORT_NAME = ReadXML.value(ReportTag.CHECK);
 			
 		    File pdfFile = new File(REPORT_PATH + REPORT_NAME +".pdf");
-  	    
-		    return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", REPORT_NAME +".pdf");
+		    
+		    //return new DefaultStreamedContent(new FileInputStream(pdfFile), "application/pdf", REPORT_NAME +".pdf");
+		    return DefaultStreamedContent.builder()
+		    		.contentType("application/pdf")
+		    		.name(REPORT_NAME +".pdf")
+		    		.stream(()-> this.getClass().getResourceAsStream(REPORT_PATH + REPORT_NAME +".pdf"))
+		    		.build();
 		}else {
 			return tempPdfFile;
 		}

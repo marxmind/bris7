@@ -177,7 +177,12 @@ public class RcdBean implements Serializable{
 	  	    
 	  	    String pdfFile = REPORT_NAME + ".pdf";
 			 File file = new File(path + pdfFile);
-			 tempPdfFile = new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
+			 tempPdfFile = DefaultStreamedContent.builder()
+					 .contentType("application/pdf")
+					 .name(pdfFile)
+					 .stream(()-> this.getClass().getResourceAsStream(path+ REPORT_NAME +".pdf"))
+					 .build(); 
+					 //new DefaultStreamedContent(new FileInputStream(file), "application/pdf", pdfFile);
 		  	    
 		  	    PrimeFaces pm = PrimeFaces.current();
 		  	    pm.executeScript("displayWizard();");
@@ -193,12 +198,17 @@ public class RcdBean implements Serializable{
 		if(tempPdfFile==null) {
 			String pdf = REPORT_PATH + ReadConfig.value(Bris.BARANGAY_NAME).replace(" ", "") + Bris.SEPERATOR.getName();
 			String REPORT_NAME = "rcd";
-			pdf += REPORT_NAME + ".pdf";
+			//pdf += REPORT_NAME + ".pdf";
 			System.out.println("pdf file >>>> " + pdf);
 			
 		    File testPdfFile = new File(pdf);
   	    
-	    	return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
+	    	//return new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf", REPORT_NAME+".pdf");
+		    return DefaultStreamedContent.builder()
+					 .contentType("application/pdf")
+					 .name(REPORT_NAME+".pdf")
+					 .stream(()-> this.getClass().getResourceAsStream(pdf+ REPORT_NAME +".pdf"))
+					 .build(); 
 		}else {
 			return tempPdfFile;
 		}

@@ -24,6 +24,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
             <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
             <h:outputStylesheet name="css/growl.css"/>
+            <h:outputStylesheet name="primeflex/primeflex.min.css" />
+            <h:outputStylesheet name="primeflex/layout.css" />
     </f:facet>
         
     <f:facet name="last">
@@ -79,25 +81,12 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				
 				</p:overlayPanel>
 	
-<p:layout fullPage="true">
-			
-			
-			
-			<p:layoutUnit position="east" size="500" visible="false">
-			         
-				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="north" size="100"  visible="false" >
-				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="south" size="50" visible="false" >
-				
-		     </p:layoutUnit>
-			
-			<p:layoutUnit position="west" size="600">
-				<p:panel header="Income + IRA Recording" />
+
+<div class="card">
+    <div class="p-grid sample-layout">
+    
+    <div class="p-col-12 p-md-6">
+            	
 				<p:toolbar id="tb" style="#{skin.toolbar}">
 			    		<f:facet name="left">
 			        			<p:commandButton disabled="#{featuresBean.orListing}" update="ORDataId" value="OR Listing" icon="fa fa-th-list" onclick="PF('ORDlg').show()" actionListener="#{orBean.loadORs}" title="Click this button to see the list of Issued Official Receipt"/>
@@ -111,11 +100,11 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 	        				<p:commandButton id="idgraph" value="Graph" icon="fa fa-pie-chart" type="button" title="Click this button to see graphical presentation of the issued MOOE" />
 			    		</f:facet>
 				</p:toolbar> 
-				<br/><br/>
+				
 				<p:panelGrid id="clearFldId" layout="grid" columns="2">
 				
 				<p:outputLabel value="Date:" />
-				<p:calendar value="#{meterBean.dateTrans}" pattern="yyyy-MM-dd" effect="slideDown" disabled="true"/>
+				<p:calendar value="#{meterBean.dateTrans}" pattern="yyyy-MM-dd" effect="slideDown" disabled="true" inputStyle="width: 15em"/>
 				
 				<p:outputLabel value="Type:" />
 				<p:selectOneMenu value="#{meterBean.type}" style="width: 15em; #{skin.select}">
@@ -123,7 +112,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		        </p:selectOneMenu>
 				
 				<p:outputLabel value="Description:" />
-				<p:inputText value="#{meterBean.descriptionIra}" />
+				<p:inputText value="#{meterBean.descriptionIra}" style="width: 15em"/>
 				
 		        <p:outputLabel value="Cycle Date:" />
 				<p:selectOneMenu value="#{meterBean.day}" style="width: 15em; #{skin.select}">
@@ -131,7 +120,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		        </p:selectOneMenu>
 		        
 		        <p:outputLabel value="Amount:" />
-				<p:inputNumber value="#{meterBean.amount}" />
+				<p:inputNumber value="#{meterBean.amount}" inputStyle="width: 15em"/>
 				
 				</p:panelGrid>
 				<p:selectOneMenu value="#{meterBean.yearIra}" style="float:left; #{skin.select}">
@@ -174,35 +163,31 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             						<p:outputLabel value="#{ir.amountira}"/>
             				</p:column>
                          
-                </p:dataTable>         
+                </p:dataTable> 
+            
+        </div>
+        <div class="p-col-12 p-md-6 p-col-nogutter">
+            <div class="p-grid">
+                
+                
+                        
 				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="center">
-			
-				<p:panel header="Maintenance Operation and Other Expenses" />
-			<p:chart id="mooebar" type="bar" model="#{meterBean.mooeModel}" style="width:400px;height:120px;#{skin.chart}" />
-			<p:toolbar id="tbmo" style="#{skin.toolbar}">
-			
-			    		<f:facet name="left">
-			        			
-			    		</f:facet>
-			    		<f:facet name="right">
-			    			<p:commandButton update="clearFldMoId mooebar" value="Clear"  icon="fa fa-trash" title="Click this button to clear information" actionListener="#{meterBean.clearFldsMooe}"/>
+				<p:chart id="mooebar" type="bar" model="#{meterBean.mooeModel}" style="width:400px;height:120px;#{skin.chart}" />
+				
+				<div class="input-group">	
+						<p:commandButton update="clearFldMoId mooebar" value="Clear"  icon="fa fa-trash" title="Click this button to clear information" actionListener="#{meterBean.clearFldsMooe}"/>
 	    					<p:commandButton update="clearFldMoId moId mooebar msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{meterBean.saveMooe}">
 	        					<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
-	        				</p:commandButton>
-	        				
-			    		</f:facet>
-				</p:toolbar> 
+	        			</p:commandButton>
+				</div> 
 				
-				<p:panelGrid id="clearFldMoId" layout="grid" columns="2">
+				<p:panelGrid id="clearFldMoId" layout="grid" columns="4">
 				
 				<p:outputLabel value="Date:" />
 				<p:calendar value="#{meterBean.dateTransMo}" pattern="yyyy-MM-dd" effect="slideDown" disabled="true"/>
 				
 				<p:outputLabel value="Code:" />
-				<p:inputText value="#{meterBean.codeMo}" a:placeholder="000"/>
+				<p:inputText value="#{meterBean.codeMo}" a:placeholder="000" style="width: 10em"/>
 				
 				<p:outputLabel value="Name:" />
 				<p:inputText value="#{meterBean.nameMo}" a:placeholder="MOOE Name"/>
@@ -214,10 +199,13 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				<p:inputNumber value="#{meterBean.amountMo}" />
 				
 				</p:panelGrid>
+				
+				<div class="input-group">	
 				<p:selectOneMenu value="#{meterBean.yearMo}" style="float:left; #{skin.select}">
-		        					<f:selectItems value="#{meterBean.yearsMo}"/>
-		        					<f:ajax event="change" listener="#{meterBean.init}" render="moId"/>
-		        				</p:selectOneMenu>
+		        	<f:selectItems value="#{meterBean.yearsMo}"/>
+		        	<f:ajax event="change" listener="#{meterBean.init}" render="moId"/>
+		        </p:selectOneMenu>
+		        </div>
 				<p:dataTable id="moId" value="#{meterBean.mos}" var="mo" stickyHeader="false"
 							rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="10"
@@ -251,9 +239,18 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             				</p:column>
                          
                 </p:dataTable>
-					
-			</p:layoutUnit>
-</p:layout>
+
+
+                   
+            </div>
+        </div>
+        
+    
+    
+    </div>
+	
+</div><!-- card -->	
+
 
 <p:dialog header="OR Listing" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" widgetVar="ORDlg" Height="300" width="800" closable="false">
 		<p:toolbar id="tbOR">

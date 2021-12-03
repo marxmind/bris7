@@ -19,12 +19,13 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 	
 	<f:facet name="middle">
            <h:outputStylesheet name="css/menu.css"/>
-           <h:outputStylesheet name="css/pageHeaderFooter.css"/>
             <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
             <!-- <h:outputStylesheet name="css/dataTables.bootstrap.mini.css"/>-->
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
             <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/> 
             <h:outputStylesheet name="css/growl.css"/>
+            <h:outputStylesheet name="primeflex/primeflex.min.css" />
+            <h:outputStylesheet name="primeflex/layout.css" />
     </f:facet>
         
     <f:facet name="last">
@@ -59,16 +60,85 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
     </p:confirmDialog>
 	
     
-    <div class="page-header">
-			 	<a><p:outputLabel value="#{menuBean.labels[4]}" style="#{skin.pageTitle};"/></a>
-			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
-	        </div>
+    		
     
-<p:layout fullPage="true">
-			
-			<p:layoutUnit position="east" size="500" visible="true">
-			
-			<p:tabView prependId="false" orientation="top" cache="true" activeIndex="2">
+
+<div class="card">
+    <div class="p-grid sample-layout">
+    
+    <div class="p-col-12 p-md-7">
+            <p:toolbar id="tbbank">
+		    		<f:facet name="left">
+		    			
+		    			<p:selectOneMenu value="#{tranBean.accountId}"  style="width: 15em">
+							<f:selectItems value="#{tranBean.bankAccounts}"/>
+							<f:ajax listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
+						</p:selectOneMenu>
+						
+						<p:selectOneMenu value="#{tranBean.monthId}"  style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
+							<f:selectItems value="#{tranBean.months}"/>
+							<f:ajax event="change" listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
+						</p:selectOneMenu> 
+						
+						<p:selectOneMenu value="#{tranBean.yearId}"  style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
+							<f:selectItems value="#{tranBean.years}"/>
+							<f:ajax event="change" listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
+						</p:selectOneMenu> 
+						     
+		    		</f:facet>
+		    		<f:facet name="right"/>
+				</p:toolbar>
+				
+				<p:outputLabel style="color: red" value="Note: Maximum of 20 checks per page" />
+				<p:dataTable id="dataChkId" value="#{tranBean.transmittals}" var="rpt" stickyHeader="false"
+						 paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                         scrollable="false" scrollWidth="100%" style="#{skin.table}"
+                         draggableColumns="false" draggableRows="false" paginatorPosition="top" 
+                         selection="#{tranBean.checkSelected}" rowKey="#{rpt.id}"
+                         >
+							
+							<p:column headerText="#" width="10" sortable="false">
+            						<p:outputLabel value="#{tranBean.transmittals.indexOf(rpt)+1}"/>
+            				</p:column>
+							
+							<p:column selectionMode="multiple" headerText="Check" style="width:20px;text-align:center" exportable="false" />
+							
+							<p:column headerText="DV Date" width="50" sortable="false">
+            						<p:outputLabel  value="#{rpt.dvDate}"/>
+            				</p:column>
+            				
+            				<p:column headerText="DV No" width="50" sortable="false">
+            						<p:outputLabel value="#{rpt.dvNumber}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Check Issued" width="50" sortable="false">
+            						<p:outputLabel value="#{rpt.checkDate}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Check No" width="50" sortable="false">
+            						<p:outputLabel value="#{rpt.checkNumber}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Amount" width="70" sortable="false">
+            						<p:outputLabel value="#{rpt.amount}"/>
+            				</p:column>
+            				
+            				<p:column headerText="PBC Date" width="50" sortable="false">
+            						<p:outputLabel value="#{rpt.pbcDate}"/>
+            				</p:column>
+            				
+            				<p:column headerText="PBC No" width="100" sortable="false">
+            						<p:outputLabel value="#{rpt.pbcNumber}"/>
+            				</p:column>
+				
+				</p:dataTable>
+        </div>
+        <div class="p-col-12 p-md-5 p-col-nogutter">
+            <div class="p-grid">
+                
+                <div class="p-col-12">
+                    <div class="p-grid">
+                        <p:tabView prependId="false" orientation="top" cache="true" activeIndex="2">
 			
 			<p:tab title="B. RCDs/RCRs" >
 			
@@ -167,84 +237,18 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 			</p:tab>
 			
 			</p:tabView>
-			
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="north" size="100"  visible="false" >
-				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="south" size="50" visible="false" >
-				
-		     </p:layoutUnit>
-			
-			<p:layoutUnit position="center">
-				
-				<p:toolbar id="tbbank" style="#{skin.toolbar}float:bottom; position: fixed;z-index: 1500;">
-		    		<f:facet name="left">
-						<p:outputLabel value="Month:" style="#{skin.label}"/>&nbsp;&nbsp;
-						<p:selectOneMenu value="#{tranBean.monthId}"  style="width:15em;#{skin.select}" filterMatchMode="contains" filter="true">
-							<f:selectItems value="#{tranBean.months}"/>
-							<f:ajax event="change" listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
-						</p:selectOneMenu>
-						<p:outputLabel value="Year:" style="#{skin.label}"/>&nbsp;&nbsp;
-						<p:inputText maxlength="4" autocomplete="false" value="#{tranBean.year}" placeholder="0000">
-							<f:ajax event="change" listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
-						</p:inputText>        
-		    		</f:facet>
-		    		<f:facet name="right">
-		    		</f:facet>
-				</p:toolbar>
-				<br/><br/><br/><br/>
-				<p:outputLabel style="color: red" value="Note: Maximum of 20 checks per page" />
-				<p:dataTable id="dataChkId" value="#{tranBean.transmittals}" var="rpt" stickyHeader="false"
-						 paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
-                         scrollable="true" scrollWidth="100%" style="#{skin.table}"
-                         draggableColumns="true" draggableRows="true" paginatorPosition="top" 
-                         selection="#{tranBean.checkSelected}" rowKey="#{rpt.id}"
-                         >
-							
-							<p:column headerText="#" width="10" sortable="false">
-            						<p:outputLabel value="#{tranBean.transmittals.indexOf(rpt)+1}"/>
-            				</p:column>
-							
-							<p:column selectionMode="multiple" headerText="Check" style="width:20px;text-align:center" exportable="false" />
-							
-							<p:column headerText="DV Date" width="50" sortable="false">
-            						<p:outputLabel  value="#{rpt.dvDate}"/>
-            				</p:column>
-            				
-            				<p:column headerText="DV No" width="50" sortable="false">
-            						<p:outputLabel value="#{rpt.dvNumber}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Check Issued" width="50" sortable="false">
-            						<p:outputLabel value="#{rpt.checkDate}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Check No" width="50" sortable="false">
-            						<p:outputLabel value="#{rpt.checkNumber}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Amount" width="70" sortable="false">
-            						<p:outputLabel value="#{rpt.amount}"/>
-            				</p:column>
-            				
-            				<p:column headerText="PBC Date" width="50" sortable="false">
-            						<p:outputLabel value="#{rpt.pbcDate}"/>
-            				</p:column>
-            				
-            				<p:column headerText="PBC No" width="100" sortable="false">
-            						<p:outputLabel value="#{rpt.pbcNumber}"/>
-            				</p:column>
-				
-				</p:dataTable>
-				
-						
-			</p:layoutUnit> 
-			
-			<p:layoutUnit position="west" visible="false" size="0"/>
-</p:layout>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+    
+    
+    </div>
+	
+</div><!-- card -->
+
 
 <ui:include src="loader.xhtml" />
 <ui:include src="menu.xhtml" />

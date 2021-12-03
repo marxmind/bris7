@@ -89,7 +89,12 @@ public class FormDownloaderBean implements Serializable{
 		try{
 			InputStream is = new FileInputStream(FORM_FOLDER + fileName);
 			String ext = fileName.split("\\.")[1];
-			formFile = new DefaultStreamedContent(is, "application/"+ext,fileName);
+			formFile =  DefaultStreamedContent.builder()
+					.contentType("application/"+ext)
+					.name(fileName)
+					.stream(()-> this.getClass().getResourceAsStream(FORM_FOLDER + fileName+ext))
+					.build();
+					//new DefaultStreamedContent(is, "application/"+ext,fileName);
 			//is.close();
 		}catch(FileNotFoundException e){
 			

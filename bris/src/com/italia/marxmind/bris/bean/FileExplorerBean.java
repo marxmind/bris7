@@ -226,7 +226,12 @@ public class FileExplorerBean implements Serializable{
 		try{
 			InputStream is = new FileInputStream(fil);
 			String ext = node.getData().toString().split("\\.")[1];
-			documentFile = new DefaultStreamedContent(is, "application/"+ext,node.getData().toString());
+			documentFile =  DefaultStreamedContent.builder()
+					.contentType("application/"+ext)
+					.name(node.getData().toString())
+					.stream(()-> this.getClass().getResourceAsStream(FILE_FOLDERS + node.getParent() + File.separator + node.getData().toString()))
+					.build();
+					//new DefaultStreamedContent(is, "application/"+ext,node.getData().toString());
 			//is.close();
 		}catch(FileNotFoundException e){
 			System.out.println("FileNotFoundException " + e.getMessage());

@@ -25,6 +25,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
             <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/> 
             <h:outputStylesheet name="css/growl.css"/>
+            <h:outputStylesheet name="primeflex/primeflex.min.css" />
+            <h:outputStylesheet name="primeflex/layout.css" />
     </f:facet>
         
     <f:facet name="last">
@@ -57,32 +59,133 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
        	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
     </p:confirmDialog>
-	<p:focus context="tb"/>
+	
     
     <div class="page-header">
 			 	<a><p:outputLabel value="#{menuBean.labels[4]}" style="#{skin.pageTitle};"/></a>
 			 	<p:outputLabel style="#{skin.copyrightLabel}" value="#{versionBean.copyright.appname} | #{versionBean.copyright.copyrightname} | #{versionBean.copyright.author} | version:#{versionBean.copyright.currentversion}"/>
-	        </div>
+	</div>
     
-<p:layout fullPage="true">
-			
-			<p:layoutUnit position="east" size="0" visible="false">
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="north" size="100"  visible="false" >
+<div class="card">
+    <div class="p-grid sample-layout">
+    
+    	<div class="p-col-12 p-md-7">
+            	<p:toolbar id="tbbank">
+		    		<f:facet name="left">
+				        
+		    		</f:facet>
+		    		<f:facet name="right">
+		    				<p:commandButton update="bankFldId selectedChkId"  value="New" actionListener="#{bankBean.clearFlds}" icon="fa fa-file-o" title="Click this button to start new information"/>
+		    				<p:commandButton update="bankFldId selectedChkId" value="Clear" icon="fa fa-trash" title="Click this button to clear information" actionListener="#{bankBean.clearFlds}"/>
+		    				<p:commandButton update="bankFldId reportId tb accId msg"  value="Save" actionListener="#{bankBean.saveTrans}" icon="fa fa-floppy-o" title="Click this button to save your changes">
+		    					<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
+		    				</p:commandButton>
+		    		</f:facet>
+				</p:toolbar>
 				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="south" size="50" visible="false" >
+				<p:panelGrid id="bankFldId" columns="4" layout="grid">
 				
-		     </p:layoutUnit>
-			
-			<p:layoutUnit position="center">
+				<p:outputLabel value="PBC NO:" style="#{skin.label}"/>
+				<p:inputText id="genId" value="#{bankBean.pbcNo}" a:placeholder="YEAR-BARANGAY-000" style="#{skin.textInput}"/>
 				
+				<p:outputLabel value="Date:" style="#{skin.label}"/>
+				<p:calendar value="#{bankBean.dateApplying}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
 				
+				<p:outputLabel value="Recepient:" style="#{skin.label}"/>
+				<p:inputText value="#{bankBean.recepient}" a:placeholder="THE MANAGER" style="#{skin.textInput}"/>
 				
+				<p:outputLabel value="Bank Name:" style="#{skin.label}"/>
+				<p:inputText value="#{bankBean.bankName}" a:placeholder="DEVELOPMENT BANK OF THE PHILIPPINES" style="#{skin.textInput}"/>
 				
-				<p:dataTable id="reportId" value="#{bankBean.rpts}" var="ct" stickyHeader="false"
+				<p:outputLabel value="Bank Location:" style="#{skin.label}"/>
+				<p:inputText value="#{bankBean.bankCityName}" a:placeholder="KORONADAL CITY" style="#{skin.textInput}"/>
+				
+				<p:outputLabel value="Province Location:" style="#{skin.label}"/>
+				<p:inputText value="#{bankBean.bankProvinceName}" a:placeholder="SOUTH COTABATO" style="#{skin.textInput}"/>
+				
+				<p:outputLabel value="Cedula No:" style="#{skin.label}"/>
+				<p:inputText value="#{bankBean.cedulaNo}" a:placeholder="000000000" style="#{skin.textInput}"/>
+				
+				<p:outputLabel value="Cedula Issued Date:" style="#{skin.label}"/>
+				<p:calendar value="#{bankBean.cedulaDate}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
+				
+				</p:panelGrid>
+				
+				<p:toolbar >
+		    		<f:facet name="left">
+				        <p:commandButton  value="Remove" update="selectedChkId dataChkId reportId msg" actionListener="#{bankBean.deleteCheckSelected}" style="#{skin.button}" icon="fa fa-trash" title="Click this button to delete selected cheque" >
+					<p:confirm header="Confirmation" message="Are you sure you want to delete selected Cheques?" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton update="dataChkId" icon="fa fa-search" title="Click this button to add Cheques" value="Cheque Lookup" onclick="PF('chkDlg').show()" actionListener="#{bankBean.loadCheckProcessed}" style="#{skin.button}"/>
+				
+		    		</f:facet>
+		    		<f:facet name="right">
+		    		</f:facet>
+				</p:toolbar>
+				
+				<p:dataTable id="selectedChkId" value="#{bankBean.checkSelected}" var="rp" stickyHeader="false" 
+                         scrollable="false" scrollWidth="100%" style="#{skin.table}"
+                         draggableColumns="false" draggableRows="false"
+                         selection="#{bankBean.removeCheckSelected}" rowKey="#{rp.id}"
+                         >
+                    		
+                    		<p:column selectionMode="multiple" headerText="[*]" style="width:50px;text-align:center" exportable="false" />
+                    		
+                   			 <p:column headerText="Date" width="70" sortable="false" sortBy="#{rp.dateTrans}">
+            						<p:outputLabel value="#{rp.dateTrans}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Amount" width="70" sortable="false" sortBy="#{rp.checkAmount}">
+            						<p:outputLabel value="#{rp.checkAmount}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Status" width="70" exportable="false" sortable="false" sortBy="#{rp.status==1}">
+	            				<f:view>		
+	            						<my:if condition="#{rp.status==1}">
+	                         			 	<f:facet name="then">
+	            								<p:outputLabel value="PROCESSED"/>
+	            							</f:facet>
+	            							<f:facet name="else">
+	            								<p:outputLabel value="CANCELLED"/>
+	            							</f:facet>
+	            						  </my:if>
+	            				</f:view>		
+            				</p:column>
+            				
+            				<p:column headerText="Accnt No" width="70" sortable="false" sortBy="#{rp.accounts.bankAccntNo}">
+            						<p:outputLabel value="#{rp.accounts.bankAccntNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Check No" width="70" sortable="false" sortBy="#{rp.checkNo}">
+            						<p:outputLabel value="#{rp.checkNo}"/>
+            				</p:column>
+            				
+            				<p:column headerText="Issue To" width="120" sortable="false" sortBy="#{rp.issueTo}">
+            						<p:outputLabel value="#{rp.issueTo}"/>
+            				</p:column>
+            				
+        		</p:dataTable> 
+        </div>
+        <div class="p-col-12 p-md-5 p-col-nogutter">
+            <div class="p-grid">
+                <div class="p-col-12 p-col-nogutter">
+                    <div class="ui-inputgroup">
+                    		<p:selectOneMenu id="accId" value="#{bankBean.accountIdSearch}"  style="width: 15em">
+										<f:selectItems value="#{bankBean.bankAccountsSearch}"/>
+										<f:ajax listener="#{bankBean.loadData}" render="reportId bankFldId selectedChkId dataChkId"/>
+							</p:selectOneMenu>
+			    			<p:inputText id="tb" value="#{bankBean.searchParam}" a:placeholder="Search..." style="width: 10em">
+			    					<f:ajax event="keyup" listener="#{bankBean.search}" render="reportId bankFldId selectedChkId dataChkId"/>
+			    			</p:inputText>
+			    			<p:calendar value="#{bankBean.calendarFromSearch}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    			<p:calendar value="#{bankBean.calendarToSearch}" pattern="yyyy-MM-dd" effect="slideDown"/>
+			    			<p:commandButton update="reportId bankFldId selectedChkId dataChkId" icon="fa fa-search" actionListener="#{bankBean.loadData}"/>
+			    		</div>	
+                </div>
+                <div class="p-col-12">
+                    <div class="p-grid">
+                 
+                 <p:dataTable id="reportId" value="#{bankBean.rpts}" var="ct" stickyHeader="false"
 							rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,20,50,100"
                          scrollable="true" style="#{skin.table}" draggableColumns="true" draggableRows="true" paginatorPosition="top"
@@ -127,111 +230,29 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             						<p:outputLabel value="#{ct.totalChequesAmount}"/>
             				</p:column>
             				
-            	</p:dataTable>			
-				
-						
-			</p:layoutUnit> 
-			
-			<p:layoutUnit position="west" size="800">
-				
-				<p:toolbar id="tbbank" style="#{skin.toolbar}">
-		    		<f:facet name="left">
-				        
-		    		</f:facet>
-		    		<f:facet name="right">
-		    				<p:commandButton update="bankFldId selectedChkId"  value="New" actionListener="#{bankBean.clearFlds}" icon="fa fa-file-o" title="Click this button to start new information"/>
-		    				<p:commandButton update="bankFldId selectedChkId" value="Clear" icon="fa fa-trash" title="Click this button to clear information" actionListener="#{bankBean.clearFlds}"/>
-		    				<p:commandButton update="bankFldId reportId tb msg"  value="Save" actionListener="#{bankBean.saveTrans}" icon="fa fa-floppy-o" title="Click this button to save your changes">
-		    					<p:confirm header="Confirmation" message="Are you sure you want to save?." icon="ui-icon-alert" />
-		    				</p:commandButton>
-		    		</f:facet>
-				</p:toolbar>
-				<br/><br/>
-				<p:panelGrid id="bankFldId" columns="4" layout="grid">
-				
-				<p:outputLabel value="PBC NO:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.pbcNo}" a:placeholder="YEAR-BARANGAY-000" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Date:" style="#{skin.label}"/>
-				<p:calendar value="#{bankBean.dateApplying}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
-				
-				<p:outputLabel value="Recepient:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.recepient}" a:placeholder="THE MANAGER" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Bank Name:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankName}" a:placeholder="DEVELOPMENT BANK OF THE PHILIPPINES" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Bank Location:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankCityName}" a:placeholder="KORONADAL CITY" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Province Location:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankProvinceName}" a:placeholder="SOUTH COTABATO" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Cedula No:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.cedulaNo}" a:placeholder="000000000" style="#{skin.textInput}"/>
-				
-				<p:outputLabel value="Cedula Issued Date:" style="#{skin.label}"/>
-				<p:calendar value="#{bankBean.cedulaDate}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
-				
-				</p:panelGrid>
-				<p:commandButton  value="Remove" update="selectedChkId dataChkId reportId msg" actionListener="#{bankBean.deleteCheckSelected}" style="#{skin.button}" icon="fa fa-trash" title="Click this button to delete selected cheque" >
-					<p:confirm header="Confirmation" message="Are you sure you want to delete selected Cheques?" icon="ui-icon-alert" />
-				</p:commandButton>
-				<p:commandButton update="dataChkId" icon="fa fa-search" title="Click this button to add Cheques" value="Cheque Lookup" onclick="PF('chkDlg').show()" actionListener="#{bankBean.loadCheckProcessed}" style="#{skin.button}"/>
-				
-				<p:dataTable id="selectedChkId" value="#{bankBean.checkSelected}" var="rp" stickyHeader="false" 
-                         scrollable="true" scrollWidth="100%" style="#{skin.table}"
-                         draggableColumns="true" draggableRows="true"
-                         selection="#{bankBean.removeCheckSelected}" rowKey="#{rp.id}"
-                         >
-                    		
-                    		<p:column selectionMode="multiple" headerText="[*]" style="width:50px;text-align:center" exportable="false" />
-                    		
-                   			 <p:column headerText="Date" width="70" sortable="false" sortBy="#{rp.dateTrans}">
-            						<p:outputLabel value="#{rp.dateTrans}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Amount" width="70" sortable="false" sortBy="#{rp.checkAmount}">
-            						<p:outputLabel value="#{rp.checkAmount}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Status" width="70" exportable="false" sortable="false" sortBy="#{rp.status==1}">
-	            				<f:view>		
-	            						<my:if condition="#{rp.status==1}">
-	                         			 	<f:facet name="then">
-	            								<p:outputLabel value="PROCESSED"/>
-	            							</f:facet>
-	            							<f:facet name="else">
-	            								<p:outputLabel value="CANCELLED"/>
-	            							</f:facet>
-	            						  </my:if>
-	            				</f:view>		
-            				</p:column>
-            				
-            				<p:column headerText="Accnt No" width="70" sortable="false" sortBy="#{rp.accounts.bankAccntNo}">
-            						<p:outputLabel value="#{rp.accounts.bankAccntNo}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Check No" width="70" sortable="false" sortBy="#{rp.checkNo}">
-            						<p:outputLabel value="#{rp.checkNo}"/>
-            				</p:column>
-            				
-            				<p:column headerText="Issue To" width="120" sortable="false" sortBy="#{rp.issueTo}">
-            						<p:outputLabel value="#{rp.issueTo}"/>
-            				</p:column>
-            				
-        		</p:dataTable>   
-						
-			</p:layoutUnit>   
-</p:layout>
-
-
+            	</p:dataTable>
+                 
+                 
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    
+    
+    </div>
+	
+</div><!-- card -->	
 
 <p:dialog header="Cheque Lookup" style="#{skin.dialog}" position="center top" modal="false" showEffect="clip" hideEffect="clip" 
-widgetVar="chkDlg" Height="300" width="800" closable="false" showHeader="false">
+widgetVar="chkDlg" Height="300" width="800" closable="true" showHeader="true" closeOnEscape="true" >
 		
 		<p:toolbar id="tbChk">
     		<f:facet name="left">
+    			<p:selectOneMenu value="#{bankBean.accountId}"  style="width: 15em">
+							<f:selectItems value="#{bankBean.bankAccounts}"/>
+							<f:ajax listener="#{bankBean.loadCheckProcessed}" render="dataChkId"/>
+				</p:selectOneMenu>
 		        <p:autoComplete a:placeholder="Search..." value="#{bankBean.searchData}" completeMethod="#{bankBean.autoPayToName}" effect="fade">
 		        	<f:ajax event="change" listener="#{bankBean.loadCheckProcessed}" render="dataChkId"/>
 		    	</p:autoComplete>
@@ -240,8 +261,8 @@ widgetVar="chkDlg" Height="300" width="800" closable="false" showHeader="false">
 				<p:commandButton id="findId" update="dataChkId"  icon="fa fa-search" actionListener="#{bankBean.loadCheckProcessed}"/>
     		</f:facet>
     		<f:facet name="right">
-				<p:commandButton actionListener="#{bankBean.updateTempCheckSelected}" value="Add" update="selectedChkId" onclick="PF('chkDlg').hide();"  icon="fa fa-floppy-o" title="Click this button to add selected cheque"  />
-    			<p:commandButton  value="Close" icon="ui-icon-closethick" title="Click this button to close dialog" onclick="PF('chkDlg').hide();"/>
+				<p:commandButton actionListener="#{bankBean.updateTempCheckSelected}" value="Add" update="selectedChkId genId" onclick="PF('chkDlg').hide();"  icon="fa fa-floppy-o" title="Click this button to add selected cheque"  />
+    			<p:commandButton  value="Close" onclick="PF('chkDlg').hide();"/>
     		</f:facet>
 		</p:toolbar>
 		<p:scrollPanel style="width:68em;height:400px" mode="native">
@@ -289,17 +310,8 @@ widgetVar="chkDlg" Height="300" width="800" closable="false" showHeader="false">
 		</p:scrollPanel>
 </p:dialog>	
 				
-				<p:commandButton id="idMenuFilter" onclick="PF('sideBarSearch').show()" icon="fa fa-search" style="#{skin.searchButton}" title="Click this button to create filters for searching" />
-				<p:sidebar widgetVar="sideBarSearch" style="#{skin.sideBar}; height: 3em;" fullScreen="false" position="top">
-						<div class="ui-inputgroup">
-			    			<p:inputText id="tb" value="#{bankBean.searchParam}" a:placeholder="Search..." style="width: 20em">
-			    					<f:ajax event="keyup" listener="#{bankBean.search}" render="reportId bankFldId selectedChkId dataChkId"/>
-			    			</p:inputText>
-			    			<p:calendar value="#{bankBean.calendarFromSearch}" pattern="yyyy-MM-dd" effect="slideDown"/>
-			    			<p:calendar value="#{bankBean.calendarToSearch}" pattern="yyyy-MM-dd" effect="slideDown"/>
-			    			<p:commandButton update="reportId bankFldId selectedChkId dataChkId" icon="fa fa-search" actionListener="#{bankBean.init}"/>
-			    		</div>		 
-				</p:sidebar>
+				
+
 				
 
 <ui:include src="loader.xhtml" />
