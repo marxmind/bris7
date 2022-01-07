@@ -1921,6 +1921,53 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		
 		detail_2 = str.toString();
 		
+	}else if(com.italia.marxmind.bris.enm.Purpose.SOCOTECO_APPLICATION.getId()==clr.getPurposeType()){
+		
+		REPORT_NAME = GENERIC_DOC;
+		
+		String words = Words.getTagName("soco-string-1");
+		if(DocTypes.CLEARANCE_OPEN_TITLE.getId()==clr.getDocumentType()) {
+			words = words.replace("<docttype>", DocTypes.CLEARANCE.getName());
+		}else if(DocTypes.CERTIFICATE_OPEN_TITLE.getId()==clr.getDocumentType()) {
+			words = words.replace("<docttype>", DocTypes.CERTIFICATE.getName());
+		}else {
+			words = words.replace("<docttype>", DocTypes.typeName(clr.getDocumentType()));
+		}
+		str.append(words);
+		
+		supplyDetails(clr, reports, address, civilStatus, municipal);
+		
+		purpose = words = Words.getTagName("soco-string-4");
+		//String heshe = taxpayer.getGender().equalsIgnoreCase("1")? "he" : "she";
+		//purpose = purpose.replace("<heshe>", heshe);
+		
+		ClearanceRpt rpt = new ClearanceRpt();
+		rpt.setF1("PURPOSE:");rpt.setF2(purpose.toUpperCase());
+		reports.add(rpt);
+		
+		detail_1 = str.toString();
+		str = new StringBuilder();
+		
+		//String heshe = clr.getTaxPayer().getGender().equalsIgnoreCase("1")? "he" : "she";
+		//words = "\t"+clr.getNotes();
+		//str.append(words);
+		words = Words.getTagName("soco-string-2");
+		words = words.replace("<address>", clr.getTaxPayer().getCompleteAddress());
+		str.append(words);
+		
+		words = Words.getTagName("soco-string-3");
+		str.append(words);
+		
+	
+		words = Words.getTagName("soco-string-5");
+		words = words.replace("<day>", DateUtils.dayNaming(clr.getIssuedDate().split("-")[2]));
+		words = words.replace("<month>", DateUtils.getMonthName(Integer.valueOf(clr.getIssuedDate().split("-")[1])));
+		words = words.replace("<year>", clr.getIssuedDate().split("-")[0]);
+		words = words.replace("<barangayaddress>", barangay);
+		str.append(words);
+		
+		detail_2 = str.toString();
+		
 	}else{
 		
 		REPORT_NAME = GENERIC_DOC;
@@ -2302,7 +2349,9 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			*/
 			
 			//revised content value
-			content = clr.getTaxPayer().getCardno();
+			//content = clr.getTaxPayer().getCardno();
+			//content = clr.getTaxPayer().getCardno() + ":" + clr.getTaxPayer().getFirstname()  + ":" + clr.getTaxPayer().getMiddlename() + ":" + clr.getTaxPayer().getLastname();
+			content = clr.getTaxPayer().getCardno() + ":" + clr.getTaxPayer().getFirstname()  + ":" + clr.getTaxPayer().getMiddlename() + ":" + clr.getTaxPayer().getLastname() + ":" + clr.getTaxPayer().getCompleteAddress() + ":" + clr.getTaxPayer().getBirthdate() + ":" + clr.getTaxPayer().getBirthdate() + ":" + clr.getTaxPayer().getGender() + ":" + clr.getTaxPayer().getCivilStatus();
 			
 			File pdf = QRCode.createQRCode(content, 200, 200, path + "qrcode" + File.separator, clr.getTaxPayer().getCardno());
 			qrPdf = new FileInputStream(pdf);

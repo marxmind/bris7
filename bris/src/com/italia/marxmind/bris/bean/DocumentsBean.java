@@ -2065,7 +2065,10 @@ public class DocumentsBean implements Serializable{
 														com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN.getId()==getPurposeTypeId() ||
 															com.italia.marxmind.bris.enm.Purpose.SSS_LOAN.getId()==getPurposeTypeId() ||
 																	com.italia.marxmind.bris.enm.Purpose.BANK_REQUIREMENT.getId()==getPurposeTypeId() || 
-																			com.italia.marxmind.bris.enm.Purpose.PNP_APPLICATION.getId()==getPurposeTypeId()
+																			com.italia.marxmind.bris.enm.Purpose.PNP_APPLICATION.getId()==getPurposeTypeId() || 
+																					com.italia.marxmind.bris.enm.Purpose.SOCOTECO_APPLICATION.getId()==getPurposeTypeId() || 
+																							com.italia.marxmind.bris.enm.Purpose.SECURING_PERMIT_FIRECRACKERS.getId()==getPurposeTypeId()
+																			
 															){		
 			
 			docTypes.add(new SelectItem(DocTypes.CERTIFICATE.getId(), DocTypes.CERTIFICATE.getName()));
