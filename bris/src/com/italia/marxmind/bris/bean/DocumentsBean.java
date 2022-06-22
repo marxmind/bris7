@@ -391,11 +391,11 @@ public class DocumentsBean implements Serializable{
 	}
 	
 	public void clickItemOwner(){
-		try {
+		//try {
 		Customer cuz = getTaxPayer();
-		setPhotoId(cuz.getPhotoid());
+		try{setPhotoId(cuz.getPhotoid());}catch(NullPointerException e) {}
 		shots = new ArrayList<>();
-		shots.add(cuz.getPhotoid());	
+		try{shots.add(cuz.getPhotoid());}catch(NullPointerException e) {}	
 			
 		loadCedula();
 		ORTransaction ort = ORTransaction.loadORIfExist(cuz);
@@ -405,7 +405,7 @@ public class DocumentsBean implements Serializable{
 			setOrNumber(ort.getOrNumber());
 			setAmountPaid(ort.getAmount());
 		}
-		}catch(Exception e) {e.printStackTrace();}
+		//}catch(Exception e) {e.printStackTrace();}
 	}
 	
 	public void clickItemBen() {
@@ -3070,7 +3070,7 @@ public class DocumentsBean implements Serializable{
 				cl.setDocumentValidity(getDocumentValidity());
 				
 				cl = Clearance.save(cl);
-				List<MultiLivelihood> mulLive = Collections.synchronizedList(new ArrayList<MultiLivelihood>());
+				List<MultiLivelihood> mulLive = new ArrayList<MultiLivelihood>();
 				if(getOwnerBusiness()!=null && getOwnerBusiness().size()>0){
 					
 					for(MultiLivelihood mu : cl.getMultilivelihood()){
