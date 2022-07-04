@@ -27,6 +27,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="css/growl.css"/>
             <h:outputStylesheet name="primeflex/primeflex.min.css" />
             <h:outputStylesheet name="primeflex/layout.css" />
+            <h:outputStylesheet name="css/utils.css"/>
     </f:facet>
         
     <f:facet name="last">
@@ -85,38 +86,38 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				
 				<p:panelGrid id="bankFldId" columns="4" layout="grid">
 				
-				<p:outputLabel value="PBC NO:" style="#{skin.label}"/>
-				<p:inputText id="genId" value="#{bankBean.pbcNo}" a:placeholder="YEAR-BARANGAY-000" style="#{skin.textInput}"/>
+				<p:outputLabel value="PBC NO:" />
+				<p:inputText id="genId" value="#{bankBean.pbcNo}" a:placeholder="YEAR-BARANGAY-000" style="width: 15em"/>
 				
-				<p:outputLabel value="Date:" style="#{skin.label}"/>
-				<p:calendar value="#{bankBean.dateApplying}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
+				<p:outputLabel value="Date:" />
+				<p:calendar value="#{bankBean.dateApplying}" pattern="yyyy-MM-dd" effect="slideDown" inputStyle="width: 15em"/>
 				
-				<p:outputLabel value="Recepient:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.recepient}" a:placeholder="THE MANAGER" style="#{skin.textInput}"/>
+				<p:outputLabel value="Recepient:" />
+				<p:inputText value="#{bankBean.recepient}" a:placeholder="THE MANAGER" style="width: 15em"/>
 				
-				<p:outputLabel value="Bank Name:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankName}" a:placeholder="DEVELOPMENT BANK OF THE PHILIPPINES" style="#{skin.textInput}"/>
+				<p:outputLabel value="Bank Name:" />
+				<p:inputText value="#{bankBean.bankName}" a:placeholder="DEVELOPMENT BANK OF THE PHILIPPINES" style="width: 15em"/>
 				
-				<p:outputLabel value="Bank Location:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankCityName}" a:placeholder="KORONADAL CITY" style="#{skin.textInput}"/>
+				<p:outputLabel value="Bank Location:" />
+				<p:inputText value="#{bankBean.bankCityName}" a:placeholder="KORONADAL CITY" style="width: 15em"/>
 				
-				<p:outputLabel value="Province Location:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.bankProvinceName}" a:placeholder="SOUTH COTABATO" style="#{skin.textInput}"/>
+				<p:outputLabel value="Province Location:" />
+				<p:inputText value="#{bankBean.bankProvinceName}" a:placeholder="SOUTH COTABATO" style="width: 15em"/>
 				
-				<p:outputLabel value="Cedula No:" style="#{skin.label}"/>
-				<p:inputText value="#{bankBean.cedulaNo}" a:placeholder="000000000" style="#{skin.textInput}"/>
+				<p:outputLabel value="Cedula No:" />
+				<p:inputText value="#{bankBean.cedulaNo}" a:placeholder="000000000" style="width: 15em"/>
 				
-				<p:outputLabel value="Cedula Issued Date:" style="#{skin.label}"/>
-				<p:calendar value="#{bankBean.cedulaDate}" pattern="yyyy-MM-dd" effect="slideDown" style="#{skin.calendar}"/>
+				<p:outputLabel value="Cedula Issued Date:" />
+				<p:calendar value="#{bankBean.cedulaDate}" pattern="yyyy-MM-dd" effect="slideDown" inputStyle="width: 15em"/>
 				
 				</p:panelGrid>
 				
 				<p:toolbar >
 		    		<f:facet name="left">
-				        <p:commandButton  value="Remove" update="selectedChkId dataChkId reportId msg" actionListener="#{bankBean.deleteCheckSelected}" style="#{skin.button}" icon="fa fa-trash" title="Click this button to delete selected cheque" >
+				        <p:commandButton  value="Remove" update="selectedChkId dataChkId reportId msg" actionListener="#{bankBean.deleteCheckSelected}"  icon="fa fa-trash" title="Click this button to delete selected cheque" >
 					<p:confirm header="Confirmation" message="Are you sure you want to delete selected Cheques?" icon="ui-icon-alert" />
 					</p:commandButton>
-					<p:commandButton update="dataChkId" icon="fa fa-search" title="Click this button to add Cheques" value="Cheque Lookup" onclick="PF('chkDlg').show()" actionListener="#{bankBean.loadCheckProcessed}" style="#{skin.button}"/>
+					<p:commandButton update="dataChkId" icon="fa fa-search" title="Click this button to add Cheques" value="Cheque Lookup" onclick="PF('chkDlg').show()" actionListener="#{bankBean.loadCheckProcessed}" />
 				
 		    		</f:facet>
 		    		<f:facet name="right">
@@ -124,7 +125,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				</p:toolbar>
 				
 				<p:dataTable id="selectedChkId" value="#{bankBean.checkSelected}" var="rp" stickyHeader="false" 
-                         scrollable="false" scrollWidth="100%" style="#{skin.table}"
+                         scrollable="false" scrollWidth="100%"
                          draggableColumns="false" draggableRows="false"
                          selection="#{bankBean.removeCheckSelected}" rowKey="#{rp.id}"
                          >
@@ -249,6 +250,7 @@ widgetVar="chkDlg" Height="300" width="800" closable="true" showHeader="true" cl
 		
 		<p:toolbar id="tbChk">
     		<f:facet name="left">
+    			 <div class="ui-inputgroup">
     			<p:selectOneMenu value="#{bankBean.accountId}"  style="width: 15em">
 							<f:selectItems value="#{bankBean.bankAccounts}"/>
 							<f:ajax listener="#{bankBean.loadCheckProcessed}" render="dataChkId"/>
@@ -259,10 +261,13 @@ widgetVar="chkDlg" Height="300" width="800" closable="true" showHeader="true" cl
 				<p:calendar value="#{bankBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown"/>
 		    	<p:calendar value="#{bankBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown"/>
 				<p:commandButton id="findId" update="dataChkId"  icon="fa fa-search" actionListener="#{bankBean.loadCheckProcessed}"/>
+				</div>
     		</f:facet>
     		<f:facet name="right">
+    			 <div class="ui-inputgroup">
 				<p:commandButton actionListener="#{bankBean.updateTempCheckSelected}" value="Add" update="selectedChkId genId" onclick="PF('chkDlg').hide();"  icon="fa fa-floppy-o" title="Click this button to add selected cheque"  />
     			<p:commandButton  value="Close" onclick="PF('chkDlg').hide();"/>
+    			</div>
     		</f:facet>
 		</p:toolbar>
 		<p:scrollPanel style="width:68em;height:400px" mode="native">

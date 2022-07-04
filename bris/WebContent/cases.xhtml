@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -145,87 +145,87 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		   <p:panelGrid id="FldId" columns="4" layout="grid">
 		   		
 		   		<p:outputLabel for="id1" value="Chairman" style="#{skin.label}"/>
-				<p:selectOneMenu id="id1" value="#{casesBean2.chairmanId}" style="width: 15em" filter="true" filterMatchMode="contains">
+				<p:selectOneMenu id="id1" value="#{casesBean2.chairmanId}" style="width: 20em" filter="true" filterMatchMode="contains">
                 			<f:selectItems value="#{casesBean2.chairmans}"/>
             	</p:selectOneMenu>
             	
 		   		<p:outputLabel for="id2" value="Secretary" style="#{skin.label}"/>
-				<p:selectOneMenu id="id2"  value="#{casesBean2.secId}" style="width: 15em" filter="true" filterMatchMode="contains">
+				<p:selectOneMenu id="id2"  value="#{casesBean2.secId}" style="width: 20em" filter="true" filterMatchMode="contains">
                 			<f:selectItems value="#{casesBean2.secretaries}"/>
             	</p:selectOneMenu>
 				
 				
 				<p:outputLabel for="id3" value="Filling" style="#{skin.label}" />
-				<p:inputText id="id3" value="#{casesBean2.fillingDate}" readonly="true" style="width: 15em"/>
+				<p:inputText id="id3" value="#{casesBean2.fillingDate}" readonly="true" style="width: 20em"/>
 				
 				<p:outputLabel for="id4" value="Status" style="#{skin.label}" />
-				<p:selectOneMenu id="id4" value="#{casesBean2.statusId}" style="width: 15em">
+				<p:selectOneMenu id="id4" value="#{casesBean2.statusId}" style="width: 20em">
                 	<f:selectItems value="#{casesBean2.status}"/>
             	</p:selectOneMenu>
 				
 				<p:outputLabel for="id5" value="Case No" style="#{skin.label}" />
-				<p:inputText id="id5" value="#{casesBean2.caseNumber}" style="width: 15em"/>
+				<p:inputText id="id5" value="#{casesBean2.caseNumber}" style="width: 20em"/>
 				
 				<p:outputLabel for="id6" value="Forms:" style="#{skin.label}"/>
-				<p:selectOneMenu id="id6" value="#{casesBean2.kpId}" style="width: 15em" filter="true" filterMatchMode="contains">
+				<p:selectOneMenu id="id6" value="#{casesBean2.kpId}" style="width: 20em" filter="true" filterMatchMode="contains">
                 			<f:selectItems value="#{casesBean2.kps}"/>
             	</p:selectOneMenu>
 				
 				<p:outputLabel for="id7" value="Kind of Case" style="#{skin.label}" />
-				<p:selectOneMenu id="id7" value="#{casesBean2.kindId}" style="width: 15em" filter="true" filterMatchMode="contains">
+				<p:selectOneMenu id="id7" value="#{casesBean2.kindId}" style="width: 20em" filter="true" filterMatchMode="contains">
                 	<f:selectItems value="#{casesBean2.kinds}"/>
                 	<p:ajax update="otherCaseId" listener="#{casesBean2.triggerCase}" event="change" />
             	</p:selectOneMenu>
             	
             	<p:outputLabel for="otherCaseId" value="Other Case" style="#{skin.label}" />
-            	<p:inputTextarea id="otherCaseId" value="#{casesBean2.otherCaseName}" disabled="#{!casesBean2.otherCase}" style="width: 15em"/>
+            	<p:inputTextarea id="otherCaseId" value="#{casesBean2.otherCaseName}" disabled="#{!casesBean2.otherCase}" style="width: 20em"/>
             	
             	
 				<p:outputLabel for="id8" value="Settlement Date" style="#{skin.label}" />
-				<p:calendar id="id8" value="#{casesBean2.settlementDate}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" inputStyle="width: 15em"/>
+				<p:calendar id="id8" value="#{casesBean2.settlementDate}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" inputStyle="width: 20em"/>
 					
 				
 				<p:outputLabel for="id9" value="Settlement Time" style="#{skin.label}" />
-				<p:inputText id="id9" value="#{casesBean2.settlementTime}" style="width: 15em"/>
+				<p:inputText id="id9" value="#{casesBean2.settlementTime}" style="width: 20em"/>
 				
 				<p:outputLabel for="id10" value="Complainant/s" style="#{skin.label}" />
-				<p:inputTextarea id="id10" placeholder="Type here the fullname of the complainant. First name Last name" value="#{casesBean2.complainants}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id10" placeholder="Type here the fullname of the complainant. First name Last name" value="#{casesBean2.complainants}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeNames}"/>
 				
 				<p:outputLabel for="id11" value="Address" style="#{skin.label}" />
-				<p:inputTextarea id="id11" placeholder="Type here the complete address of the complainant/s" value="#{casesBean2.compAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id11" placeholder="Type here the complete address of the complainant/s" value="#{casesBean2.compAddress}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeAddress}"/>
 				
 				<p:outputLabel for="id12" value="Respondent/s" style="#{skin.label}" />
-				<p:inputTextarea id="id12" placeholder="Type here the fullname of the respondent. First name Last name" value="#{casesBean2.respondents}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id12" placeholder="Type here the fullname of the respondent. First name Last name" value="#{casesBean2.respondents}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeNames}"/>
 				
 				<p:outputLabel for="id13" value="Address" style="#{skin.label}" />
-				<p:inputTextarea id="id13" placeholder="Type here the complete address of the respondent/s" value="#{casesBean2.resAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id13" placeholder="Type here the complete address of the respondent/s" value="#{casesBean2.resAddress}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeAddress}"/>
 				
 				<p:outputLabel for="id14" value="Complain" style="#{skin.label}" />
-				<p:inputTextarea id="id14" value="#{casesBean2.narratives}" placeholder="Type here the reason of the case" style="width: 15em" autoResize="true|false"/>
+				<p:inputTextarea id="id14" value="#{casesBean2.narratives}" placeholder="Type here the reason of the case" style="width: 20em" autoResize="true|false"/>
 				
 				<p:outputLabel for="id15" value="Suggested Solution" style="#{skin.label}" />
-				<p:inputTextarea id="id15" value="#{casesBean2.solutions}" placeholder="Type here the agreed solution" style="width: 15em" autoResize="true|false"/>
+				<p:inputTextarea id="id15" value="#{casesBean2.solutions}" placeholder="Type here the agreed solution" style="width: 20em" autoResize="true|false"/>
 				
 				<p:outputLabel for="id16" value="Witness/es" style="#{skin.label}" />
-				<p:inputTextarea id="id16" placeholder="Type here the name of the witness or witnesses" value="#{casesBean2.witness}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id16" placeholder="Type here the name of the witness or witnesses" value="#{casesBean2.witness}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeNames}"/>
 				
 				<p:outputLabel for="id17" value="Address" style="#{skin.label}" />
-				<p:inputTextarea id="id17" placeholder="Type here the complete address of the witness" value="#{casesBean2.witnessAddress}" style="width: 15em" autoResize="true|false" minQueryLength="2"
+				<p:inputTextarea id="id17" placeholder="Type here the complete address of the witness" value="#{casesBean2.witnessAddress}" style="width: 20em" autoResize="true|false" minQueryLength="2"
 				completeMethod="#{casesBean2.completeAddress}"/>
 				
 				<p:outputLabel for="id18" value="OR No" style="#{skin.label}" />
-				<p:inputText id="id18" value="#{casesBean2.orNumber}" placeholder="0000000" style="width: 15em"/>
+				<p:inputText id="id18" value="#{casesBean2.orNumber}" placeholder="0000000" style="width: 20em"/>
 				
 				<p:outputLabel for="id19" value="Fee" style="#{skin.label}" />
-				<p:inputText id="id19" value="#{casesBean2.fees}" style="width: 15em"/>
+				<p:inputText id="id19" value="#{casesBean2.fees}" style="width: 20em"/>
 				
 				<p:outputLabel for="id20" value="Messenger Fee" style="#{skin.label}" />
-				<p:inputText id="id20" value="#{casesBean2.messengerFees}" placeholder="00.00" style="width: 15em"/>
+				<p:inputText id="id20" value="#{casesBean2.messengerFees}" placeholder="00.00" style="width: 20em"/>
 		   
 		   </p:panelGrid>
 		   

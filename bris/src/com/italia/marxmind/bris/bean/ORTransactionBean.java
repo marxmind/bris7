@@ -4,19 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Cedula;
 import com.italia.marxmind.bris.controller.Clearance;
@@ -30,10 +25,9 @@ import com.italia.marxmind.bris.enm.DateFormat;
 import com.italia.marxmind.bris.enm.EmailType;
 import com.italia.marxmind.bris.enm.Job;
 import com.italia.marxmind.bris.reader.ReadConfig;
-import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 
-@ManagedBean(name="orBean", eager=true)
+@Named("orBean")
 @ViewScoped
 public class ORTransactionBean implements Serializable{
 

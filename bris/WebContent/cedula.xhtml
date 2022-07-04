@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -110,11 +110,16 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="input-group">
+        	  	<div class="ui-inputgroup">
+   		 	  		<span class="ui-input-icon-right">
 				<p:inputText value="#{cedulaBean.searchParam}" placeholder="Search..." style="width: 20em" styleClass="js-tilt">
 			    		<p:ajax event="keyup" listener="#{cedulaBean.init}" update="cedDataId" delay="800"/>
 			    </p:inputText>
-				<p:calendar value="#{cedulaBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
-			    <p:calendar value="#{cedulaBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
+			    <i class="pi pi-search" />
+			    </span>
+			    </div>
+				<p:calendar value="#{cedulaBean.dateFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" />
+			    <p:calendar value="#{cedulaBean.dateTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" />
 			    <p:commandButton update="cedDataId" icon="fa fa-search" actionListener="#{cedulaBean.init}"/>
           	  </div>
      </div>
@@ -164,23 +169,23 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				<p:panelGrid id="cedFld" columns="4" layout="grid" styleClass="ui-noborder">
         	
 		        <p:outputLabel  value="Issued Date:" style="#{skin.label}"/>
-				<p:calendar value="#{cedulaBean.cedulaIssued}" pattern="yyyy-MM-dd" effect="slideDown" style="width: 11em;#{skin.calendar}"/>
+				<p:calendar value="#{cedulaBean.cedulaIssued}" pattern="yyyy-MM-dd" effect="slideDown" inputStyle="width: 15em;#{skin.calendar}"/>
 				
 				<p:outputLabel  value="Cedula Number: " style="#{skin.label}"/>
-				<p:inputText value="#{cedulaBean.cedulaNumber}" placeholder="000000000000" style="width: 11em;#{skin.textInput}"/>
+				<p:inputText value="#{cedulaBean.cedulaNumber}" placeholder="000000000000" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Status: " style="#{skin.label}"/>
-            	<p:selectOneMenu value="#{cedulaBean.cedId}" style="width: 11em;#{skin.select}">
+            	<p:selectOneMenu value="#{cedulaBean.cedId}" style="width: 15em;#{skin.select}">
                 	<f:selectItems value="#{cedulaBean.ceds}"/>
             	</p:selectOneMenu>
 				
 				<p:outputLabel  value="Type: " style="#{skin.label}"/>
-            	<p:selectOneMenu value="#{cedulaBean.cedulaTypeId}" style="width: 11em;#{skin.select}">
+            	<p:selectOneMenu value="#{cedulaBean.cedulaTypeId}" style="width: 15em;#{skin.select}">
                 	<f:selectItems value="#{cedulaBean.cedulaTypes}"/>
             	</p:selectOneMenu>
 				
 				<p:outputLabel  value="Issued Address: " style="#{skin.label}"/>
-				<p:inputTextarea value="#{cedulaBean.cedulaIssuedAddress}" placeholder="Issued Address" style="width: 11em;#{skin.textInput}"/>
+				<p:inputTextarea value="#{cedulaBean.cedulaIssuedAddress}" placeholder="Issued Address" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Full Name: " style="#{skin.label}"/>
 				<p:outputLabel>
@@ -189,22 +194,22 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				</p:outputLabel>
 				
 				<p:outputLabel  value="TIN: " style="#{skin.label}"/>
-				<p:inputText value="#{cedulaBean.tinNo}" placeholder="000-000-000-000" style="width: 11em;#{skin.textInput}"/>
+				<p:inputText value="#{cedulaBean.tinNo}" placeholder="000-000-000-000" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Height: " style="#{skin.label}"/>
-				<p:inputText value="#{cedulaBean.hieght}" placeholder="height" style="width: 11em;#{skin.textInput}"/>
+				<p:inputText value="#{cedulaBean.hieght}" placeholder="height" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Weight: " style="#{skin.label}"/>
-				<p:inputText value="#{cedulaBean.weight}" placeholder="weight" style="width: 11em;#{skin.textInput}"/>
+				<p:inputText value="#{cedulaBean.weight}" placeholder="weight" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Basic Tax: " style="#{skin.label}"/>
-				<p:inputNumber value="#{cedulaBean.basicTax}" placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				<p:inputNumber value="#{cedulaBean.basicTax}" placeholder="0.00" inputStyle="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Gross Tax: " style="#{skin.label}"/>
-				<p:inputNumber value="#{cedulaBean.grossTax}" placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				<p:inputNumber value="#{cedulaBean.grossTax}" placeholder="0.00" inputStyle="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Total: " style="#{skin.label}"/>
-				<p:inputNumber value="#{cedulaBean.totalAmount}" placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				<p:inputNumber value="#{cedulaBean.totalAmount}" placeholder="0.00" inputStyle="width: 15em;#{skin.textInput}"/>
 		        	
         		</p:panelGrid>
 		   

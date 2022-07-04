@@ -333,6 +333,12 @@ public class DateUtils {
 		return dateFormat.format(date);
 	}
 	
+	public static String getCurrentTIMEHHMM(){
+		DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+	
 	public static String getCurrentDateMMDDYYYYTIMEPlain(){//MMMM d, yyyy
 		DateFormat dateFormat = new SimpleDateFormat("MMddyyyyhhmmss");
 		Date date = new Date();

@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -81,18 +81,18 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="input-group">
-	        	   <p:selectOneMenu value="#{checkBean2.searchAccountId}"  style="width: 15em" styleClass="js-tilt">
+	        	   <p:selectOneMenu value="#{checkBean2.searchAccountId}"  style="width: 15em" >
 					<f:selectItems value="#{checkBean2.searchBankAccounts}"/>
 					<f:ajax event="change" listener="#{checkBean2.init}" render="dataChkId"/>
 				</p:selectOneMenu>
-				<p:selectOneMenu value="#{checkBean2.moid}"  style="width:15em;" filterMatchMode="contains" filter="true" styleClass="js-tilt">
+				<p:selectOneMenu value="#{checkBean2.moid}"  style="width:15em;" filterMatchMode="contains" filter="true" >
 					<f:selectItems value="#{checkBean2.moeSearch}"/>
 				</p:selectOneMenu>
-				<p:autoComplete id="tb" placeholder="Search..." value="#{checkBean2.searchData}" completeMethod="#{checkBean2.autoPayToName}" effect="fade" styleClass="js-tilt">
+				<p:autoComplete id="tb" placeholder="Search..." value="#{checkBean2.searchData}" completeMethod="#{checkBean2.autoPayToName}" effect="fade" >
 		    		<f:ajax event="change" listener="#{checkBean2.init}" render="dataChkId"/>
 		    	</p:autoComplete>
-				<p:calendar value="#{checkBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 10em"/>
-		    	<p:calendar value="#{checkBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 10em"/>
+				<p:calendar value="#{checkBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"  inputStyle="width: 10em"/>
+		    	<p:calendar value="#{checkBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"  inputStyle="width: 10em"/>
 				<p:commandButton id="findId" update="dataChkId"  icon="fa fa-search" actionListener="#{checkBean2.init}"/>
           	  </div>
      </div>

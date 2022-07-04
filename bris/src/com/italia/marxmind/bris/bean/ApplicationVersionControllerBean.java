@@ -1,11 +1,13 @@
 package com.italia.marxmind.bris.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.application.ApplicationFixes;
 import com.italia.marxmind.bris.application.ApplicationVersionController;
@@ -17,9 +19,9 @@ import com.italia.marxmind.bris.security.License;
  * @since 09/28/2016
  * @version 1.0
  */
-
-@ManagedBean(name="versionBean", eager=true)
-public class ApplicationVersionControllerBean {
+@Named("versionBean")
+@ViewScoped
+public class ApplicationVersionControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 1394801825228386363L;
 	

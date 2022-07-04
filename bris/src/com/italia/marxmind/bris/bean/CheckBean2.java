@@ -17,9 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -44,17 +42,14 @@ import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.enm.DateFormat;
 import com.italia.marxmind.bris.enm.Feature;
 import com.italia.marxmind.bris.enm.UserAccess;
-import com.italia.marxmind.bris.reader.ReadConfig;
 import com.italia.marxmind.bris.reports.ReadXML;
 import com.italia.marxmind.bris.reports.ReportTag;
 import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 import com.italia.marxmind.bris.utils.Numbers;
 
-//@ManagedBean(name="checkBean2", eager=true)
-//@SessionScoped
 @Named
-@javax.enterprise.context.SessionScoped
+@SessionScoped
 public class CheckBean2 implements Serializable{
 
 	/**

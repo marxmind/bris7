@@ -17,14 +17,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
 import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.reader.ReadConfig;
@@ -33,7 +31,7 @@ import com.italia.marxmind.bris.security.SecureChar;
 import com.italia.marxmind.bris.utils.DateUtils;
 
 @Named
-@javax.faces.view.ViewScoped
+@ViewScoped
 public class UtilBean implements Serializable{
 
 	/**

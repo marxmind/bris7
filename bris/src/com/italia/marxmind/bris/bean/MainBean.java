@@ -89,10 +89,7 @@ import net.sourceforge.barbecue.BarcodeImageHandler;
  * @version 1.0
  *
  */
-//@ManagedBean(name="mainBean", eager=true)
-//@ViewScoped
 @Named
-//@org.omnifaces.cdi.ViewScoped
 @SessionScoped
 public class MainBean implements Serializable{
 

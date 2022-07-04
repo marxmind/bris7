@@ -10,18 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -30,7 +26,6 @@ import com.italia.marxmind.bris.controller.Forms;
 import com.italia.marxmind.bris.controller.Login;
 import com.italia.marxmind.bris.enm.Bris;
 import com.italia.marxmind.bris.enm.UserAccess;
-import com.italia.marxmind.bris.utils.DateUtils;
 
 /**
  * 
@@ -39,7 +34,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @since 7/1/2018
  *
  */
-@ManagedBean(name="dataBean", eager=true)
+@Named("dataBean")
 @ViewScoped
 public class DatabaseUtilityBean implements Serializable{
 

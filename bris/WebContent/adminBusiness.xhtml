@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -84,9 +84,9 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	    <p:inputText value="#{bizBean.searchName}" placeholder="Search Business" styleClass="js-tilt">
 	    					<f:ajax event="keyup" listener="#{bizBean.init}" render="cusId usercusId"/>
 	    			</p:inputText>
-	    			&nbsp;&nbsp;<p:commandButton id="idLoadAll" update="cusId usercusId" value="Load All" icon="fa fa-search" actionListener="#{bizBean.loadAll}"/>
-	    			&nbsp;&nbsp;
-		        <p:selectOneMenu value="#{bizBean.purokId}" style="color: black; width: 15em;#{skin.select}" styleClass="js-tilt">
+	    			<p:commandButton id="idLoadAll" update="cusId usercusId" value="Load All" icon="fa fa-search" actionListener="#{bizBean.loadAll}"/>
+	    			
+		        <p:selectOneMenu value="#{bizBean.purokId}" style="color: black; width: 15em;#{skin.select}">
 		            	<f:selectItems value="#{bizBean.purokList}"/>
 		            	<f:ajax event="change" render="cusId" listener="#{bizBean.loadAll}"/>
 		        </p:selectOneMenu>

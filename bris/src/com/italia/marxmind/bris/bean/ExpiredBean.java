@@ -4,16 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.security.License;
 import com.italia.marxmind.bris.security.Module;
 
-@ManagedBean(name= "expiredBean", eager=true)
+@Named("expiredBean")
 @SessionScoped
 public class ExpiredBean implements Serializable{
 

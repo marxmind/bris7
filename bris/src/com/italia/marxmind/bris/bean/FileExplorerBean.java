@@ -9,10 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -33,7 +32,7 @@ import com.italia.marxmind.bris.reader.ReadConfig;
  * @version 1.0
  *
  */
-@ManagedBean(name="explorerBean", eager=true)
+@Named("explorerBean")
 @ViewScoped
 public class FileExplorerBean implements Serializable{
 

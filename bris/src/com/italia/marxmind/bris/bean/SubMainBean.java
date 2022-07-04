@@ -6,15 +6,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.annotation.ManagedProperty;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.TabChangeEvent;
-
 import com.italia.marxmind.bris.controller.BCard;
 import com.italia.marxmind.bris.controller.CaseFilling;
 import com.italia.marxmind.bris.controller.Cases;
@@ -33,7 +30,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @version 1.0
  *
  */
-@ManagedBean(name="submainBean", eager=true)
+@Named("submainBean")
 @ViewScoped
 public class SubMainBean implements Serializable{
 

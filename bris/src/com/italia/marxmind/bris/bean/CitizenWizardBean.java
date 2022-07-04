@@ -49,7 +49,6 @@ import com.italia.marxmind.bris.utils.DateUtils;
  *
  */
 @Named
-//@org.omnifaces.cdi.ViewScoped
 @SessionScoped
 public class CitizenWizardBean implements Serializable{
 

@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.CollectionInfo;
 import com.italia.marxmind.bris.controller.Collector;
@@ -30,7 +28,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @version 1.0
  *
  */
-@ManagedBean(name="formisBean", eager=true)
+@Named("formisBean")
 @ViewScoped
 public class IssuedFormBean implements Serializable{
 
@@ -57,13 +55,13 @@ public class IssuedFormBean implements Serializable{
 	
 	private IssuedForm selectedForm;
 	
-	private List<IssuedForm> forms = Collections.synchronizedList(new ArrayList<IssuedForm>());
+	private List<IssuedForm> forms = new ArrayList<IssuedForm>();
 	
-	public List<Stocks> stocks = Collections.synchronizedList(new ArrayList<Stocks>());
-	public int formTypeIdSearch;
-	public List formTypeSearch;
+	private List<Stocks> stocks = new ArrayList<Stocks>();
+	private int formTypeIdSearch;
+	private List formTypeSearch;
 	
-	public Stocks stockData;
+	private Stocks stockData;
 	
 	private int fundId;
 	private List funds;
@@ -71,14 +69,14 @@ public class IssuedFormBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		
-		forms = Collections.synchronizedList(new ArrayList<IssuedForm>());
+		forms = new ArrayList<IssuedForm>();
 		forms =  IssuedForm.retrieve("", new String[0]);
 		Collections.reverse(forms);
 	}
 	
 	public void loadForms() {
 		
-		stocks = Collections.synchronizedList(new ArrayList<Stocks>());
+		stocks = new ArrayList<Stocks>();
 		String sql = " AND cl.isid=0 AND st.qty>0 ";
 		String[] params = new String[0];
 		

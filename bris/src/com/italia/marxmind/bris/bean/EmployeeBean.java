@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Barangay;
@@ -34,7 +33,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @since 07/06/2017
  *
  */
-@ManagedBean(name="empBean", eager=true)
+@Named("empBean")
 @ViewScoped
 public class EmployeeBean implements Serializable {
 

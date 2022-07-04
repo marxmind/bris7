@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +27,7 @@ import com.italia.marxmind.bris.sessions.SessionBean;
  *
  */
 @Named
-@javax.enterprise.context.SessionScoped
+@SessionScoped
 public class MenuBean implements Serializable{
  
 	/**

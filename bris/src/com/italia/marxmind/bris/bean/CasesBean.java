@@ -16,11 +16,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import com.italia.marxmind.bris.application.Application;
@@ -71,7 +71,7 @@ import net.sourceforge.barbecue.BarcodeImageHandler;
  * @version 1.0
  *
  */
-@ManagedBean(name="caseBean", eager=true)
+@Named("caseBean")
 @ViewScoped
 public class CasesBean implements Serializable{
 
@@ -466,7 +466,7 @@ public class CasesBean implements Serializable{
 		setFillingDate(DateUtils.getCurrentDateYYYYMMDD());
 		setCaseNumber(cz.getCaseNo());
 		setSettlementDate(DateUtils.getDateToday());
-		setSettlementTime(DateUtils.getCurrentTIME());
+		setSettlementTime(DateUtils.getCurrentTIMEHHMM());
 		setAttemps(fils.size()+1);
 		
 		setComplainants(cz.getComplainants());
@@ -492,7 +492,7 @@ public class CasesBean implements Serializable{
 		setFillingDate(DateUtils.getCurrentDateYYYYMMDD());
 		setCaseNumber(cz.getCaseNo());
 		setSettlementDate(DateUtils.getDateToday());
-		setSettlementTime(DateUtils.getCurrentTIME());
+		setSettlementTime(DateUtils.getCurrentTIMEHHMM());
 		
 		setComplainants(cz.getComplainants());
 		setRespondents(cz.getRespondents());
@@ -853,7 +853,7 @@ public void printCase(CaseFilling fil){
 	}
 	public String getSettlementTime() {
 		if(settlementTime==null){
-			settlementTime = DateUtils.getCurrentTIME();
+			settlementTime = DateUtils.getCurrentTIMEHHMM();
 		}
 		return settlementTime;
 	}

@@ -2,7 +2,6 @@ package com.italia.marxmind.bris.bean;
 
 import java.io.Serializable;
 import java.util.List;
-
 import org.primefaces.component.organigram.OrganigramHelper;
 import org.primefaces.event.organigram.OrganigramNodeCollapseEvent;
 import org.primefaces.event.organigram.OrganigramNodeDragDropEvent;
@@ -10,7 +9,6 @@ import org.primefaces.event.organigram.OrganigramNodeExpandEvent;
 import org.primefaces.event.organigram.OrganigramNodeSelectEvent;
 import org.primefaces.model.DefaultOrganigramNode;
 import org.primefaces.model.OrganigramNode;
-
 import com.italia.marxmind.bris.controller.Employee;
 import com.italia.marxmind.bris.controller.Features;
 import com.italia.marxmind.bris.controller.Login;
@@ -19,14 +17,13 @@ import com.italia.marxmind.bris.enm.Feature;
 import com.italia.marxmind.bris.enm.Positions;
 import com.italia.marxmind.bris.enm.UserAccess;
 import com.italia.marxmind.bris.reader.ReadConfig;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@ManagedBean(name="organigramView", eager=true)
+@Named("organigramView")
 @ViewScoped
 public class OrganizationBean implements Serializable{
 

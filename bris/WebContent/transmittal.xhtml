@@ -26,6 +26,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="css/growl.css"/>
             <h:outputStylesheet name="primeflex/primeflex.min.css" />
             <h:outputStylesheet name="primeflex/layout.css" />
+            <h:outputStylesheet name="css/utils.css"/>
     </f:facet>
         
     <f:facet name="last">
@@ -70,6 +71,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <p:toolbar id="tbbank">
 		    		<f:facet name="left">
 		    			
+		    			<div class="input-group">
 		    			<p:selectOneMenu value="#{tranBean.accountId}"  style="width: 15em">
 							<f:selectItems value="#{tranBean.bankAccounts}"/>
 							<f:ajax listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
@@ -84,6 +86,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 							<f:selectItems value="#{tranBean.years}"/>
 							<f:ajax event="change" listener="#{tranBean.loadMonthCheques}" render="dataChkId"/>
 						</p:selectOneMenu> 
+						</div>
 						     
 		    		</f:facet>
 		    		<f:facet name="right"/>

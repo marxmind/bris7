@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.application.Menu;
@@ -40,9 +40,8 @@ import com.italia.marxmind.bris.reports.ReadXML;
  * @version 1.0
  *
  */
-@ManagedBean(name="featuresBean")
+@Named("featuresBean")
 @SessionScoped
-
 public class FeatureBean implements Serializable{
 
 	/**
@@ -75,15 +74,15 @@ public class FeatureBean implements Serializable{
 	
 	private String moduleName;
 	
-	private List<Features> modules = Collections.synchronizedList(new ArrayList<Features>());
+	private List<Features> modules = new ArrayList<Features>();
 	
 	private List themesNames;
 	private int themeId;
-	private Map<Integer, Themes> themeData = Collections.synchronizedMap(new HashMap<Integer, Themes>());
+	private Map<Integer, Themes> themeData = new HashMap<Integer, Themes>();
 	
 	private List menus;
 	private int menuId;
-	private Map<Integer, MenuStyle> menuData = Collections.synchronizedMap(new HashMap<Integer, MenuStyle>());
+	private Map<Integer, MenuStyle> menuData = new HashMap<Integer, MenuStyle>();
 	
 	public Login getLogin() {
 		return Login.getUserLogin();

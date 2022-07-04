@@ -20,12 +20,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.event.CaptureEvent;
@@ -77,7 +77,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @since 07/06/2017
  *
  */
-@ManagedBean(name="clearBean", eager=true)
+@Named("clearBean")
 @ViewScoped
 public class ClearanceBean implements Serializable{
 

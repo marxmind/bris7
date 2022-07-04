@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.event.ItemSelectEvent;
@@ -23,7 +24,6 @@ import org.primefaces.model.charts.axes.radial.linear.RadialLinearTicks;
 import org.primefaces.model.charts.bar.BarChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
 import org.primefaces.model.charts.bar.BarChartOptions;
-import org.primefaces.model.charts.bubble.BubbleChartDataSet;
 import org.primefaces.model.charts.bubble.BubbleChartModel;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
 import org.primefaces.model.charts.donut.DonutChartModel;
@@ -51,9 +51,14 @@ import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 
 @Named
-@javax.faces.view.ViewScoped
+@ViewScoped
 public class ChartJsView implements Serializable {
      
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 546547657677681L;
+
 	//MOOE Budget
     private PieChartModel pieModel;
      

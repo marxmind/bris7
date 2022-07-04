@@ -68,7 +68,7 @@ public class LoginBean implements Serializable{
 	private String ui="";
 	
 	private List themes;
-	private String idThemes="luna-amber";
+	private String idThemes="vela"; //"luna-amber";
 	
 	public String getCurrentDate(){//MMMM d, yyyy
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -488,9 +488,9 @@ public List getThemes() {
 		
 		themes = new ArrayList<>();
 		
-		themes.add(new SelectItem("arya","ARYA"));
-		themes.add(new SelectItem("saga","SAGA"));
-		themes.add(new SelectItem("vela","VELA"));
+		themes.add(new SelectItem("arya","SHADOW BLACK"));
+		themes.add(new SelectItem("saga","ICE LIGHT"));
+		themes.add(new SelectItem("vela","AURORA BLACK"));
 		themes.add(new SelectItem("luna-amber","LUNA AMBER"));
 		themes.add(new SelectItem("luna-blue","LUNA BLUE"));
 		themes.add(new SelectItem("luna-green","LUNA GREEN"));

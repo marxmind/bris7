@@ -24,6 +24,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
             <h:outputStylesheet name="primeflex/primeflex.min.css" />
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -80,13 +81,17 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="input-group">	
-        	  
-        	    <p:inputText id="idSearchName" value="#{cardBean2.searchName}" placeholder="Search Name" styleClass="js-tilt">
+        	  	<div class="ui-inputgroup">
+   		 	  	<span class="ui-input-icon-right">
+        	    <p:inputText id="idSearchName" value="#{cardBean2.searchName}" style="width: 30em" placeholder="Search Name" styleClass="js-tilt">
     					<f:ajax event="keyup" listener="#{cardBean2.init}" render="cusId clearFldId"/>
     			</p:inputText>
-    			<p:calendar value="#{cardBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
-    			<p:calendar value="#{cardBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt"/>
-    			&nbsp;&nbsp;<p:commandButton update="cusId" icon="fa fa-search" actionListener="#{cardBean2.init}"/>
+    			<i class="pi pi-search" />	
+    			</span>
+    			</div>
+    			<p:calendar value="#{cardBean2.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" />
+    			<p:calendar value="#{cardBean2.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" />
+    			<p:commandButton update="cusId" icon="fa fa-search" actionListener="#{cardBean2.init}"/>
         	  
           	  </div>
      </div>

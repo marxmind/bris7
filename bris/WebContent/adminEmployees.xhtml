@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -80,11 +80,14 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="input-group">	
-        	  
-        	    <p:inputText id="tb" value="#{empBean.searchName}" placeholder="Search Name..." styleClass="js-tilt">
+        	  	<div class="ui-inputgroup">
+   		 	  	<span class="ui-input-icon-right">
+        	    <p:inputText id="tb" value="#{empBean.searchName}" placeholder="Search Name..." styleClass="js-tilt" style="width: 30em">
 		    		<f:ajax event="keyup" listener="#{empBean.init}" render="cusId usercusId"/>
 		    	</p:inputText>
-        	  
+		    	<i class="pi pi-search" />	
+        	  	</span>
+        	  	</div>
           	  </div>
      </div>
 

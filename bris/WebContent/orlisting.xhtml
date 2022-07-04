@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -110,11 +110,16 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="input-group">
-	        	   <p:inputText value="#{orBean.searchName}" placeholder="Search..." styleClass="js-tilt">
+        	  		<div class="ui-inputgroup">
+   		 	  		<span class="ui-input-icon-right">
+	        	   <p:inputText value="#{orBean.searchName}" placeholder="Search..." style="width: 30em" styleClass="js-tilt">
 				    	<p:ajax event="keyup" listener="#{orBean.loadORs}" update="ORDataId" delay="800"/>
-				    </p:inputText>		
-			        <p:calendar value="#{orBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" styleClass="js-tilt"/>
-				    <p:calendar value="#{orBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" styleClass="js-tilt"/>
+				    </p:inputText>	
+				    <i class="pi pi-search" />	
+				    </span>
+				    </div>	
+			        <p:calendar value="#{orBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" />
+				    <p:calendar value="#{orBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" />
 				    <p:commandButton update="ORDataId" icon="fa fa-search" actionListener="#{orBean.loadORs}"/>
           	  </div>
      </div>
@@ -164,21 +169,21 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				<p:panelGrid id="orFld" columns="4" layout="grid" styleClass="ui-noborder">
         	
 		        <p:outputLabel  value="Issued Date:" style="#{skin.label}"/>
-				<p:calendar value="#{orBean.issuedDate}" pattern="yyyy-MM-dd" effect="slideDown" style="width: 11em;#{skin.calendar}"/>
+				<p:calendar value="#{orBean.issuedDate}" pattern="yyyy-MM-dd" effect="slideDown" inputStyle="width: 15em;#{skin.calendar}"/>
 				
 				<p:outputLabel  value="Status: " style="#{skin.label}"/>
-            	<p:selectOneMenu value="#{orBean.statId}" style="width: 11em;#{skin.select}">
+            	<p:selectOneMenu value="#{orBean.statId}" style="width: 15em;#{skin.select}">
                 	<f:selectItems value="#{orBean.stats}"/>
             	</p:selectOneMenu>
 				
 				<p:outputLabel  value="OR Number: " style="#{skin.label}"/>
-				<p:inputText value="#{orBean.orNumber}" placeholder="000000000000" style="width: 11em;#{skin.textInput}"/>
+				<p:inputText value="#{orBean.orNumber}" placeholder="000000000000" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Issued Address: " style="#{skin.label}"/>
-				<p:inputTextarea value="#{orBean.issuedAddress}" placeholder="Address" style="width: 11em;#{skin.textInput}"/>
+				<p:inputTextarea value="#{orBean.issuedAddress}" placeholder="Address" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Purpose: " style="#{skin.label}"/>
-				<p:inputTextarea value="#{orBean.purpose}" placeholder="Purpose of OR" style="width: 11em;#{skin.textInput}"/>
+				<p:inputTextarea value="#{orBean.purpose}" placeholder="Purpose of OR" style="width: 15em;#{skin.textInput}"/>
 				
 				<p:outputLabel  value="Full Name: " style="#{skin.label}"/>
 				<p:outputLabel>
@@ -187,7 +192,10 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				</p:outputLabel>
 								
 				<p:outputLabel  value="Amount: " style="#{skin.label}"/>
-				<p:inputNumber value="#{orBean.amount}" placeholder="0.00" style="width: 11em;#{skin.textInput}"/>
+				<p:inputNumber value="#{orBean.amount}" placeholder="0.00" inputStyle="width: 15em;#{skin.textInput}"/>
+		        
+		        <p:outputLabel/>
+		        <p:outputLabel/>
 		        	
         		</p:panelGrid>
 		   

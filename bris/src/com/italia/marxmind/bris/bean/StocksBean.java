@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Stocks;
 import com.italia.marxmind.bris.enm.FormType;
@@ -25,7 +23,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @since 06-12-2019
  *
  */
-@ManagedBean(name="stockBean", eager=true)
+@Named("stockBean")
 @ViewScoped
 public class StocksBean implements Serializable{
 
@@ -39,17 +37,17 @@ public class StocksBean implements Serializable{
 	private String seriesFrom;
 	private String seriesTo;
 	private Stocks stockData;
-	public List<Stocks> stocks = Collections.synchronizedList(new ArrayList<Stocks>());
+	private List<Stocks> stocks = new ArrayList<Stocks>();
 	
-	public int formTypeId;
-	public List formType;
+	private int formTypeId;
+	private List formType;
 	
-	public int formTypeIdSearch;
-	public List formTypeSearch;
+	private int formTypeIdSearch;
+	private List formTypeSearch;
 	
 	@PostConstruct
 	public void init() {
-		stocks = Collections.synchronizedList(new ArrayList<Stocks>());
+		stocks = new ArrayList<Stocks>();
 		
 		String sql = " AND cl.isid=0 ";
 		String[] params = new String[0];
@@ -105,16 +103,6 @@ public class StocksBean implements Serializable{
 			setSeriesTo(series+"");
 		}
 		
-		
-		
-		/*long seriesFrom = 0;
-		long seriesTo = 0;
-		
-		try {
-		seriesFrom = Long.valueOf(getSeriesFrom());
-		seriesTo = Long.valueOf(getSeriesTo());
-		}catch(Exception e) {}*/
-		
 	}
 	
 	public void saveData() {
@@ -146,7 +134,6 @@ public class StocksBean implements Serializable{
 		
 		if(FormType.CT_2.getId()==getFormTypeId() || FormType.CT_5.getId()==getFormTypeId()) {
 			
-			//for(long i=1; i<=getNumberOfStab(); i++) {
 					st = new Stocks();
 					st.setIsActive(1);
 					st.setDateTrans(DateUtils.convertDate(getRecordedDate(), "yyyy-MM-dd"));
@@ -157,7 +144,7 @@ public class StocksBean implements Serializable{
 					st.setCollector(null);
 					st.setQuantity(Integer.valueOf(getSeriesTo()));
 					st.save();
-			//}
+			
 			
 					setFormTypeIdSearch(getFormTypeId());
 					createNew();
@@ -179,15 +166,12 @@ public class StocksBean implements Serializable{
 			long from = 0;
 			for(long i=seriesFrom; i<=seriesTo; i++) {
 				
-				//System.out.println("cnt>>> " + cnt);
-				
 				if(cnt==1) {
 					from = i;
 				}
 				
 				if(cnt==50) {
 					
-					//System.out.println(DateUtils.numberResult(getFormTypeId(), from) + "-" + DateUtils.numberResult(getFormTypeId(), i));
 					st = new Stocks();
 					st.setIsActive(1);
 					st.setDateTrans(DateUtils.convertDate(getRecordedDate(), "yyyy-MM-dd"));

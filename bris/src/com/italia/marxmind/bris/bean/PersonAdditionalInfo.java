@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Customer;
@@ -25,7 +25,7 @@ import com.italia.marxmind.bris.enm.EducationLevel;
 import com.italia.marxmind.bris.enm.Religion;
 import com.italia.marxmind.bris.utils.DateUtils;
 
-@ManagedBean(name="addInfoBean", eager=true)
+@Named("addInfoBean")
 @ViewScoped
 public class PersonAdditionalInfo implements Serializable{
 

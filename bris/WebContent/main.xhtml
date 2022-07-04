@@ -25,6 +25,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="primeflex/primeflex.min.css" />
             <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             
@@ -123,27 +124,28 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 				<f:selectItem itemLabel="Calendar" itemValue="5" />
    		 	</p:selectOneRadio>
    		 <div id="citTextId" style="display: block">
-   		 	  <div class="ui-inputgroup">	
+   		 	  <div class="ui-inputgroup">
+   		 	  <span class="ui-input-icon-right">	
 	          <p:inputText placeholder="Search for..." id="idSearch" autocomplete="off" value="#{mainBean.searchCustomer}" styleClass="js-tilt">
 	          	<p:ajax  event="keyup" listener="#{mainBean.init}" delay="800" update="cusId idContent msg"/>
 	          </p:inputText>
-	          <button class="btn btn-primary" type="button">
-              	<i class="fas fa-search"></i>
-	           </button>
+	          <i class="pi pi-search" />	
+		       </span>
 	           </div>
           </div>
+          
           <div id="geneTextId" style="display: none">
-          	  <div class="ui-inputgroup">	
+          	  <div class="ui-inputgroup">
+          	  	  <span class="ui-input-icon-right">
 		          <p:inputText placeholder="Search for..." id="idGenSearch" autocomplete="off" value="#{submainBean.genericSeach}" styleClass="js-tilt">
 		          	<p:ajax  event="keyup" listener="#{submainBean.loadGenericSearch}" delay="800" update="cardId clrId caseId"/>
 		          </p:inputText>
-		          <button class="btn btn-primary" type="button">
-	              	<i class="fas fa-search"></i>
-            		</button>
+		          <i class="pi pi-search" />	
+		          </span>
               </div>
           </div>
-            
-        </div>
+          </div>  
+        
           
      </div>
 

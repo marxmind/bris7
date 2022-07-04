@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -38,7 +38,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @version 1.0
  *
  */
-@ManagedBean(name="meterBean", eager=true)
+@Named("meterBean")
 @ViewScoped
 public class BudgetMeterBean implements Serializable {
 

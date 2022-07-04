@@ -1,8 +1,5 @@
 package com.italia.marxmind.bris.bean;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,16 +9,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.PrimeFaces;
@@ -57,7 +52,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @since 06-12-2019
  *
  */
-@ManagedBean(name="colBean", eager=true)
+@Named("colBean")
 @SessionScoped
 public class CollectionFormBean implements Serializable{
 

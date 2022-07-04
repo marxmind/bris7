@@ -16,12 +16,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import com.italia.marxmind.bris.application.Application;
@@ -43,7 +43,7 @@ import com.italia.marxmind.bris.utils.Currency;
 import com.italia.marxmind.bris.utils.DateUtils;
 import com.italia.marxmind.bris.utils.Numbers;
 
-@ManagedBean(name="checkBean", eager=true)
+@Named("checkBean")
 @ViewScoped
 public class ChequeProcessing implements Serializable{
 

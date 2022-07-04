@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.controller.BCard;
 import com.italia.marxmind.bris.controller.Cases;
@@ -34,7 +34,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @version 1.0
  *
  */
-@ManagedBean(name="rptBean", eager=true)
+@Named("rptBean")
 @ViewScoped
 public class ReportGeneratorBean implements Serializable {
 

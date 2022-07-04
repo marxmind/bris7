@@ -24,6 +24,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
             <h:outputStylesheet name="primeflex/primeflex.min.css" />
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             
@@ -88,16 +89,16 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         	  
         	  
         	  <div class="ui-inputgroup">
-        	  <p:selectOneMenu value="#{documentsBean.purposeId}"  filter="true" filterMatchMode="contains" style="width: 10em" styleClass="js-tilt">
+        	  <p:selectOneMenu value="#{documentsBean.purposeId}"  filter="true" filterMatchMode="contains" style="width: 10em">
 		      			<f:selectItems value="#{documentsBean.purposeList}"/>
 		       			<f:ajax event="change" listener="#{documentsBean.init}" render="cusId clearFldId businessDataId idCommBiz pictureId cedFld birthFld cattleFld"/>
 		      </p:selectOneMenu>
-	    	  <p:inputText id="searchId" value="#{documentsBean.searchClearance}" placeholder="Search..." styleClass="js-tilt">
+	    	  <p:inputText id="searchId" value="#{documentsBean.searchClearance}" placeholder="Search...">
 			  		<p:ajax event="keyup" listener="#{documentsBean.init}" delay="800" update="cusId clearFldId businessDataId idCommBiz pictureId cedFld birthFld cattleFld"/>
 			  </p:inputText>
-			  <p:calendar value="#{documentsBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 8em"/>
-			  <p:calendar value="#{documentsBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" styleClass="js-tilt" inputStyle="width: 8em"/>
-			  <p:commandButton update="cusId clearFldId businessDataId idCommBiz pictureId cedFld birthFld cattleFld" icon="fa fa-search" actionListener="#{documentsBean.init}" styleClass="js-tilt"/>
+			  <p:calendar value="#{documentsBean.calendarFrom}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true" inputStyle="width: 8em"/>
+			  <p:calendar value="#{documentsBean.calendarTo}" pattern="yyyy-MM-dd" effect="slideDown" disabledWeekends="true"  inputStyle="width: 8em"/>
+			  <p:commandButton update="cusId clearFldId businessDataId idCommBiz pictureId cedFld birthFld cattleFld" icon="fa fa-search" actionListener="#{documentsBean.init}"/>
           	  </div>
      </div>
 

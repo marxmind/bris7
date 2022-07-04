@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.application.ApplicationFixes;
 import com.italia.marxmind.bris.application.ApplicationVersionController;
@@ -35,7 +35,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  * @version 1.0
  *
  */
-@ManagedBean(name="assistBean", eager=true)
+@Named("assistBean")
 @ViewScoped
 public class AssistantsBean implements Serializable{
 

@@ -1,17 +1,13 @@
 package com.italia.marxmind.bris.bean;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 import com.italia.marxmind.bris.controller.Email;
 import com.italia.marxmind.bris.controller.Login;
 import com.italia.marxmind.bris.controller.UserDtls;
 
-@ManagedBean(name="notiBean", eager=true)
+@Named("notiBean")
 @RequestScoped
 public class NotificationBean {
 	

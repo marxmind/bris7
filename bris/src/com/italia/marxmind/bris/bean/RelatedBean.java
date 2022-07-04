@@ -4,18 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.event.TabChangeEvent;
-
 import com.italia.marxmind.bris.application.Application;
 import com.italia.marxmind.bris.controller.Education;
 import com.italia.marxmind.bris.controller.Races;
-import com.italia.marxmind.bris.enm.Religion;
-
 /**
  * 
  * @author mark italia
@@ -23,7 +19,7 @@ import com.italia.marxmind.bris.enm.Religion;
  * @version 1.0
  *
  */
-@ManagedBean(name="relBean", eager=true)
+@Named
 @ViewScoped
 public class RelatedBean implements Serializable{
 

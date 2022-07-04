@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -19,7 +18,6 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.LegendPlacement;
-
 import com.italia.marxmind.bris.controller.BCard;
 import com.italia.marxmind.bris.controller.Barangay;
 import com.italia.marxmind.bris.controller.Customer;
@@ -49,7 +47,7 @@ import com.italia.marxmind.bris.utils.DateUtils;
  *
  */
 
-@ManagedBean(name="graphBean", eager=true)
+@Named("graphBean")
 @ViewScoped
 public class GraphBean implements Serializable{
 

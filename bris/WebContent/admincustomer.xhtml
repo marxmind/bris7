@@ -23,7 +23,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
             <h:outputStylesheet name="sb-admin/css/sb-admin.min.css"/>
             <h:outputStylesheet name="sb-admin/css/bg-sidebar.min.css"/>
             <h:outputStylesheet name="css/font-awesome.min.css" />
-            
+            <h:outputStylesheet name="css/utils.css"/>
      </f:facet>
      <f:facet name="last">       
             <h:outputScript name="jquery/jquery.min.js" target="head"/>
@@ -79,14 +79,14 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
       <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         		
         		<div class="input-group">
-	               <p:inputText id="searchId" value="#{citizenWizardBean.searchCustomer}" placeholder="Search..." styleClass="js-tilt">
+        			<div class="ui-inputgroup">
+   		 	  		<span class="ui-input-icon-right">
+	               <p:inputText id="searchId" value="#{citizenWizardBean.searchCustomer}" placeholder="Search..." style="width: 30em" styleClass="js-tilt">
 	               			<p:ajax event="keyup" listener="#{citizenWizardBean.init}" delay="800" update="cusId pictureId personId contact addressFlds"/>
 	    			</p:inputText>
-	    			<div class="input-group-append js-tilt">
-		            <button class="btn btn-primary" type="button">
-		              <i class="fas fa-search"></i>
-		            </button>
-	          		</div>
+	    			<i class="pi pi-search" />	
+			       </span>
+		           </div>
 	          </div>
           
      </div>
@@ -134,7 +134,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		  		    
 		  		<div id="panelHide" style="display: none">
 		  		
-		  		<p:panelGrid id="pictureId" columns="6" layout="grid">
+		  		<p:panelGrid id="pictureId" columns="2" layout="grid" style="border-color: transparent">
 										
 						<p:commandLink update="shotId" onclick="PF('multiDialogCamera').show()">	
         					<p:graphicImage id="photo" name="images/photocam/#{citizenWizardBean.photoId}.jpg" rendered="#{not empty citizenWizardBean.photoId}" style="width: 100px; height: 100px"/>
@@ -147,6 +147,9 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
         				   				allowTypes="/(\.|\/)(gif|jpeg|jpg|png|JPEG|JPG|PNG|GIF)$/" 
         				   				oncomplete="hideLoading()"
         				   				/>
+        				   				
+        				   				
+        				   				
 				</p:panelGrid>
 				
 				<p:panelGrid id="personId" columns="4" layout="grid">
@@ -182,6 +185,8 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		        				<p:outputLabel for="contNo" value="Contact No." />
 			                 	<p:inputText id="contNo" styleClass="panelClassInput"  value="#{citizenWizardBean.citizen.contactno}" label="Contact No" placeholder="000 0000 0000" style="width: 15em"/>
 			                 	
+			                 	<p:outputLabel/>
+			                 	<p:outputLabel/>
 			      </p:panelGrid>
 		  			
 		  		  <p:panelGrid id="contact" columns="4" layout="grid">
