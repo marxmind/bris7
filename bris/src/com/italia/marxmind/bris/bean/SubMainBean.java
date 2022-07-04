@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.TabChangeEvent;
@@ -22,6 +23,9 @@ import com.italia.marxmind.bris.enm.CaseStatus;
 import com.italia.marxmind.bris.enm.DateFormat;
 import com.italia.marxmind.bris.enm.Feature;
 import com.italia.marxmind.bris.utils.DateUtils;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 
@@ -51,13 +55,15 @@ public class SubMainBean implements Serializable{
 	
 	//use by version6 aka avalon
 	
-	@ManagedProperty("#{mainBean}")
-	private MainBean mainBean;
+	//@ManagedProperty("#{mainBean}")
+	@Inject
+	@Setter @Getter private MainBean mainBean;
 	
 	private String genericSeach;
 	
 	public void loadGenericSearch() {
 		String val = getMainBean().getSearchOption();
+		//String val = getSearchOption();
 		System.out.println("search options>> " + val);
 		System.out.println("generic seach >> " + getGenericSeach());
 		
@@ -385,11 +391,9 @@ public class SubMainBean implements Serializable{
 
 	
 
-	public MainBean getMainBean() {
-		return mainBean;
-	}
-	
-	public void setMainBean(MainBean mainBean) {
-		this.mainBean = mainBean;
-	}
+	/*
+	 * public MainBean getMainBean() { return mainBean; }
+	 * 
+	 * public void setMainBean(MainBean mainBean) { this.mainBean = mainBean; }
+	 */
 }

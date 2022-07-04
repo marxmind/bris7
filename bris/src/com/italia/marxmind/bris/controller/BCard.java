@@ -57,7 +57,7 @@ public class BCard {
 			
 		}
 		
-		//System.out.println("SQL: " + ps.toString());
+		System.out.println("BCard: " + ps.toString());
 		
 		rs = ps.executeQuery();
 		
