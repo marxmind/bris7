@@ -137,7 +137,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		  		<p:panelGrid id="pictureId" columns="2" layout="grid" style="border-color: transparent">
 										
 						<p:commandLink update="shotId" onclick="PF('multiDialogCamera').show()">	
-        					<p:graphicImage id="photo" name="images/photocam/#{citizenWizardBean.photoId}.jpg" rendered="#{not empty citizenWizardBean.photoId}" style="width: 100px; height: 100px"/>
+        					<p:graphicImage id="photo" name="images/photocam/#{citizenWizardBean.photoId}.jpg" rendered="#{not empty citizenWizardBean.photoId}" style="width: 100px; height: 100px;-moz-border-radius: 100px;-webkit-border-radius: 100px;border-radius: 100px"/>
         				</p:commandLink>
         				
         				

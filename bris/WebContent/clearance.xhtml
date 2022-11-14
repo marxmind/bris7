@@ -150,7 +150,7 @@ xmlns:my="http://java.sun.com/jsf/composite/my"
 		            <div id="panelHide" style="display: none">
 					<p:panelGrid id="pictureId" columns="1" layout="grid">
 							<p:commandLink onclick="PF('multiDialogCamera').show()" update="shotId">
-		        				<p:graphicImage id="photo" name="images/photocam/#{documentsBean.photoId}.jpg" rendered="#{not empty documentsBean.photoId}" style="width: 100px; height: 100px"/>
+		        				<p:graphicImage id="photo" name="images/photocam/#{documentsBean.photoId}.jpg" rendered="#{not empty documentsBean.photoId}" style="width: 100px; height: 100px;-moz-border-radius: 100px;-webkit-border-radius: 100px;border-radius: 100px"/>
 		        			</p:commandLink>
 					</p:panelGrid>
 					<p:panelGrid id="clearFldId" layout="grid" columns="4">

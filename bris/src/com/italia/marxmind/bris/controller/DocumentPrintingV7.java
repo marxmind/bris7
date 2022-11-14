@@ -892,7 +892,7 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			
 			detail_2 = str.toString();
 		
-		}else if(com.italia.marxmind.bris.enm.Purpose.OTHER_LEGAL_MATTERS.getId()== clr.getPurposeType()){
+		}else if(com.italia.marxmind.bris.enm.Purpose.OTHER_LEGAL_MATTERS.getId()== clr.getPurposeType() || com.italia.marxmind.bris.enm.Purpose.BALIK_PROBINSYA_PROGRAM.getId()== clr.getPurposeType()){
 			
 			REPORT_NAME = GENERIC_DOC;
 			word = new StringBuilder();
@@ -909,7 +909,14 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 			supplyDetails(clr, reports, address, civilStatus, municipal);
 			
 			ClearanceRpt rpt = new ClearanceRpt();
-			rpt.setF1("PURPOSE:");rpt.setF2(Words.getTagName("legal-string-3"));
+			rpt.setF1("PURPOSE:");
+			
+			if(com.italia.marxmind.bris.enm.Purpose.BALIK_PROBINSYA_PROGRAM.getId()== clr.getPurposeType()) {
+				rpt.setF2(Words.getTagName("legal-string-4"));
+			}else {
+				rpt.setF2(Words.getTagName("legal-string-3"));
+			}
+			
 			reports.add(rpt);
 			
 			reports = checkSummonRemarks(clr.getTaxPayer(),reports,Purpose.OTHER_LEGAL_MATTERS);
