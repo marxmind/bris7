@@ -779,7 +779,8 @@ public class DocumentsBean implements Serializable{
 			setSupportingDetails(dtls);
 			}
 			
-		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId() == getPurposeTypeId() ||
+		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId() == getPurposeTypeId() || 
+				com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId() == getPurposeTypeId() ||
 				com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId() == getPurposeTypeId() ||
 				com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId() == getPurposeTypeId() ||
 						com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId() == getPurposeTypeId()){
@@ -2058,7 +2059,8 @@ public class DocumentsBean implements Serializable{
 						com.italia.marxmind.bris.enm.Purpose.PASSPORT.getId()==getPurposeTypeId() ||
 							com.italia.marxmind.bris.enm.Purpose.EMPLOYMENT_ABROAD.getId()==getPurposeTypeId() ||
 								com.italia.marxmind.bris.enm.Purpose.JOB_APPLICATION.getId()==getPurposeTypeId() ||
-									com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN.getId()==getPurposeTypeId() ||
+									com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN.getId()==getPurposeTypeId() || 
+											com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN.getId()==getPurposeTypeId() ||
 										com.italia.marxmind.bris.enm.Purpose.CAR_LOAN.getId()==getPurposeTypeId() ||
 											com.italia.marxmind.bris.enm.Purpose.TO_TAKE_BOARD_LICENSE.getId()==getPurposeTypeId() ||
 													com.italia.marxmind.bris.enm.Purpose.AFP_TRAINING.getId()==getPurposeTypeId() ||
@@ -2139,7 +2141,8 @@ public class DocumentsBean implements Serializable{
 			docTypes.add(new SelectItem(DocTypes.CERTIFICATE.getId(), DocTypes.CERTIFICATE.getName()));
 			docTypes.add(new SelectItem(DocTypes.CLEARANCE.getId(), DocTypes.CLEARANCE.getName()));
 			
-		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
+		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() || 
+				com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 				com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 				com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 				com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId()==getPurposeTypeId()){
@@ -2712,7 +2715,8 @@ public class DocumentsBean implements Serializable{
 					isOk = false;
 				}
 			
-			}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
+			}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() || 
+					com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 					com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 					com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 					com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId()==getPurposeTypeId()){	
@@ -2894,7 +2898,8 @@ public class DocumentsBean implements Serializable{
 					/*}else if(com.italia.marxmind.bris.enm.Purpose.LARGE_CATTLE.getId()==getPurposeTypeId()){
 						notes = getSupportingDetails();
 						cl.setNotes(notes);*/
-					}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
+					}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() || 
+							com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 							com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 							com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==getPurposeTypeId() ||
 							com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId()==getPurposeTypeId()){
@@ -3361,7 +3366,8 @@ public class DocumentsBean implements Serializable{
 					saveTree();	
 					}catch(Exception e){}
 					
-				}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==cl.getPurposeType() ||
+				}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==cl.getPurposeType() || 
+						com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==cl.getPurposeType() ||
 						com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==cl.getPurposeType() ||
 						com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==cl.getPurposeType() ||
 						com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId()==cl.getPurposeType()){

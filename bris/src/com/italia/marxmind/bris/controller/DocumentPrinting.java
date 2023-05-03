@@ -1403,7 +1403,8 @@ public class DocumentPrinting {
 			param.put("PARAM_BENEFICIARY", requestor);
 			param.put("PARAM_RELATIONSHIP_TITLE", relationship);
 		
-		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
+		}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() || 
+				com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
 				com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==clr.getPurposeType()){	
 			
 			REPORT_NAME = ASSISTANCE_REPORT_NAME;

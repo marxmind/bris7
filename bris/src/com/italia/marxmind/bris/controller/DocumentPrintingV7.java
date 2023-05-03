@@ -1470,7 +1470,8 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		param.put("PARAM_BENEFICIARY", requestor);
 		param.put("PARAM_RELATIONSHIP_TITLE", relationship);
 	
-	}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
+	}else if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() || 
+			com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
 			com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
 			com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==clr.getPurposeType() ||
 			com.italia.marxmind.bris.enm.Purpose.SSS_LOAN_REQUIREMENT.getId()==clr.getPurposeType()){	
@@ -1485,6 +1486,8 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 		supplyDetails(clr, reports, address, civilStatus, municipal);
 		if(com.italia.marxmind.bris.enm.Purpose.MOTORCYCLE_LOAN_REQUIREMENT.getId()==clr.getPurposeType()) {
 			reports = checkSummonRemarks(clr.getTaxPayer(),reports,Purpose.MOTORCYCLE_LOAN_REQUIREMENT);
+		}else if(com.italia.marxmind.bris.enm.Purpose.APPLIANCE_LOAN_REQUIREMENT.getId()==clr.getPurposeType()){
+			reports = checkSummonRemarks(clr.getTaxPayer(),reports,Purpose.APPLIANCE_LOAN_REQUIREMENT);	
 		}else if(com.italia.marxmind.bris.enm.Purpose.CAR_LOAN_REQUIREMENT.getId()==clr.getPurposeType()){
 			reports = checkSummonRemarks(clr.getTaxPayer(),reports,Purpose.CAR_LOAN_REQUIREMENT);
 		}else if(com.italia.marxmind.bris.enm.Purpose.PAG_IBIG_LOAN_REQUIREMENT.getId()==clr.getPurposeType()){
@@ -2513,6 +2516,12 @@ public static Map<Integer, Object> printDocumentV7(Clearance clr) {
 				}
 			}else if(Purpose.MOTORCYCLE_LOAN_REQUIREMENT==purpose) {
 				word = Words.getTagName("activate-motorcycle-loan");
+				if("on".equalsIgnoreCase(word)) {
+					rpt.setF1("REMARKS:");rpt.setF2(remarks);
+					reports.add(rpt);
+				}
+			}else if(Purpose.APPLIANCE_LOAN_REQUIREMENT==purpose) {
+				word = Words.getTagName("activate-appliance-loan");
 				if("on".equalsIgnoreCase(word)) {
 					rpt.setF1("REMARKS:");rpt.setF2(remarks);
 					reports.add(rpt);
